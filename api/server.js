@@ -1,4 +1,7 @@
 import express from "express";
+import fs from "fs";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 import extractSpotlights from "../src/extractors/spotlight.js";
 import extractTrending from "../src/extractors/trending.js";
 import { extractor, countPages } from "../src/extractors/extract.js";
@@ -13,7 +16,9 @@ import extractSeasons from "../src/extractors/seasons.js";
 
 const app = express();
 const port = process.env.PORT || 4444;
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+app.use(express.static(join(dirname(__dirname), "public")));
 const handleRequest = async (req, res, extractorType) => {
   try {
     let requestedPage = parseInt(req.query.page) || 1;
@@ -26,14 +31,22 @@ const handleRequest = async (req, res, extractorType) => {
         `${req.originalUrl.split("?")[0]}?page=${requestedPage}`
       );
     }
-
     res.json({ success: true, results: { totalPages, data } });
   } catch (e) {
     console.error(e);
     res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 };
-
+app.get("/", (req, res) => {
+  const filePath = join(dirname(__dirname), "public", "index.html");
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Internal Server Error");
+    }
+    res.send(data);
+  });
+});
 app.get("/api/", async (req, res) => {
   try {
     const [spotlights, trending] = await Promise.all([
