@@ -27,8 +27,8 @@
 - [Deployment](#deployment)
   - [Render](#Render)
 - [Documentation](#documentation)
-- [Pull Requests](#pull_requests)
-- [Reporting Issues](#reporting)
+- [Pull Requests](#pull-requests)
+- [Reporting Issues](#reporting-issues)
 - [Support](#support)
 
 > # Installation
