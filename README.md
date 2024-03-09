@@ -66,13 +66,6 @@ Host your own instance of anime-api on Render using this button below.
 ```bash
   https://anime-api-k3tm.onrender.com/api/
 ```
->
->### Required parameters and it's type 
-
-| Parameter | Type     | Required?              |
-| :--------:| :-------:| :--------------------: |
-|    `id`   | `string` | yes `✔️`               |
-
 #### Example of request
 ```sh
 import axios from 'axios';
