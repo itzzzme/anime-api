@@ -46,7 +46,7 @@ $ npm install
 ```
 Start the server
 ```bash
->$ npm start #or npm run devStart
+$ npm start #or npm run devStart
 ```
 ># Deployment
 ## Render
@@ -59,11 +59,11 @@ Host your own instance of anime-api on Render using this button below.
 
 ### `Get` Basic info
 
-```http
+```bash
   GET /api/
 ```
 ### Endpoint
-```http
+```bash
   https://anime-api-k3tm.onrender.com/api/
 ```
 >
