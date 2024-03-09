@@ -12,7 +12,7 @@ import extractSearchResults from "../src/extractors/searchResult.js";
 import extractSeasons from "../src/extractors/seasons.js";
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 4444;
 
 const handleRequest = async (req, res, extractorType) => {
   try {
