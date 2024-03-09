@@ -23,7 +23,7 @@
 > <h2> Table of Contents </h2>
 
 - [Installation](#installation)
-  - [Local installation](#locally)
+  - [Local installation](#local-installation)
 - [Deployment](#deployment)
   - [Render](#Render)
 - [Documentation](#documentation)
