@@ -185,7 +185,7 @@ console.log(resp.data);
 
 #### Parameters
 
-| Parameter |  Type  | Description | Required? | Default |
+| Parameter |  Type  | Description | Mandatory ? | Default |
 | :-------: | :----: | :---------: | :-------: | :-----: |
 |   `id`    | string |  anime-id   |  Yes ✔️   |   --    |
 
@@ -253,7 +253,7 @@ console.log(resp.data);
 
 #### Parameters
 
-| Parameter  | Parameter-type | Data-type | Description | Required? | Default |
+| Parameter  | Parameter-type | Data-type | Description | Mandatory ? | Default |
 | :--------: | :------------: | :-------: | :---------: | :-------: | :-----: |
 | `category` |     `path`     | `string`  | `Category`  |  Yes ✔️   |   --    |
 |   `page`   |    `query`     | `number`  | `Page-no.`  |   No ❌   |   `1`   |
@@ -331,7 +331,7 @@ console.log(resp.data);
 
 #### Parameters
 
-| Parameter | Parameter-type |   Type   | Description | Required? | Default |
+| Parameter | Parameter-type |   Type   | Description | Mandatory ? | Default |
 | :-------: | :------------: | :------: | :---------: | :-------: | :-----: |
 | `keyword` |    `query`     | `string` |  `keyword`  |  Yes ✔️   |   --    |
 
@@ -388,7 +388,7 @@ console.log(resp.data);
 
 #### Parameters
 
-| Parameter | Parameter-type |   Type   | Description | Required? | Default |
+| Parameter | Parameter-type |   Type   | Description | Mandatory ? | Default |
 | :-------: | :------------: | :------: | :---------: | :-------: | :-----: |
 |   `id`    |    `query`     | `string` |  `keyword`  |  Yes ✔️   |   --    |
 
@@ -488,5 +488,5 @@ If you discover any issues or have suggestions for improvement, please open an i
 >### Support
 If you like the project feel free to drop a star ✨. Your appreciation means a lot.
 
-<p align="center style="text-decoration: none;"">Made by <a href="https://github.com/itzzzme" target="_blank">itzzzme 
+<p align="center" style="text-decoration: none;">Made by <a href="https://github.com/itzzzme" target="_blank">itzzzme 
 </a>🫰</p>
