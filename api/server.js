@@ -126,6 +126,16 @@ app.get("/api/search", async (req, res) => {
     res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 });
+app.get("*", (req, res) => {
+  const filePath = join(dirname(__dirname), "public", "404.html");
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Internal Server Error");
+    }
+    res.status(404).send(data);
+  });
+});
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
