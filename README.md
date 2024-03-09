@@ -1,8 +1,8 @@
 <p align="center">
       <img
         src="https://media1.tenor.com/m/zZOt7alSzAMAAAAd/gojo-gojo-satoru.gif"
-        width="120"
-        height="120"
+        width="200"
+        height="200"
       />
     </p>
 
