@@ -67,14 +67,14 @@ Host your own instance of anime-api on Render using this button below.
   https://anime-api-k3tm.onrender.com/api/
 ```
 #### Example of request
-```sh
+```javsacript
 import axios from 'axios';
 const resp=await axios.get('https://anime-api-k3tm.onrender.com/api/')
 console.log(resp.data);
 ```
 
 #### Sample Response
-```sh
+```javascript
 {
   "success": true,
   "results": {
