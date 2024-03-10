@@ -19,5 +19,9 @@
   "type": "module",
   "devDependencies": {
     "nodemon": "^3.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itzzzme/anime-api.git"
   }
 }
