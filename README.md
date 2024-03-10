@@ -18,7 +18,7 @@
 
 2.  This `api` does not store any files , it only link to the media which is hosted on 3rd party services.
 
-3.  This `api` is explicitly made for educational purposes only. This repo will not be responsible for any misuse of it.
+3.  This `api` is explicitly made for educational purposes only and not for commercial usage. This repo will not be responsible for any misuse of it.
 
 > <h2> Table of Contents </h2>
 
