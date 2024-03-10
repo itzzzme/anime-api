@@ -267,6 +267,14 @@ console.log(resp.data);
 - recently-updated
 - recently-added
 - top-upcoming
+- subbed-anime
+- dubbed-anime
+- top-upcoming
+- movie
+- special
+- ova
+- ona
+- tv
 
 #### Example of request
 
