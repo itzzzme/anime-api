@@ -59,7 +59,6 @@ async function extractSpotlights() {
               tvInfo[key] = value;
             })
         );
-
         return { data_id, poster, title, description, tvInfo };
       })
       .get();

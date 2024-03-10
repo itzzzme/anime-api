@@ -1,141 +1,53 @@
 import express from "express";
-import fs from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
-import extractSpotlights from "../src/extractors/spotlight.js";
-import extractTrending from "../src/extractors/trending.js";
-import { extractor, countPages } from "../src/extractors/extract.js";
-import extractTopTen from "../src/extractors/topten.js";
-import extractAnimeInfo from "../src/extractors/animeInfo.js";
-import {
-  extractOtherEpisodes,
-  extractStreamingInfo,
-} from "../src/extractors/streamInfo.js";
-import extractSearchResults from "../src/extractors/searchResult.js";
-import extractSeasons from "../src/extractors/seasons.js";
+import { handleHomePage } from "../src/controllers/home.controller.js";
+import { handle404 } from "../src/controllers/404.controller.js";
+import { routeTypes } from "../src/routes/category.route.js";
+import * as homeInfoController from "../src/controllers/homeInfo.controller.js";
+import * as categoryController from "../src/controllers/category.controller.js";
+import * as topTenController from "../src/controllers/topten.controller.js";
+import * as animeInfoController from "../src/controllers/animeInfo.controller.js";
+import * as streamController from "../src/controllers/streamInfo.controller.js";
+import * as searchController from "../src/controllers/search.controller.js";
 
 const app = express();
 const port = process.env.PORT || 4444;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
 app.use(express.static(join(dirname(__dirname), "public")));
-const handleRequest = async (req, res, extractorType) => {
-  try {
-    let requestedPage = parseInt(req.query.page) || 1;
-    const { data, totalPages } = await extractor(extractorType, requestedPage);
 
-    requestedPage = Math.min(requestedPage, totalPages);
+app.get("/", handleHomePage);
 
-    if (requestedPage !== parseInt(req.query.page)) {
-      return res.redirect(
-        `${req.originalUrl.split("?")[0]}?page=${requestedPage}`
-      );
-    }
-    res.json({ success: true, results: { totalPages, data } });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
-  }
-};
-app.get("/", (req, res) => {
-  const filePath = join(dirname(__dirname), "public", "index.html");
-  fs.readFile(filePath, "utf8", (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send("Internal Server Error");
-    }
-    res.send(data);
-  });
-});
 app.get("/api/", async (req, res) => {
-  try {
-    const [spotlights, trending] = await Promise.all([
-      extractSpotlights(),
-      extractTrending(),
-    ]);
-    res.json({ success: true, results: { spotlights, trending } });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
-  }
+  await homeInfoController.getHomeInfo(req, res);
 });
-
-const routeTypes = [
-  "top-airing",
-  "most-popular",
-  "most-favorite",
-  "completed",
-  "recently-updated",
-  "recently-added",
-  "top-upcoming",
-];
 
 routeTypes.forEach((routeType) => {
   app.get(`/api/${routeType}`, async (req, res) => {
-    await handleRequest(req, res, routeType);
+    await categoryController.getCategory(req, res, routeType);
   });
 });
 
 app.get("/api/top-ten", async (req, res) => {
-  try {
-    res.json({ success: true, results: await extractTopTen() });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
-  }
+  await topTenController.getTopTen(req, res);
 });
 
 app.get("/api/info", async (req, res) => {
-  const id = req.query.id;
-  try {
-    const [seasons, data] = await Promise.all([
-      extractSeasons(id),
-      extractAnimeInfo(id),
-    ]);
-    res.json({ success: true, results: { seasons, data } });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
-  }
+  await animeInfoController.getAnimeInfo(req, res);
 });
+
 app.get("/api/stream", async (req, res) => {
-  try {
-    const input = req.query.id;
-    const match = input.match(/ep=(\d+)/);
-    if (!match) {
-      throw new Error("Invalid URL format");
-    }
-    const finalId = match[1];
-    const [ episodes, streamingInfo] = await Promise.all([
-      extractOtherEpisodes(input),
-      extractStreamingInfo(finalId),
-    ]);
-    res.json({ success: true, results: { streamingInfo, episodes } });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
-  }
+  await streamController.getStreamInfo(req, res);
 });
+
 app.get("/api/search", async (req, res) => {
-  const keyword = req.query.keyword;
-  try {
-    const data = await extractSearchResults(encodeURIComponent(keyword));
-    res.json({ success: true, results: data });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
-  }
+  await searchController.search(req, res);
 });
-app.get("*", (req, res) => {
-  const filePath = join(dirname(__dirname), "public", "404.html");
-  fs.readFile(filePath, "utf8", (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send("Internal Server Error");
-    }
-    res.status(404).send(data);
-  });
-});
+
+app.get("*", handle404);
+
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
