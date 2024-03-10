@@ -6,4 +6,12 @@ export const routeTypes = [
     "recently-updated",
     "recently-added",
     "top-upcoming",
+    "subbed-anime",
+    "dubbed-anime",
+    "top-upcoming",
+    "movie",
+    "special",
+    "ova",
+    "ona",
+    "tv",
   ];
