@@ -405,7 +405,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-k3tm.onrender.com/api/stream?id=frieren-beyond-journeys-end-18542?ep=107257
+  "https://anime-api-k3tm.onrender.com/api/stream?id=frieren-beyond-journeys-end-18542?ep=107257"
 );
 console.log(resp.data);
 ```
