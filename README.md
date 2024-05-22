@@ -70,7 +70,7 @@ Host your own instance of anime-api on Render.
 ### Endpoint
 
 ```bash
-  https://anime-api-k3tm.onrender.com/api/
+  https://anime-api-five-woad.vercel.app/api/
 ```
 
 > #### No parameter required ❌
@@ -79,7 +79,7 @@ Host your own instance of anime-api on Render.
 
 ```javascript
 import axios from "axios";
-const resp = await axios.get("https://anime-api-k3tm.onrender.com/api/");
+const resp = await axios.get("https://anime-api-five-woad.vercel.app/api/");
 console.log(resp.data);
 ```
 
@@ -133,7 +133,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://anime-api-k3tm.onrender.com/api/info?id={string}
+  https://anime-api-five-woad.vercel.app/api/info?id={string}
 ```
 
 > #### No parameter required ❌
@@ -142,7 +142,7 @@ console.log(resp.data);
 
 ```javascript
 import axios from "axios";
-const resp = await axios.get("https://anime-api-k3tm.onrender.com/api/top-ten");
+const resp = await axios.get("https://anime-api-five-woad.vercel.app/api/top-ten");
 console.log(resp.data);
 ```
 
@@ -180,7 +180,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://anime-api-k3tm.onrender.com/api/info?id={string}
+  https://anime-api-five-woad.vercel.app/api/info?id={string}
 ```
 
 #### Parameters
@@ -194,7 +194,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-k3tm.onrender.com/api/info?id=yami-shibai-9-17879"
+  "https://anime-api-five-woad.vercel.app/api/info?id=yami-shibai-9-17879"
 );
 console.log(resp.data);
 ```
@@ -246,9 +246,9 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://anime-api-k3tm.onrender.com/api/{string}?page={number}
+  https://anime-api-five-woad.vercel.app/api/{string}?page={number}
   #or
-  https://anime-api-k3tm.onrender.com/api/{string}
+  https://anime-api-five-woad.vercel.app/api/{string}
 ```
 
 #### Parameters
@@ -281,7 +281,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-k3tm.onrender.com/api/most-popular?page=1"
+  "https://anime-api-five-woad.vercel.app/api/most-popular?page=1"
 );
 console.log(resp.data);
 ```
@@ -334,7 +334,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://anime-api-k3tm.onrender.com/api/search?keyword={string}
+  https://anime-api-five-woad.vercel.app/api/search?keyword={string}
 ```
 
 #### Parameters
@@ -348,7 +348,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-k3tm.onrender.com/api/search?keyword=one%20punch%20man"
+  "https://anime-api-five-woad.vercel.app/api/search?keyword=one%20punch%20man"
 );
 console.log(resp.data);
 ```
@@ -391,7 +391,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://anime-api-k3tm.onrender.com/api/stream?id={string}
+  https://anime-api-five-woad.vercel.app/api/stream?id={string}
 ```
 
 #### Parameters
@@ -405,7 +405,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-k3tm.onrender.com/api/stream?id=frieren-beyond-journeys-end-18542?ep=107257"
+  "https://anime-api-five-woad.vercel.app/api/stream?id=frieren-beyond-journeys-end-18542?ep=107257"
 );
 console.log(resp.data);
 ```
