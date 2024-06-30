@@ -1,10 +1,10 @@
 import { decryptSources_v1 } from "./decrypt_v1.decryptor.js";
 import { decryptSources_v2 } from "./decrypt_v2.decryptor.js";
-import { extractSubtitle } from "../../extractors/subtitle.extractor.js";
+// import { extractSubtitle } from "../../extractors/subtitle.extractor.js";
 
 export async function decryptAllServers(data) {
   const promises = data.map(async (server) => {
-    const subtitlePromise = extractSubtitle(server.id);
+    // const subtitlePromise = extractSubtitle(server.id);
 
     let decryptionPromise;
     if (server.type === "sub") {
@@ -21,13 +21,10 @@ export async function decryptAllServers(data) {
       );
     }
 
-    const [subtitleResult, decryptionResult] = await Promise.all([
-      subtitlePromise,
-      decryptionPromise,
-    ]);
+    const decryptionResult = await decryptionPromise;
     // const decryptionResult = await decryptionPromise;
 
-    return { decryptionResult,subtitleResult };
+    return { decryptionResult };
   });
 
   return Promise.allSettled(promises);
