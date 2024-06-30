@@ -18,7 +18,6 @@ async function decryptSources_v2(id, name, type) {
     const ajaxResp = sourcesData.link;
     const [hostname] = /^(https?:\/\/(?:www\.)?[^\/\?]+)/.exec(ajaxResp) || [];
     const [_, sourceId] = /\/([^\/\?]+)\?/.exec(ajaxResp) || [];
-    console.log(hostname);
     const source = await fetchData(
       `${hostname}/ajax/embed-6-v2/getSources?id=${sourceId}`
     );
