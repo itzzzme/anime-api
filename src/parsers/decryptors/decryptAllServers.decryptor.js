@@ -4,21 +4,30 @@ import { extractSubtitle } from "../../extractors/subtitle.extractor.js";
 
 export async function decryptAllServers(data) {
   const promises = data.map(async (server) => {
-    const subtitlePromise = extractSubtitle(server.id);
+    // const subtitlePromise = extractSubtitle(server.id);
 
     let decryptionPromise;
     if (server.type === "sub") {
-      decryptionPromise = decryptSources_v1(server.id, server.name, server.type);
+      decryptionPromise = decryptSources_v1(
+        server.id,
+        server.name,
+        server.type
+      );
     } else if (server.type === "dub") {
-      decryptionPromise = decryptSources_v2(server.id, server.name, server.type);
+      decryptionPromise = decryptSources_v2(
+        server.id,
+        server.name,
+        server.type
+      );
     }
 
-    const [subtitleResult, decryptionResult] = await Promise.all([
-      subtitlePromise,
-      decryptionPromise,
-    ]);
+    // const [subtitleResult, decryptionResult] = await Promise.all([
+    //   subtitlePromise,
+    //   decryptionPromise,
+    // ]);
+    const decryptionResult = await decryptionPromise;
 
-    return { decryptionResult, subtitleResult };
+    return { decryptionResult };
   });
 
   return Promise.allSettled(promises);

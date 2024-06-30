@@ -17,28 +17,31 @@ async function decryptSources_v2(id, name, type) {
     const [_, sourceId] = /\/([^\/\?]+)\?/.exec(ajaxResp) || [];
     const source = await fetchData(`${hostname}/ajax/embed-6-v2/getSources?id=${sourceId}`);
 
-    const sourcesArray = source.sources.split("");
-    let extractedKey = "";
-    let currentIndex = 0;
+    // The server doesn't encrypt the source anymore
 
-    for (const index of decryptKey_v2) {
-      const start = index[0] + currentIndex;
-      const end = start + index[1];
+    // const sourcesArray = source.sources.split("");
+    // let extractedKey = "";
+    // let currentIndex = 0;
 
-      for (let i = start; i < end; i++) {
-        extractedKey += sourcesArray[i];
-        sourcesArray[i] = "";
-      }
-      currentIndex += index[1];
-    }
+    // for (const index of decryptKey_v2) {
+    //   const start = index[0] + currentIndex;
+    //   const end = start + index[1];
 
-    const decrypted = CryptoJS.AES.decrypt(sourcesArray.join(""), extractedKey).toString(CryptoJS.enc.Utf8);
-    const decryptedSources = JSON.parse(decrypted);
+    //   for (let i = start; i < end; i++) {
+    //     extractedKey += sourcesArray[i];
+    //     sourcesArray[i] = "";
+    //   }
+    //   currentIndex += index[1];
+    // }
+
+    // const decrypted = CryptoJS.AES.decrypt(sourcesArray.join(""), extractedKey).toString(CryptoJS.enc.Utf8);
+    // const decryptedSources = JSON.parse(decrypted);
 
     return {
-      link: decryptedSources[0].file,
-      server: name,
-      type: type,
+      source,
+      // link: decryptedSources[0].file,
+      // server: name,
+      // type: type,
     };
   } catch (error) {
     console.error("Error during decryption:", error);
