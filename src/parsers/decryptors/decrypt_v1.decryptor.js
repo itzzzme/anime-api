@@ -5,7 +5,7 @@ import { fetchData } from "../../helper/fetchData.helper.js";
 // import getKeys from "../../helper/getKey.helper.js";
 // import { PLAYER_SCRIPT_URL } from "../../configs/player_v1.config.js";
 
-export async function decryptSources_v1(type,id, name) {
+export async function decryptSources_v1(id, name,type) {
   try {
     const sourcesData = await fetchData(
       `https://${v1_base_url}/ajax/v2/episode/sources?id=${id}`
