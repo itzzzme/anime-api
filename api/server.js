@@ -1,4 +1,5 @@
 import express from "express";
+import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { handleHomePage } from "../src/controllers/home.controller.js";
@@ -10,6 +11,8 @@ import * as topTenController from "../src/controllers/topten.controller.js";
 import * as animeInfoController from "../src/controllers/animeInfo.controller.js";
 import * as streamController from "../src/controllers/streamInfo.controller.js";
 import * as searchController from "../src/controllers/search.controller.js";
+
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 4444;

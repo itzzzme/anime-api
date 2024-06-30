@@ -4,7 +4,7 @@ import { extractSubtitle } from "../../extractors/subtitle.extractor.js";
 
 export async function decryptAllServers(data) {
   const promises = data.map(async (server) => {
-    // const subtitlePromise = extractSubtitle(server.id);
+    const subtitlePromise = extractSubtitle(server.id);
 
     let decryptionPromise;
     if (server.type === "sub") {
@@ -21,13 +21,13 @@ export async function decryptAllServers(data) {
       );
     }
 
-    // const [subtitleResult, decryptionResult] = await Promise.all([
-    //   subtitlePromise,
-    //   decryptionPromise,
-    // ]);
-    const decryptionResult = await decryptionPromise;
+    const [subtitleResult, decryptionResult] = await Promise.all([
+      subtitlePromise,
+      decryptionPromise,
+    ]);
+    // const decryptionResult = await decryptionPromise;
 
-    return { decryptionResult };
+    return { decryptionResult,subtitleResult };
   });
 
   return Promise.allSettled(promises);

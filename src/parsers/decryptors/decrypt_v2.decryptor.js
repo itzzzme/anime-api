@@ -12,7 +12,7 @@ async function decryptSources_v2(id, name, type) {
     //   getKeys(await fetchScript(PLAYER_SCRIPT_URL)),
     // ]);
 
-    const [sourcesData] = await fetchData(
+    const sourcesData = await fetchData(
       `https://${v2_base_url}/ajax/episode/sources?id=${id}`
     );
     const ajaxResp = sourcesData.link;
