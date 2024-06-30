@@ -5,7 +5,7 @@ import { fetchData } from "../../helper/fetchData.helper.js";
 // import getKeys from "../../helper/getKey.helper.js";
 // import { PLAYER_SCRIPT_URL } from "../../configs/player_v1.config.js";
 
-export async function decryptSources_v1(id, name, type) {
+export async function decryptSources_v1(type,id, name) {
   try {
     const sourcesData = await fetchData(
       `https://${v1_base_url}/ajax/v2/episode/sources?id=${id}`
@@ -38,10 +38,10 @@ export async function decryptSources_v1(id, name, type) {
     // const decryptedSources = JSON.parse(decrypted);
 
     return {
+      type: type,
       source,
       // link: decryptedSources[0].file,
       // server: name,
-      // type: type,
     };
   } catch (error) {
     console.error("Error during decryption:", error);

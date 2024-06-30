@@ -43,10 +43,10 @@ async function decryptSources_v2(id, name, type) {
     // const decryptedSources = JSON.parse(decrypted);
 
     return {
+      type: type,
       source,
       // link: decryptedSources[0].file,
       // server: name,
-      // type: type,
     };
   } catch (error) {
     console.error("Error during decryption:", error);
