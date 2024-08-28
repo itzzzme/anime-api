@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: anime-api
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    branch: main
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 6969
