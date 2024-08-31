@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
+import formatTitle from "../helper/formatTitle.helper.js";
 import baseUrl  from "../utils/baseUrl.js";
 
 async function extractSpotlights() {
@@ -59,6 +60,7 @@ async function extractSpotlights() {
               tvInfo[key] = value;
             })
         );
+        const id=formatTitle(title, data_id);
         return { data_id, poster, title, description, tvInfo };
       })
       .get();

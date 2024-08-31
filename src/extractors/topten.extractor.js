@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
+import formatTitle from "../helper/formatTitle.helper.js";
 import baseUrl from "../utils/baseUrl.js";
 
 // Set Axios defaults
@@ -18,7 +19,7 @@ async function extractTopTen() {
         const name = $(".film-detail>.film-name>a", element).text().trim();
         const poster = $(".film-poster>img", element).attr("data-src");
         const data_id = $(".film-poster", element).attr("data-id");
-
+        const id=formatTitle(name, data_id);
         const tvInfo = ["sub", "dub", "eps"].reduce((info, property) => {
           const value = $(`.tick .tick-${property}`, element).text().trim();
           if (value) {

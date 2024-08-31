@@ -11,6 +11,7 @@ import * as topTenController from "../src/controllers/topten.controller.js";
 import * as animeInfoController from "../src/controllers/animeInfo.controller.js";
 import * as streamController from "../src/controllers/streamInfo.controller.js";
 import * as searchController from "../src/controllers/search.controller.js";
+import * as episodeListController from "../src/controllers/episodeList.controller.js";
 
 dotenv.config();
 
@@ -39,6 +40,10 @@ app.get("/api/top-ten", async (req, res) => {
 
 app.get("/api/info", async (req, res) => {
   await animeInfoController.getAnimeInfo(req, res);
+});
+
+app.get("/api/episodes/:id", async (req, res) => {
+  await episodeListController.getEpisodes(req, res);
 });
 
 app.get("/api/stream", async (req, res) => {

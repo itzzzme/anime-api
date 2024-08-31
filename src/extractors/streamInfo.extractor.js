@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import baseUrl from "../utils/baseUrl.js";
+import formatTitle from "../helper/formatTitle.helper.js";
 import { fetchServerData_v2 } from "../parsers/idFetch_v2.parser.js";
 import { fetchServerData_v1 } from "../parsers/idFetch_v1.parser.js";
 import { decryptAllServers } from "../parsers/decryptors/decryptAllServers.decryptor.js";
@@ -17,8 +18,8 @@ async function extractOtherEpisodes(id) {
       const episode_no = $(element).attr("data-number");
       const data_id = $(element).attr("data-id");
       const japanese_title = $(element).find(".ssli-detail > .ep-name").attr("data-jname");
-      
-      return { data_id, episode_no, title, japanese_title };
+      const id=formatTitle(title, data_id);
+      return {id, data_id, episode_no, title, japanese_title };
     }).get();
     
     return episodes;

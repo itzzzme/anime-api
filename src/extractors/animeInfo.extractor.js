@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
+import formatTitle from "../helper/formatTitle.helper.js"
 import { v1_base_url } from "../utils/base_v1.js";
 
 const baseUrl = v1_base_url;
@@ -31,14 +32,14 @@ async function extractAnimeInfo(id) {
         animeInfo[key] = value;
       }
     });
-
+    const id=formatTitle(title, data_id);
     const overview = $(
       "#ani_detail > .ani_detail-stage > .container > .anis-content > .anisc-detail > .film-description > .text"
     )
       .text()
       .trim();
     animeInfo["Overview"] = overview;
-    return { data_id, title, poster, animeInfo };
+    return {id, data_id, title, poster, animeInfo };
   } catch (e) {
     console.log(e);
   }

@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
+import formatTitle from "../helper/formatTitle.helper.js";
 import baseUrl from "../utils/baseUrl.js";
 
 async function extractSearchResults(search) {
@@ -22,6 +23,7 @@ async function extractSearchResults(search) {
           const poster = $(".film-poster>img", element).attr("data-src");
           const title = $(".film-detail .film-name", element).text();
           const data_id = $(".film-poster>a", element).attr("data-id");
+          const id=formatTitle(title, data_id);
           const tvInfo = {
             showType: showType ? showType.text().trim() : "Unknown",
             duration: $(".film-detail .fd-infor .fdi-duration", element)
