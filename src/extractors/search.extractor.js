@@ -39,6 +39,7 @@ async function extractSearchResults(search) {
           });
 
           return {
+            id,
             data_id,
             poster,
             title,

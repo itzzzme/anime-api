@@ -9,7 +9,7 @@ async function fetchAnimeDetails(element) {
   const poster = element.find("img").attr("data-src");
   const title = element.find(".film-title").text().trim();
   const id=formatTitle(title, data_id);
-  return { data_id, number, poster, title };
+  return {id, data_id, number, poster, title };
 }
 
 async function extractTrending() {

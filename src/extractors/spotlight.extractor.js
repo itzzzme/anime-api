@@ -61,7 +61,7 @@ async function extractSpotlights() {
             })
         );
         const id=formatTitle(title, data_id);
-        return { data_id, poster, title, description, tvInfo };
+        return {id, data_id, poster, title, description, tvInfo };
       })
       .get();
 

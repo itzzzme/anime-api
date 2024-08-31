@@ -28,7 +28,7 @@ async function extractTopTen() {
           return info;
         }, {});
 
-        return { data_id, number, name, poster, tvInfo };
+        return {id, data_id, number, name, poster, tvInfo };
       })
       .get();
 
