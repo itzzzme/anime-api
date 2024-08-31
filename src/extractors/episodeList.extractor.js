@@ -27,6 +27,7 @@ async function extractEpisodesList(id){
                     number: $el.attr('data-number'),
                     id: episodeId,
                     data_id: showId,
+                    episode_id: $el.attr('data-id'),
                     jname: $el.find('.ep-name').attr('data-jname'),
                     title: $el.attr('title')
                 });
@@ -41,6 +42,7 @@ async function extractEpisodesList(id){
                     number: $el.attr('data-number'),
                     id: episodeId,
                     data_id: showId,
+                    episode_id: $el.attr('data-id'),
                     jname: $el.find('.ep-name').attr('data-jname'),
                     title: $el.attr('title')
                 });
