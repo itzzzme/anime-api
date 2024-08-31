@@ -19,7 +19,7 @@
   },
   "type": "module",
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.4"
   },
   "repository": {
     "type": "git",
