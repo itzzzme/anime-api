@@ -97,6 +97,7 @@ console.log(resp.data);
   "results": {
     "spotlights": [
       {
+        "id":string,
         "data_id": number,
         "poster": string,
         "title": string,
@@ -113,12 +114,14 @@ console.log(resp.data);
     ],
     "trending": [
       {
+        "id":string,
         "data_id": number,
         "number": number,
         "poster": string,
         "title": string
       },
       {
+        "id":string,
         "data_id": number,
         "number": number,
         "poster": string,
@@ -159,6 +162,7 @@ console.log(resp.data);
   "success": true,
   "results": [
     {
+      "id":string,
       "data_id": number,
       "number": number,
       "name": string,
@@ -166,6 +170,7 @@ console.log(resp.data);
       "tvInfo": [Object]
     },
     {
+      "id":string,
       "data_id": number,
       "number": number,
       "name": string,
@@ -213,6 +218,7 @@ console.log(resp.data);
   "results": {
     "seasons": [
       {
+        "id":string,
         "data_number": number,
         "data_id": number,
         "season": string,
@@ -222,6 +228,7 @@ console.log(resp.data);
       {...}
     ],
     "data": {
+      "id":string,
       "data_id": number,
       "title": string,
       "poster": string,
@@ -301,6 +308,7 @@ console.log(resp.data);
     "totalPages": number,
     "data": [
       {
+        "id":string,
         "data_id": number,
         "poster": string,
         "title": string,
@@ -313,6 +321,7 @@ console.log(resp.data);
         }
       },
       {
+        "id":string,
         "data_id": number,
         "poster": string,
         "title": string,
@@ -366,23 +375,76 @@ console.log(resp.data);
   "success": true,
   "results": [
     {
+        "id":string,
         "data_id": number,
         "poster": string,
         "title": string,
         "tvInfo": [Object]
       },
     {
+        "id":string,
         "data_id": number,
         "poster": string,
         "title": string,
         "tvInfo": [Object]
       },
+    {...}
+  ]
+}
+```
+
+### `Get` suggestions
+
+```bash
+  GET /api/search
+```
+
+### Endpoint
+
+```bash
+  https://anime-api-five-woad.vercel.app/api/search/suggestion?keyword={string}
+```
+
+#### Parameters
+
+| Parameter | Parameter-type |   Type   | Description | Mandatory ? | Default |
+| :-------: | :------------: | :------: | :---------: | :-------: | :-----: |
+| `keyword` |    `query`     | `string` |  `keyword`  |  Yes ✔️   |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get(
+  "https://anime-api-five-woad.vercel.app/api/search/suggest?keyword=demon"
+);
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": [
+    {   
+        "id":"string",
+        "data_id": number,
+        "poster": string,
+        "title": string,
+        "releaseDate": string,
+        "showType": string,
+        "duration": string,
+      },
     {
-      "data_id": number,
-      "poster": string,
-      "title": string,
-      "tvInfo": [Object]
-    },
+        "id":"string",
+        "data_id": number,
+        "poster": string,
+        "title": string,
+        "releaseDate": string,
+        "showType": string,
+        "duration": string,
+      },
     {...}
   ]
 }
@@ -429,7 +491,7 @@ console.log(resp.data);
       "jname": string,
       "title": string
     },
-    ...
+    {...}
   ]
 }
 ```
