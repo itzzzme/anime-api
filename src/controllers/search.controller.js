@@ -5,14 +5,14 @@ import { v1_base_url } from "../utils/base_v1.js";
 export const search = async (req, res) => {
   try {
     const keyword = req.query.keyword;
-    let requestedPage = parseInt(req.query.page) || 1;
+    let page = parseInt(req.query.page) || 1;
     const totalPages = await countPages(
       `https://${v1_base_url}/search?keyword=${keyword}`
     );
-    requestedPage = Math.min(requestedPage, totalPages);
-    if (requestedPage !== parseInt(req.query.page)) {
+    page = Math.min(page, totalPages);
+    if (page !== parseInt(req.query.page)) {
       return res.redirect(
-        `${req.originalUrl.split("?")[0]}?keyword=${keyword}&page=${requestedPage}`
+        `${req.originalUrl.split("?")[0]}?keyword=${keyword}&page=${page}`
       );
     }
     const data = await extractSearchResults(encodeURIComponent(keyword), page);
