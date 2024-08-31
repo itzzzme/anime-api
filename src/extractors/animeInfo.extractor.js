@@ -32,14 +32,14 @@ async function extractAnimeInfo(id) {
         animeInfo[key] = value;
       }
     });
-    const id=formatTitle(title, data_id);
+    const season_id = formatTitle(title, data_id); 
     const overview = $(
       "#ani_detail > .ani_detail-stage > .container > .anis-content > .anisc-detail > .film-description > .text"
     )
       .text()
       .trim();
     animeInfo["Overview"] = overview;
-    return {id, data_id, title, poster, animeInfo };
+    return { id: season_id, data_id, title, poster, animeInfo };
   } catch (e) {
     console.log(e);
   }
