@@ -12,6 +12,7 @@ import * as animeInfoController from "../src/controllers/animeInfo.controller.js
 import * as streamController from "../src/controllers/streamInfo.controller.js";
 import * as searchController from "../src/controllers/search.controller.js";
 import * as episodeListController from "../src/controllers/episodeList.controller.js";
+import * as suggestionsController from "../src/controllers/suggestion.controller.js";
 
 dotenv.config();
 
@@ -52,6 +53,10 @@ app.get("/api/stream", async (req, res) => {
 
 app.get("/api/search", async (req, res) => {
   await searchController.search(req, res);
+});
+
+app.get("/api/search/suggest", async (req, res) => {
+  await suggestionsController.getSuggestions(req, res);
 });
 
 app.get("*", handle404);
