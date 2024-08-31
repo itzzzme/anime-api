@@ -5,3 +5,5 @@ function formatTitle(title, data_id) {
   formattedTitle = `${formattedTitle}-${data_id}`;
   return formattedTitle;
 }
+
+export default formatTitle;
