@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { handleHomePage } from "../src/controllers/home.controller.js";
@@ -20,6 +21,8 @@ const app = express();
 const port = process.env.PORT || 4444;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+app.use(cors());
 
 app.use(express.static(join(dirname(__dirname), "public")));
 
