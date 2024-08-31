@@ -9,7 +9,13 @@ export const search = async (req, res) => {
     const totalPages = await countPages(
       `https://${v1_base_url}/search?keyword=${keyword}`
     );
-    if (page > totalPages || isNaN(page) || page < 1 || page === 1) {
+    if(isNaN(page) || page < 1 || page === 1){
+      page = totalPages;
+      return res.redirect(
+        `${req.originalUrl.split("?")[0]}?keyword=${keyword}&page=${page}`
+      );
+    }
+    else if (page > totalPages ) {
       page = totalPages;
       return res.redirect(
         `${req.originalUrl.split("?")[0]}?keyword=${keyword}&page=${page}`
