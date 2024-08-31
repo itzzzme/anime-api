@@ -6,13 +6,13 @@ export const search = async (req, res) => {
   const keyword = req.query.keyword;
   let page = parseInt(req.query.page, 10) || 1;
   try {
-    const totalPages = await countPages(
-      `https://${v1_base_url}/search?keyword=${keyword}`
-    );
-    page = Math.min(page, totalPages);
-    res.redirect(
-      `${req.originalUrl.split("?")[0]}?keyword=${keyword}&page=${page}`
-    );
+    const totalPages = await countPages(`https://${v1_base_url}/search?keyword=${keyword}`);
+    if (page > totalPages || isNaN(page) || page < 1) {
+      page = totalPages;
+      return res.redirect(
+        `${req.originalUrl.split("?")[0]}?keyword=${keyword}&page=${page}`
+      );
+    }
     const data = await extractSearchResults(encodeURIComponent(keyword), page);
     res.json({ success: true, results: data });
   } catch (e) {
