@@ -397,14 +397,14 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://anime-api-five-woad.vercel.app/api/episode/{params}
+  https://anime-api-five-woad.vercel.app/api/episode/{param}
 ```
 
 #### Parameters
 
 | Parameter |  Type  | Description | Mandatory ? | Default |
 | :-------: | :----: | :---------: | :-------: | :-----: |
-|   `id`    | string |  anime-id   |  Yes ✔️   |   --    |
+|   `param`    | string |  anime-id   |  Yes ✔️   |   --    |
 
 #### Example of request
 
