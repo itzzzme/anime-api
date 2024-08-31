@@ -3,22 +3,16 @@ import countPages from "../helper/countPages.helper.js";
 import { v1_base_url } from "../utils/base_v1.js";
 
 export const search = async (req, res) => {
-  const keyword = req.query.keyword;
-  let page = parseInt(req.query.page, 10) || 1;
   try {
+    const keyword = req.query.keyword;
+    let requestedPage = parseInt(req.query.page) || 1;
     const totalPages = await countPages(
       `https://${v1_base_url}/search?keyword=${keyword}`
     );
-    if(isNaN(page) || page < 1 || page === 1){
-      page = totalPages;
+    requestedPage = Math.min(requestedPage, totalPages);
+    if (requestedPage !== parseInt(req.query.page)) {
       return res.redirect(
-        `${req.originalUrl.split("?")[0]}?keyword=${keyword}&page=${page}`
-      );
-    }
-    else if (page > totalPages ) {
-      page = totalPages;
-      return res.redirect(
-        `${req.originalUrl.split("?")[0]}?keyword=${keyword}&page=${page}`
+        `${req.originalUrl.split("?")[0]}?keyword=${keyword}&page=${requestedPage}`
       );
     }
     const data = await extractSearchResults(encodeURIComponent(keyword), page);
