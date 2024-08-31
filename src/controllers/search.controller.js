@@ -1,5 +1,5 @@
 import extractSearchResults from "../extractors/search.extractor.js";
-// import countPages from "../helper/countPages.helper.js";
+import countPages from "../helper/countPages.helper.js";
 import { v1_base_url } from "../utils/base_v1.js";
 
 export const search = async (req, res) => {
