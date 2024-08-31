@@ -388,6 +388,52 @@ console.log(resp.data);
 }
 ```
 
+### `Get` anime's episode list
+
+```bash
+  GET /api/episode/
+```
+
+### Endpoint
+
+```bash
+  https://anime-api-five-woad.vercel.app/api/episode/{params}
+```
+
+#### Parameters
+
+| Parameter |  Type  | Description | Mandatory ? | Default |
+| :-------: | :----: | :---------: | :-------: | :-----: |
+|   `id`    | string |  anime-id   |  Yes ✔️   |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get(
+  "https://anime-api-five-woad.vercel.app/api/episodes/one-piece-100"
+);
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": [
+    {
+      "episode_no": number,
+      "id": string,
+      "data_id": number,
+      "jname": string,
+      "title": string
+    },
+    ...
+  ]
+}
+```
+
 ### `Get` streaming info
 
 ```bash

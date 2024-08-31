@@ -24,7 +24,7 @@ async function extractEpisodesList(id){
                 const $el = $(el);
                 const episodeId = `${id}?ep=` + $el.attr('data-id');
                 episodes.set(episodeId, {
-                    number: $el.attr('data-number'),
+                    episode_no: $el.attr('data-number'),
                     id: episodeId,
                     season_id: showId,
                     episode_id: $el.attr('data-id'),
