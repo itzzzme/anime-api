@@ -3,9 +3,9 @@ import * as cheerio from "cheerio";
 import formatTitle from "../helper/formatTitle.helper.js";
 import baseUrl from "../utils/baseUrl.js";
 
-async function extractSearchResults(search) {
+async function extractSearchResults(search, page) {
   try {
-    const resp = await axios.get(`${baseUrl}/search?keyword=${search}`);
+    const resp = await axios.get(`${baseUrl}/search?keyword=${search}&page=${page}`);
     const $ = cheerio.load(resp.data);
     const data = await Promise.all(
       $("#main-content .film_list-wrap .flw-item").map(
@@ -19,11 +19,10 @@ async function extractSearchResults(search) {
               );
             })
             .first();
-          $;
           const poster = $(".film-poster>img", element).attr("data-src");
           const title = $(".film-detail .film-name", element).text();
           const data_id = $(".film-poster>a", element).attr("data-id");
-          const id=formatTitle(title, data_id);
+          const id = formatTitle(title, data_id);
           const tvInfo = {
             showType: showType ? showType.text().trim() : "Unknown",
             duration: $(".film-detail .fd-infor .fdi-duration", element)
