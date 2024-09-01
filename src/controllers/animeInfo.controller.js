@@ -8,7 +8,7 @@ export const getAnimeInfo = async (req, res) => {
       extractSeasons(id),
       extractAnimeInfo(id),
     ]);
-    res.json({ success: true, results: { seasons, data } });
+    res.json({ success: true, results: { data, seasons } });
   } catch (e) {
     console.error(e);
     res.status(500).json({ success: false, error: "Internal Server Error" });
