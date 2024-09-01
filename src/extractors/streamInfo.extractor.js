@@ -23,7 +23,7 @@ async function extractOtherEpisodes(id) {
         const japanese_title = $(element)
           .find(".ssli-detail > .ep-name")
           .attr("data-jname");
-        const id = formatTitle(title, data_id);
+        const id = finalId+"?ep="+data_id;
         return { id, data_id, episode_no, title, japanese_title };
       })
       .get();
