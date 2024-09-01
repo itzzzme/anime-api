@@ -16,7 +16,7 @@ export const search = async (req, res) => {
       );
     }
     const data = await extractSearchResults(encodeURIComponent(keyword), page);
-    res.json({ success: true, results: data });
+    res.json({ success: true, results: { totalPages, data } });
   } catch (e) {
     console.error(e);
     res.status(500).json({ success: false, error: "Internal Server Error" });
