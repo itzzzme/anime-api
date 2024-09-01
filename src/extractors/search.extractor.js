@@ -21,6 +21,7 @@ async function extractSearchResults(search, page) {
             .first();
           const poster = $(".film-poster>img", element).attr("data-src");
           const title = $(".film-detail .film-name", element).text();
+          const japanese_title = $(".film-detail .film-name", element).attr("data-jname");
           const data_id = $(".film-poster>a", element).attr("data-id");
           const id = formatTitle(title, data_id);
           const tvInfo = {
@@ -42,6 +43,7 @@ async function extractSearchResults(search, page) {
             data_id,
             poster,
             title,
+            japanese_title,
             tvInfo,
           };
         }

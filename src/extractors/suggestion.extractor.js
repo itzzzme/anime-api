@@ -16,6 +16,7 @@ async function getSuggestions(keyword) {
         const data_id = id.split("-").pop();
         const imgData = $(element).find(".film-poster-img").attr("data-src");
         const title = $(element).find(".film-name").text().trim();
+        const japanese_title = $(element).find(".film-name").attr("data-jname").trim();
         const releaseDate = $(element)
           .find(".film-infor span")
           .first()

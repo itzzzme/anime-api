@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import formatTitle from "../helper/formatTitle.helper.js";
-import baseUrl  from "../utils/baseUrl.js";
+import baseUrl from "../utils/baseUrl.js";
 
 async function extractSpotlights() {
   try {
@@ -25,13 +25,27 @@ async function extractSpotlights() {
           )
           .text()
           .trim();
+        const japanese_title = $(ele)
+          .find(
+            "div.deslide-item > div.deslide-item-content > div.desi-head-title"
+          )
+          .attr("data-jname")
+          .trim();
         const description = $(ele)
           .find(
             "div.deslide-item > div.deslide-item-content > div.desi-description"
           )
           .text()
           .trim();
-        const data_id=$(ele).find('.deslide-item > .deslide-item-content > .desi-buttons > a:eq(0)').attr('href').split('/').pop().split('-').pop();
+        const data_id = $(ele)
+          .find(
+            ".deslide-item > .deslide-item-content > .desi-buttons > a:eq(0)"
+          )
+          .attr("href")
+          .split("/")
+          .pop()
+          .split("-")
+          .pop();
         const tvInfoMapping = {
           0: "showType",
           1: "duration",
@@ -60,8 +74,8 @@ async function extractSpotlights() {
               tvInfo[key] = value;
             })
         );
-        const id=formatTitle(title, data_id);
-        return {id, data_id, poster, title, description, tvInfo };
+        const id = formatTitle(title, data_id);
+        return { id, data_id, poster, title,japanese_title, description, tvInfo };
       })
       .get();
 

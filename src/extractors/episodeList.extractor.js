@@ -28,7 +28,7 @@ async function extractEpisodesList(id){
                     id: episodeId,
                     season_id: showId,
                     episode_id: $el.attr('data-id'),
-                    jname: $el.find('.ep-name').attr('data-jname'),
+                    japanese_title: $el.find('.ep-name').attr('data-jname'),
                     title: $el.attr('title')
                 });
             });
@@ -43,7 +43,7 @@ async function extractEpisodesList(id){
                     id: episodeId,
                     season_id: showId,
                     episode_id: $el.attr('data-id'),
-                    jname: $el.find('.ep-name').attr('data-jname'),
+                    japanese_title: $el.find('.ep-name').attr('data-jname'),
                     title: $el.attr('title')
                 });
             });
