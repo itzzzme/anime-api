@@ -8,7 +8,7 @@ import { decryptAllServers } from "../parsers/decryptors/decryptAllServers.decry
 
 async function extractOtherEpisodes(id) {
   try {
-    const givenId=id;
+    const seasonId=id.split("?")[0];
     const finalId = id.split("?").shift().split("-").pop();
     const resp = await axios.get(`${baseUrl}/ajax/v2/episode/list/${finalId}`);
     const $ = cheerio.load(resp.data.html);
@@ -24,7 +24,7 @@ async function extractOtherEpisodes(id) {
         const japanese_title = $(element)
           .find(".ssli-detail > .ep-name")
           .attr("data-jname");
-        const id = givenId + "?ep=" + data_id;
+        const id = seasonId + "?ep=" + data_id;
         return { data_id, id, episode_no, title, japanese_title };
       })
       .get();
