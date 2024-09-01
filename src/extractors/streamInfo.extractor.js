@@ -1,30 +1,58 @@
-import NodeCache from 'node-cache';
-import { extractOtherEpisodes, extractStreamingInfo } from "../extractors/streamInfo.extractor.js";
+import axios from "axios";
+import * as cheerio from "cheerio";
+import baseUrl from "../utils/baseUrl.js";
+import formatTitle from "../helper/formatTitle.helper.js";
+import { fetchServerData_v2 } from "../parsers/idFetch_v2.parser.js";
+import { fetchServerData_v1 } from "../parsers/idFetch_v1.parser.js";
+import { decryptAllServers } from "../parsers/decryptors/decryptAllServers.decryptor.js";
 
-const cache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
-
-export const getStreamInfo = async (req, res) => {
+async function extractOtherEpisodes(id) {
   try {
-    const input = req.query.id;
-    const cacheKey = `streamInfo-${input}`;
-    const cachedData = cache.get(cacheKey);
-    if (cachedData) {
-      return res.json({ success: true, results: cachedData });
-    }
-    const match = input.match(/ep=(\d+)/);
-    if (!match) {
-      throw new Error("Invalid URL format");
-    }
-    const finalId = match[1];
-    const [episodes, streamingInfo] = await Promise.all([
-      extractOtherEpisodes(input),
-      extractStreamingInfo(finalId),
-    ]);
-    const results = { streamingInfo, episodes };
-    cache.set(cacheKey, results);
-    res.json({ success: true, results });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
+    const givenId=id;
+    const finalId = id.split("?").shift().split("-").pop();
+    const resp = await axios.get(`${baseUrl}/ajax/v2/episode/list/${finalId}`);
+    const $ = cheerio.load(resp.data.html);
+    const elements = $(
+      ".seasons-block > #detail-ss-list > .detail-infor-content > .ss-list > a"
+    );
+
+    const episodes = elements
+      .map((index, element) => {
+        const title = $(element).attr("title");
+        const episode_no = $(element).attr("data-number");
+        const data_id = $(element).attr("data-id");
+        const japanese_title = $(element)
+          .find(".ssli-detail > .ep-name")
+          .attr("data-jname");
+        const id = givenId + "?ep=" + data_id;
+        return { data_id, id, episode_no, title, japanese_title };
+      })
+      .get();
+
+    return episodes;
+  } catch (error) {
+    console.error("An error occurred:", error);
+    return [];
   }
-};
+}
+
+async function extractStreamingInfo(id) {
+  try {
+    const [data_v1, data_v2] = await Promise.all([
+      fetchServerData_v1(id),
+      fetchServerData_v2(id),
+    ]);
+
+    const sortedData = [...data_v1, ...data_v2].sort((a, b) =>
+      a.type.localeCompare(b.type)
+    );
+    const decryptedResults = await decryptAllServers(sortedData);
+
+    return decryptedResults;
+  } catch (error) {
+    console.error("An error occurred:", error);
+    return [];
+  }
+}
+
+export { extractOtherEpisodes, extractStreamingInfo };
