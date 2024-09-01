@@ -1,6 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import morgan from 'morgan';
+import NodeCache from 'node-cache';
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { handleHomePage } from "../src/controllers/home.controller.js";
@@ -22,31 +24,50 @@ const port = process.env.PORT || 4444;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-app.use(cors());
+const cache = new NodeCache({ stdTTL: 86400, checkperiod: 1800 });
 
+app.use(cors());
 app.use(express.static(join(dirname(__dirname), "public")));
+app.use(morgan('combined'));
+
+const cacheMiddleware = (req, res, next) => {
+  const key = req.originalUrl;
+  const cachedResponse = cache.get(key);
+
+  if (cachedResponse) {
+    return res.json(cachedResponse);
+  }
+
+  res.sendResponse = res.json;
+  res.json = (body) => {
+    cache.set(key, body);
+    res.sendResponse(body);
+  };
+
+  next();
+};
 
 app.get("/", handleHomePage);
 
-app.get("/api/", async (req, res) => {
+app.get("/api/", cacheMiddleware, async (req, res) => {
   await homeInfoController.getHomeInfo(req, res);
 });
 
 routeTypes.forEach((routeType) => {
-  app.get(`/api/${routeType}`, async (req, res) => {
+  app.get(`/api/${routeType}`, cacheMiddleware, async (req, res) => {
     await categoryController.getCategory(req, res, routeType);
   });
 });
 
-app.get("/api/top-ten", async (req, res) => {
+app.get("/api/top-ten", cacheMiddleware, async (req, res) => {
   await topTenController.getTopTen(req, res);
 });
 
-app.get("/api/info", async (req, res) => {
+app.get("/api/info", cacheMiddleware, async (req, res) => {
   await animeInfoController.getAnimeInfo(req, res);
 });
 
-app.get("/api/episodes/:id", async (req, res) => {
+app.get("/api/episodes/:id", cacheMiddleware, async (req, res) => {
   await episodeListController.getEpisodes(req, res);
 });
 
@@ -54,11 +75,11 @@ app.get("/api/stream", async (req, res) => {
   await streamController.getStreamInfo(req, res);
 });
 
-app.get("/api/search", async (req, res) => {
+app.get("/api/search", cacheMiddleware, async (req, res) => {
   await searchController.search(req, res);
 });
 
-app.get("/api/search/suggest", async (req, res) => {
+app.get("/api/search/suggest", cacheMiddleware, async (req, res) => {
   await suggestionsController.getSuggestions(req, res);
 });
 
