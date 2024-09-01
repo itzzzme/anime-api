@@ -402,7 +402,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://anime-api-five-woad.vercel.app/api/search/suggestion?keyword={string}
+  https://anime-api-five-woad.vercel.app/api/search/suggest?keyword={string}
 ```
 
 #### Parameters
