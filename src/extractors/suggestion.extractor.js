@@ -35,6 +35,7 @@ async function getSuggestions(keyword) {
           data_id,
           imgData,
           title,
+          japanese_title,
           releaseDate,
           showType,
           duration,

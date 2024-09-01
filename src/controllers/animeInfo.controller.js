@@ -1,4 +1,4 @@
-import  extractAnimeInfo  from "../extractors/animeInfo.extractor.js";
+import extractAnimeInfo from "../extractors/animeInfo.extractor.js";
 import extractSeasons from "../extractors/seasons.extractor.js";
 
 export const getAnimeInfo = async (req, res) => {

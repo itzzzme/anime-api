@@ -1,9 +1,9 @@
 class ErrorLoadingException extends Error {
-    constructor(message) {
-      super(message);
-      this.name = "ErrorLoadingException";
-    }
+  constructor(message) {
+    super(message);
+    this.name = "ErrorLoadingException";
   }
+}
 
 function matchingKey(value, script) {
   const regex = new RegExp(`,${value}=((?:0x)?([0-9a-fA-F]+))`);

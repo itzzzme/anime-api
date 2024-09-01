@@ -3,7 +3,6 @@ import baseUrl from "../utils/baseUrl.js";
 import countPages from "../helper/countPages.helper.js";
 import extractPage from "../helper/extractPages.helper.js";
 
-
 async function extractor(path, page) {
   try {
     const [data, totalPages] = await Promise.all([
@@ -13,7 +12,10 @@ async function extractor(path, page) {
 
     return { data, totalPages };
   } catch (error) {
-    console.error(`Error extracting data for ${path} from page ${page}:`, error.message);
+    console.error(
+      `Error extracting data for ${path} from page ${page}:`,
+      error.message
+    );
     throw error;
   }
 }

@@ -1,4 +1,7 @@
-import { extractOtherEpisodes, extractStreamingInfo } from "../extractors/streamInfo.extractor.js";
+import {
+  extractOtherEpisodes,
+  extractStreamingInfo,
+} from "../extractors/streamInfo.extractor.js";
 
 export const getStreamInfo = async (req, res) => {
   try {

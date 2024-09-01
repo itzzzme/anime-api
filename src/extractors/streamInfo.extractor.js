@@ -11,17 +11,23 @@ async function extractOtherEpisodes(id) {
     const finalId = id.split("?").shift().split("-").pop();
     const resp = await axios.get(`${baseUrl}/ajax/v2/episode/list/${finalId}`);
     const $ = cheerio.load(resp.data.html);
-    const elements = $(".seasons-block > #detail-ss-list > .detail-infor-content > .ss-list > a");
-    
-    const episodes = elements.map((index, element) => {
-      const title = $(element).attr("title");
-      const episode_no = $(element).attr("data-number");
-      const data_id = $(element).attr("data-id");
-      const japanese_title = $(element).find(".ssli-detail > .ep-name").attr("data-jname");
-      const id=formatTitle(title, data_id);
-      return {id, data_id, episode_no, title, japanese_title };
-    }).get();
-    
+    const elements = $(
+      ".seasons-block > #detail-ss-list > .detail-infor-content > .ss-list > a"
+    );
+
+    const episodes = elements
+      .map((index, element) => {
+        const title = $(element).attr("title");
+        const episode_no = $(element).attr("data-number");
+        const data_id = $(element).attr("data-id");
+        const japanese_title = $(element)
+          .find(".ssli-detail > .ep-name")
+          .attr("data-jname");
+        const id = formatTitle(title, data_id);
+        return { id, data_id, episode_no, title, japanese_title };
+      })
+      .get();
+
     return episodes;
   } catch (error) {
     console.error("An error occurred:", error);
@@ -36,7 +42,9 @@ async function extractStreamingInfo(id) {
       fetchServerData_v2(id),
     ]);
 
-    const sortedData = [...data_v1, ...data_v2].sort((a, b) => a.type.localeCompare(b.type));
+    const sortedData = [...data_v1, ...data_v2].sort((a, b) =>
+      a.type.localeCompare(b.type)
+    );
     const decryptedResults = await decryptAllServers(sortedData);
 
     return decryptedResults;

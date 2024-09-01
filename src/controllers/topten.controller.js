@@ -1,4 +1,4 @@
-import  extractTopTen  from "../extractors/topten.extractor.js";
+import extractTopTen from "../extractors/topten.extractor.js";
 
 export const getTopTen = async (req, res) => {
   try {

@@ -75,7 +75,15 @@ async function extractSpotlights() {
             })
         );
         const id = formatTitle(title, data_id);
-        return { id, data_id, poster, title,japanese_title, description, tvInfo };
+        return {
+          id,
+          data_id,
+          poster,
+          title,
+          japanese_title,
+          description,
+          tvInfo,
+        };
       })
       .get();
 

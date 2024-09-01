@@ -1,4 +1,4 @@
-import  extractTrending  from "../extractors/trending.extractor.js";
+import extractTrending from "../extractors/trending.extractor.js";
 
 export const getTrending = async () => {
   try {

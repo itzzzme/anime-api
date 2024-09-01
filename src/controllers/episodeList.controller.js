@@ -1,4 +1,4 @@
-import  extractEpisodesList  from "../extractors/episodeList.extractor.js";
+import extractEpisodesList from "../extractors/episodeList.extractor.js";
 
 export const getEpisodes = async (req, res) => {
   const id = req.params.id;

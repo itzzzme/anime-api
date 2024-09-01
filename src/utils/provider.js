@@ -1,1 +1,1 @@
-export const provider='https://megacloud.tv'
+export const provider = "https://megacloud.tv";
