@@ -13,7 +13,7 @@ async function extractAnimeInfo(id) {
       "#ani_detail > .ani_detail-stage > .container > .anis-content > .anisc-detail > .film-name"
     ).text();
     const japanese_title = $(
-      "#ani_detail > .ani_detail-stage > .container > .anis-content > .anisc-detail > .film-name>h2"
+      "#ani_detail > .ani_detail-stage > .container > .anis-content > .anisc-detail > .film-name"
     ).attr("data-jname");
     const poster = $(
       "#ani_detail > .ani_detail-stage > .container > .anis-content > .anisc-poster > .film-poster > img"
@@ -42,7 +42,7 @@ async function extractAnimeInfo(id) {
       .text()
       .trim();
     animeInfo["Overview"] = overview;
-    return { id: season_id, data_id, title,japanese_title, poster, animeInfo };
+    return {animeInfo , id: season_id, data_id, title,japanese_title, poster} ;
   } catch (e) {
     console.log(e);
   }

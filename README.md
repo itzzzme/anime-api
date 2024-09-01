@@ -101,6 +101,7 @@ console.log(resp.data);
         "data_id": number,
         "poster": string,
         "title": string,
+        "japanese_title": string,
         "description": string,
         "tvInfo": {
           "showType": string,
@@ -118,14 +119,16 @@ console.log(resp.data);
         "data_id": number,
         "number": number,
         "poster": string,
-        "title": string
+        "title": string,
+        "japanese_title": string,
       },
       {
         "id":string,
         "data_id": number,
         "number": number,
         "poster": string,
-        "title": string
+        "title": string,
+        "japanese_title": string,
       },
       {...}
     ]
@@ -216,21 +219,11 @@ console.log(resp.data);
 {
   "success": true,
   "results": {
-    "seasons": [
-      {
-        "id":string,
-        "data_number": number,
-        "data_id": number,
-        "season": string,
-        "title": string,
-        "season_poster": string
-      },
-      {...}
-    ],
     "data": {
       "id":string,
       "data_id": number,
       "title": string,
+      "japanese_title": string,
       "poster": string,
       "animeInfo": {
         "Overview": string,
@@ -245,7 +238,20 @@ console.log(resp.data);
         "Studios": string,
         "Producers": [Object]
       }
-    }
+    },
+    "seasons": [
+      {
+        "id":string,
+        "data_number": number,
+        "data_id": number,
+        "season": string,
+        "title": string,
+        "japanese_title": string,
+        "season_poster": string
+      },
+      {...}
+    ],
+    
   }
 }
 ```
@@ -312,6 +318,7 @@ console.log(resp.data);
         "data_id": number,
         "poster": string,
         "title": string,
+        "japanese_title": string,
         "description": string,
         "tvInfo": {
           "showType": string,
@@ -325,6 +332,7 @@ console.log(resp.data);
         "data_id": number,
         "poster": string,
         "title": string,
+        "japanese_title": string,
         "description": string,
         "tvInfo": {
           "showType": sting,
@@ -379,6 +387,7 @@ console.log(resp.data);
         "data_id": number,
         "poster": string,
         "title": string,
+        "japanese_title": string,
         "tvInfo": [Object]
       },
     {
@@ -386,6 +395,7 @@ console.log(resp.data);
         "data_id": number,
         "poster": string,
         "title": string,
+        "japanese_title": string,
         "tvInfo": [Object]
       },
     {...}
@@ -432,6 +442,7 @@ console.log(resp.data);
         "data_id": number,
         "poster": string,
         "title": string,
+        "japanese_title": string,
         "releaseDate": string,
         "showType": string,
         "duration": string,
@@ -441,6 +452,7 @@ console.log(resp.data);
         "data_id": number,
         "poster": string,
         "title": string,
+        "japanese_title": string,
         "releaseDate": string,
         "showType": string,
         "duration": string,
@@ -489,7 +501,8 @@ console.log(resp.data);
       "id": string,
       "data_id": number,
       "jname": string,
-      "title": string
+      "title": string,
+      "japanese_title": string
     },
     {...}
   ]
