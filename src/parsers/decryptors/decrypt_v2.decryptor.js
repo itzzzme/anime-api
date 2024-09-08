@@ -41,12 +41,14 @@ async function decryptSources_v2(id, name, type) {
 
     // const decrypted = CryptoJS.AES.decrypt(sourcesArray.join(""), extractedKey).toString(CryptoJS.enc.Utf8);
     // const decryptedSources = JSON.parse(decrypted);
-
+    if (source.hasOwnProperty('server')) {
+      delete source.server;
+    }
     return {
       type: type,
       source,
       // link: decryptedSources[0].file,
-      // server: name,
+      server: name,
     };
   } catch (error) {
     console.error("Error during decryption:", error);
