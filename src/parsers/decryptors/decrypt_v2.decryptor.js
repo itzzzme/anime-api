@@ -1,20 +1,20 @@
-// import CryptoJS from "crypto-js";
-import { fetchData } from "../../helper/fetchData.helper.js";
+import CryptoJS from "crypto-js";
 import { v2_base_url } from "../../utils/base_v2.js";
-// import { PLAYER_SCRIPT_URL } from "../../configs/player_v2.config.js";
-// import fetchScript from "../../helper/fetchScript.helper.js";
-// import getKeys from "../../helper/getKey.helper.js";
+import { fetchData } from "../../helper/fetchData.helper.js";
+import fetchScript from "../../helper/fetchScript.helper.js";
+import getKeys from "../../helper/getKey.helper.js";
+import { PLAYER_SCRIPT_URL } from "../../configs/player_v2.config.js";
 
 async function decryptSources_v2(id, name, type) {
   try {
-    // const [sourcesData, decryptKey_v2] = await Promise.all([
-    //   fetchData(`https://${v2_base_url}/ajax/episode/sources?id=${id}`),
-    //   getKeys(await fetchScript(PLAYER_SCRIPT_URL)),
-    // ]);
+    const [sourcesData, decryptKey_v2] = await Promise.all([
+      fetchData(`https://${v2_base_url}/ajax/episode/sources?id=${id}`),
+      getKeys(await fetchScript(PLAYER_SCRIPT_URL)),
+    ]);
 
-    const sourcesData = await fetchData(
-      `https://${v2_base_url}/ajax/episode/sources?id=${id}`
-    );
+    // const sourcesData = await fetchData(
+    //   `https://${v2_base_url}/ajax/episode/sources?id=${id}`
+    // );
     const ajaxResp = sourcesData.link;
     const [hostname] = /^(https?:\/\/(?:www\.)?[^\/\?]+)/.exec(ajaxResp) || [];
     const [_, sourceId] = /\/([^\/\?]+)\?/.exec(ajaxResp) || [];
@@ -24,30 +24,34 @@ async function decryptSources_v2(id, name, type) {
 
     // The server doesn't encrypt the source anymore
 
-    // const sourcesArray = source.sources.split("");
-    // let extractedKey = "";
-    // let currentIndex = 0;
+    const sourcesArray = source.sources.split("");
+    let extractedKey = "";
+    let currentIndex = 0;
 
-    // for (const index of decryptKey_v2) {
-    //   const start = index[0] + currentIndex;
-    //   const end = start + index[1];
+    for (const index of decryptKey_v2) {
+      const start = index[0] + currentIndex;
+      const end = start + index[1];
 
-    //   for (let i = start; i < end; i++) {
-    //     extractedKey += sourcesArray[i];
-    //     sourcesArray[i] = "";
-    //   }
-    //   currentIndex += index[1];
-    // }
+      for (let i = start; i < end; i++) {
+        extractedKey += sourcesArray[i];
+        sourcesArray[i] = "";
+      }
+      currentIndex += index[1];
+    }
 
-    // const decrypted = CryptoJS.AES.decrypt(sourcesArray.join(""), extractedKey).toString(CryptoJS.enc.Utf8);
-    // const decryptedSources = JSON.parse(decrypted);
+    const decrypted = CryptoJS.AES.decrypt(sourcesArray.join(""), extractedKey).toString(CryptoJS.enc.Utf8);
+    const decryptedSources = JSON.parse(decrypted);
+    source.sources = null;
+    source.sources = [{
+      file: decryptedSources[0].file,
+      type: "hls",
+    }];
     if (source.hasOwnProperty('server')) {
       delete source.server;
     }
     return {
       type: type,
       source,
-      // link: decryptedSources[0].file,
       server: name,
     };
   } catch (error) {
