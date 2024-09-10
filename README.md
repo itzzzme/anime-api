@@ -25,6 +25,7 @@
 - [Installation](#installation)
   - [Local installation](#local-installation)
 - [Deployment](#deployment)
+  - [Vercel](#Vercel) 
   - [Render](#Render)
 - [Documentation](#documentation)
 - [Pull Requests](#pull-requests)
