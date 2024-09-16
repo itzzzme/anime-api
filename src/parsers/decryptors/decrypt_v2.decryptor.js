@@ -11,10 +11,6 @@ async function decryptSources_v2(id, name, type) {
       fetchData(`https://${v2_base_url}/ajax/episode/sources?id=${id}`),
       getKeys(await fetchScript(PLAYER_SCRIPT_URL)),
     ]);
-
-    // const sourcesData = await fetchData(
-    //   `https://${v2_base_url}/ajax/episode/sources?id=${id}`
-    // );
     const ajaxResp = sourcesData.link;
     const [hostname] = /^(https?:\/\/(?:www\.)?[^\/\?]+)/.exec(ajaxResp) || [];
     const [_, sourceId] = /\/([^\/\?]+)\?/.exec(ajaxResp) || [];
@@ -22,30 +18,35 @@ async function decryptSources_v2(id, name, type) {
       `${hostname}/ajax/embed-6-v2/getSources?id=${sourceId}`
     );
 
-    // The server doesn't encrypt the source anymore
+    if (source.encrypted === true) {
+      const sourcesArray = source.sources.split("");
+      let extractedKey = "";
+      let currentIndex = 0;
 
-    const sourcesArray = source.sources.split("");
-    let extractedKey = "";
-    let currentIndex = 0;
+      for (const index of decryptKey_v2) {
+        const start = index[0] + currentIndex;
+        const end = start + index[1];
 
-    for (const index of decryptKey_v2) {
-      const start = index[0] + currentIndex;
-      const end = start + index[1];
-
-      for (let i = start; i < end; i++) {
-        extractedKey += sourcesArray[i];
-        sourcesArray[i] = "";
+        for (let i = start; i < end; i++) {
+          extractedKey += sourcesArray[i];
+          sourcesArray[i] = "";
+        }
+        currentIndex += index[1];
       }
-      currentIndex += index[1];
-    }
 
-    const decrypted = CryptoJS.AES.decrypt(sourcesArray.join(""), extractedKey).toString(CryptoJS.enc.Utf8);
-    const decryptedSources = JSON.parse(decrypted);
-    source.sources = null;
-    source.sources = [{
-      file: decryptedSources[0].file,
-      type: "hls",
-    }];
+      const decrypted = CryptoJS.AES.decrypt(
+        sourcesArray.join(""),
+        extractedKey
+      ).toString(CryptoJS.enc.Utf8);
+      const decryptedSources = JSON.parse(decrypted);
+      source.sources = null;
+      source.sources = [
+        {
+          file: decryptedSources[0].file,
+          type: "hls",
+        },
+      ];
+    }
     if (source.hasOwnProperty('server')) {
       delete source.server;
     }
