@@ -55,4 +55,5 @@ async function extractStreamingInfo(id) {
   }
 }
 
-export { extractOtherEpisodes, extractStreamingInfo };
+// export { extractOtherEpisodes, extractStreamingInfo };
+export { extractStreamingInfo };
