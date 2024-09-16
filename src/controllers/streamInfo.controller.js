@@ -1,5 +1,6 @@
 import NodeCache from 'node-cache';
-import { extractOtherEpisodes, extractStreamingInfo } from "../extractors/streamInfo.extractor.js";
+// import { extractOtherEpisodes, extractStreamingInfo } from "../extractors/streamInfo.extractor.js";
+import {extractStreamingInfo } from "../extractors/streamInfo.extractor.js";
 
 const cache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
 
@@ -16,11 +17,12 @@ export const getStreamInfo = async (req, res) => {
       throw new Error("Invalid URL format");
     }
     const finalId = match[1];
-    const [episodes, streamingInfo] = await Promise.all([
-      extractOtherEpisodes(input),
-      extractStreamingInfo(finalId),
-    ]);
-    const results = { streamingInfo, episodes };
+    // const [episodes, streamingInfo] = await Promise.all([
+    //   extractOtherEpisodes(input),
+      // extractStreamingInfo(finalId),
+    // ]);
+    const streamingInfo=await extractStreamingInfo(finalId);
+    const results = { streamingInfo };
     cache.set(cacheKey, results);
     res.json({ success: true, results });
   } catch (e) {
