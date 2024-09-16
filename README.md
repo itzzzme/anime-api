@@ -77,7 +77,7 @@ Host your own instance of anime-api on Render.
 ### Endpoint
 
 ```bash
-  https://animeconnectapi.vercel.app/api/
+  https://anime-api-five-woad.vercel.app/api/
 ```
 
 > #### No parameter required ❌
@@ -86,7 +86,7 @@ Host your own instance of anime-api on Render.
 
 ```javascript
 import axios from "axios";
-const resp = await axios.get("https://animeconnectapi.vercel.app/api/");
+const resp = await axios.get("https://anime-api-five-woad.vercel.app/api/");
 console.log(resp.data);
 ```
 
@@ -146,7 +146,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://animeconnectapi.vercel.app/api/info?id={string}
+  https://anime-api-five-woad.vercel.app/api/info?id={string}
 ```
 
 > #### No parameter required ❌
@@ -155,7 +155,7 @@ console.log(resp.data);
 
 ```javascript
 import axios from "axios";
-const resp = await axios.get("https://animeconnectapi.vercel.app/api/top-ten");
+const resp = await axios.get("https://anime-api-five-woad.vercel.app/api/top-ten");
 console.log(resp.data);
 ```
 
@@ -195,7 +195,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://animeconnectapi.vercel.app/api/info?id={string}
+  https://anime-api-five-woad.vercel.app/api/info?id={string}
 ```
 
 #### Parameters
@@ -209,7 +209,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://animeconnectapi.vercel.app/api/info?id=yami-shibai-9-17879"
+  "https://anime-api-five-woad.vercel.app/api/info?id=yami-shibai-9-17879"
 );
 console.log(resp.data);
 ```
@@ -266,9 +266,9 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://animeconnectapi.vercel.app/api/{string}?page={number}
+  https://anime-api-five-woad.vercel.app/api/{string}?page={number}
   #or
-  https://animeconnectapi.vercel.app/api/{string}
+  https://anime-api-five-woad.vercel.app/api/{string}
 ```
 
 #### Parameters
@@ -301,7 +301,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://animeconnectapi.vercel.app/api/most-popular?page=1"
+  "https://anime-api-five-woad.vercel.app/api/most-popular?page=1"
 );
 console.log(resp.data);
 ```
@@ -358,7 +358,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://animeconnectapi.vercel.app/api/search?keyword={string}
+  https://anime-api-five-woad.vercel.app/api/search?keyword={string}
 ```
 
 #### Parameters
@@ -372,7 +372,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://animeconnectapi.vercel.app/api/search?keyword=one%20punch%20man"
+  "https://anime-api-five-woad.vercel.app/api/search?keyword=one%20punch%20man"
 );
 console.log(resp.data);
 ```
@@ -413,7 +413,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://animeconnectapi.vercel.app/api/search/suggest?keyword={string}
+  https://anime-api-five-woad.vercel.app/api/search/suggest?keyword={string}
 ```
 
 #### Parameters
@@ -427,7 +427,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://animeconnectapi.vercel.app/api/search/suggest?keyword=demon"
+  "https://anime-api-five-woad.vercel.app/api/search/suggest?keyword=demon"
 );
 console.log(resp.data);
 ```
@@ -472,7 +472,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://animeconnectapi.vercel.app/api/episode/{param}
+  https://anime-api-five-woad.vercel.app/api/episode/{param}
 ```
 
 #### Parameters
@@ -486,7 +486,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://animeconnectapi.vercel.app/api/episodes/one-piece-100"
+  "https://anime-api-five-woad.vercel.app/api/episodes/one-piece-100"
 );
 console.log(resp.data);
 ```
@@ -519,7 +519,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://animeconnectapi.vercel.app/api/stream?id={string}
+  https://anime-api-five-woad.vercel.app/api/stream?id={string}
 ```
 
 #### Parameters
@@ -533,7 +533,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://animeconnectapi.vercel.app/api/stream?id=frieren-beyond-journeys-end-18542?ep=107257"
+  "https://anime-api-five-woad.vercel.app/api/stream?id=frieren-beyond-journeys-end-18542?ep=107257"
 );
 console.log(resp.data);
 ```
