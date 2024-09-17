@@ -167,23 +167,41 @@ console.log(resp.data);
 {
   "success": true,
   "results": [
-    {
-      "id":string,
-      "data_id": number,
-      "number": number,
-      "name": string,
-      "poster": string,
-      "tvInfo": [Object]
-    },
-    {
-      "id":string,
-      "data_id": number,
-      "number": number,
-      "name": string,
-      "poster": string,
-      "tvInfo": [Object]
-    },
-    {..}
+    "topTen":[
+      "today":[
+        {
+          "id":string,
+          "data_id": number,
+          "number": number,
+          "name": string,
+          "poster": string,
+          "tvInfo": [Object]
+        },
+        {...}
+      ],
+      "week":[
+        {
+          "id":string,
+          "data_id": number,
+          "number": number,
+          "name": string,
+          "poster": string,
+          "tvInfo": [Object]
+        },
+        {...}
+      ],
+      "month":[
+        {
+          "id":string,
+          "data_id": number,
+          "number": number,
+          "name": string,
+          "poster": string,
+          "tvInfo": [Object]
+        },
+        {...}
+      ],
+    ]
   ]
 }
 ```
