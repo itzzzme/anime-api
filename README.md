@@ -10,7 +10,7 @@
 
 >
 
-<p align="center">API made with Node.js ( scrape data from <a href="https://hianime.to" target="_blank">hianime.to</a></p>
+<p align="center">API made with Node.js ( scrape data from <a href="https://hianime.to" target="_blank">hianime.to</a></p>)
 
 # <span style="color:red">! Disclaimer !</span>
 
