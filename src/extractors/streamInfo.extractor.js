@@ -1,57 +1,55 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import baseUrl from "../utils/baseUrl.js";
-import formatTitle from "../helper/formatTitle.helper.js";
-import { fetchServerData_v2 } from "../parsers/idFetch_v2.parser.js";
+// import formatTitle from "../helper/formatTitle.helper.js";
+// import { fetchServerData_v2 } from "../parsers/idFetch_v2.parser.js";
 import { fetchServerData_v1 } from "../parsers/idFetch_v1.parser.js";
 import { decryptAllServers } from "../parsers/decryptors/decryptAllServers.decryptor.js";
 
-// async function extractOtherEpisodes(id) {
-//   try {
-//     const seasonId=id.split("?")[0];
-//     const finalId = id.split("?").shift().split("-").pop();
-//     const resp = await axios.get(`${baseUrl}/ajax/v2/episode/list/${finalId}`);
-//     const $ = cheerio.load(resp.data.html);
-//     const elements = $(
-//       ".seasons-block > #detail-ss-list > .detail-infor-content > .ss-list > a"
-//     );
+async function extractServers(id) {
+  try {
+    const resp = await axios.get(
+      `${baseUrl}/ajax/v2/episode/servers?episodeId=${id}`
+    );
+    const $ = cheerio.load(resp.data.html);
 
-//     const episodes = elements
-//       .map((index, element) => {
-//         const title = $(element).attr("title");
-//         const episode_no = $(element).attr("data-number");
-//         const data_id = $(element).attr("data-id");
-//         const japanese_title = $(element)
-//           .find(".ssli-detail > .ep-name")
-//           .attr("data-jname");
-//         const id = seasonId + "?ep=" + data_id;
-//         return { data_id, id, episode_no, title, japanese_title };
-//       })
-//       .get();
+    const serverData = [];
 
-//     return episodes;
-//   } catch (error) {
-//     console.error("An error occurred:", error);
-//     return [];
-//   }
-// }
+    $(".server-item").each((index, element) => {
+      const dataId = $(element).attr("data-id");
+      const serverId = $(element).attr("data-server-id");
+      const type = $(element).attr("data-type");
+      const serverName = $(element).find("a").text().trim();
+      serverData.push({
+        type,
+        dataId,
+        serverId,
+        serverName,
+      });
+    });
+
+    return serverData;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
 
 async function extractStreamingInfo(id) {
   try {
-    const [data_v1, data_v2] = await Promise.all([
+    const [data_v1, servers] = await Promise.all([
       fetchServerData_v1(id),
-      fetchServerData_v2(id),
+      // fetchServerData_v2(id),
+      extractServers(id.split("?ep=").pop()) 
     ]);
-
-    const sortedData = [...data_v1, ...data_v2].sort((a, b) =>
+    const sortedData = [...data_v1].sort((a, b) =>
       a.type.localeCompare(b.type)
     );
     const decryptedResults = await decryptAllServers(sortedData);
-
-    return decryptedResults;
+    return { decryptedResults, servers };
   } catch (error) {
     console.error("An error occurred:", error);
-    return [];
+    return { decryptedResults: [], servers: [] };
   }
 }
 

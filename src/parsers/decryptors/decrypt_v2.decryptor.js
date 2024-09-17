@@ -51,6 +51,7 @@ async function decryptSources_v2(id, name, type) {
       delete source.server;
     }
     return {
+      id:id,
       type: type,
       source,
       server: name,

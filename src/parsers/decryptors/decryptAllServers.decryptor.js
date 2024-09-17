@@ -22,8 +22,6 @@ export async function decryptAllServers(data) {
     }
 
     const decryptionResult = await decryptionPromise;
-    // const decryptionResult = await decryptionPromise;
-
     return { decryptionResult };
   });
 
