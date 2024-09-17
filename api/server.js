@@ -52,48 +52,48 @@ const cacheMiddleware = (req, res, next) => {
 
 app.get("/", handleHomePage);
 
-// app.get("/api/", cacheMiddleware, async (req, res) => {
-//   await homeInfoController.getHomeInfo(req, res);
-// });
+app.get("/api/", cacheMiddleware, async (req, res) => {
+  await homeInfoController.getHomeInfo(req, res);
+});
 
-// routeTypes.forEach((routeType) => {
-//   app.get(`/api/${routeType}`, cacheMiddleware, async (req, res) => {
-//     await categoryController.getCategory(req, res, routeType);
-//   });
-// });
+routeTypes.forEach((routeType) => {
+  app.get(`/api/${routeType}`, cacheMiddleware, async (req, res) => {
+    await categoryController.getCategory(req, res, routeType);
+  });
+});
 
-// app.get("/api/top-ten", cacheMiddleware, async (req, res) => {
-//   await topTenController.getTopTen(req, res);
-// });
+app.get("/api/top-ten", cacheMiddleware, async (req, res) => {
+  await topTenController.getTopTen(req, res);
+});
 
-// app.get("/api/info", cacheMiddleware, async (req, res) => {
-//   await animeInfoController.getAnimeInfo(req, res);
-// });
+app.get("/api/info", cacheMiddleware, async (req, res) => {
+  await animeInfoController.getAnimeInfo(req, res);
+});
 
-// app.get("/api/episodes/:id", cacheMiddleware, async (req, res) => {
-//   await episodeListController.getEpisodes(req, res);
-// });
+app.get("/api/episodes/:id", cacheMiddleware, async (req, res) => {
+  await episodeListController.getEpisodes(req, res);
+});
 
-// app.get("/api/servers/:id", async (req, res) => {
-//   await serversController.getServers(req, res);
-// });
-// app.get("/api/stream", async (req, res) => {
-//   await streamController.getStreamInfo(req, res);
-// });
+app.get("/api/servers/:id", async (req, res) => {
+  await serversController.getServers(req, res);
+});
+app.get("/api/stream", async (req, res) => {
+  await streamController.getStreamInfo(req, res);
+});
 
-// app.get("/api/search", cacheMiddleware, async (req, res) => {
-//   await searchController.search(req, res);
-// });
-// app.get("/api/schedule", cacheMiddleware, async (req, res) => {
-//   await scheduleController.getSchedule(req, res);
-// });
+app.get("/api/search", cacheMiddleware, async (req, res) => {
+  await searchController.search(req, res);
+});
+app.get("/api/schedule", cacheMiddleware, async (req, res) => {
+  await scheduleController.getSchedule(req, res);
+});
 
-// app.get("/api/search/suggest", cacheMiddleware, async (req, res) => {
-//   await suggestionsController.getSuggestions(req, res);
-// });
+app.get("/api/search/suggest", cacheMiddleware, async (req, res) => {
+  await suggestionsController.getSuggestions(req, res);
+});
 
-// app.get("*", handle404);
-app.get("*", handleMaintenance);
+app.get("*", handle404);
+// app.get("*", handleMaintenance);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
