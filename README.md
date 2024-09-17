@@ -25,7 +25,7 @@
 - [Installation](#installation)
   - [Local installation](#local-installation)
 - [Deployment](#deployment)
-  - [Vercel](#Vercel) 
+  - [Vercel](#Vercel)
   - [Render](#Render)
 - [Documentation](#documentation)
 - [Pull Requests](#pull-requests)
@@ -155,7 +155,9 @@ console.log(resp.data);
 
 ```javascript
 import axios from "axios";
-const resp = await axios.get("https://anime-api-five-woad.vercel.app/api/top-ten");
+const resp = await axios.get(
+  "https://anime-api-five-woad.vercel.app/api/top-ten"
+);
 console.log(resp.data);
 ```
 
@@ -201,8 +203,8 @@ console.log(resp.data);
 #### Parameters
 
 | Parameter |  Type  | Description | Mandatory ? | Default |
-| :-------: | :----: | :---------: | :-------: | :-----: |
-|   `id`    | string |  anime-id   |  Yes ✔️   |   --    |
+| :-------: | :----: | :---------: | :---------: | :-----: |
+|   `id`    | string |  anime-id   |   Yes ✔️    |   --    |
 
 #### Example of request
 
@@ -252,7 +254,7 @@ console.log(resp.data);
       },
       {...}
     ],
-    
+
   }
 }
 ```
@@ -274,9 +276,9 @@ console.log(resp.data);
 #### Parameters
 
 | Parameter  | Parameter-type | Data-type | Description | Mandatory ? | Default |
-| :--------: | :------------: | :-------: | :---------: | :-------: | :-----: |
-| `category` |     `path`     | `string`  | `Category`  |  Yes ✔️   |   --    |
-|   `page`   |    `query`     | `number`  | `Page-no.`  |   No ❌   |   `1`   |
+| :--------: | :------------: | :-------: | :---------: | :---------: | :-----: |
+| `category` |     `path`     | `string`  | `Category`  |   Yes ✔️    |   --    |
+|   `page`   |    `query`     | `number`  | `Page-no.`  |    No ❌    |   `1`   |
 
 #### List of Categories
 
@@ -364,8 +366,8 @@ console.log(resp.data);
 #### Parameters
 
 | Parameter | Parameter-type |   Type   | Description | Mandatory ? | Default |
-| :-------: | :------------: | :------: | :---------: | :-------: | :-----: |
-| `keyword` |    `query`     | `string` |  `keyword`  |  Yes ✔️   |   --    |
+| :-------: | :------------: | :------: | :---------: | :---------: | :-----: |
+| `keyword` |    `query`     | `string` |  `keyword`  |   Yes ✔️    |   --    |
 
 #### Example of request
 
@@ -419,8 +421,8 @@ console.log(resp.data);
 #### Parameters
 
 | Parameter | Parameter-type |   Type   | Description | Mandatory ? | Default |
-| :-------: | :------------: | :------: | :---------: | :-------: | :-----: |
-| `keyword` |    `query`     | `string` |  `keyword`  |  Yes ✔️   |   --    |
+| :-------: | :------------: | :------: | :---------: | :---------: | :-----: |
+| `keyword` |    `query`     | `string` |  `keyword`  |   Yes ✔️    |   --    |
 
 #### Example of request
 
@@ -438,7 +440,7 @@ console.log(resp.data);
 {
   "success": true,
   "results": [
-    {   
+    {
         "id":"string",
         "data_id": number,
         "poster": string,
@@ -478,8 +480,8 @@ console.log(resp.data);
 #### Parameters
 
 | Parameter |  Type  | Description | Mandatory ? | Default |
-| :-------: | :----: | :---------: | :-------: | :-----: |
-|   `param`    | string |  anime-id   |  Yes ✔️   |   --    |
+| :-------: | :----: | :---------: | :---------: | :-----: |
+|  `param`  | string |  anime-id   |   Yes ✔️    |   --    |
 
 #### Example of request
 
@@ -510,6 +512,54 @@ console.log(resp.data);
 }
 ```
 
+### `Get` schedule of upcoming anime
+
+```bash
+  GET /api/schedule
+```
+
+### Endpoint
+
+```bash
+  https://anime-api-five-woad.vercel.app/api/schedule?date={string}
+```
+
+#### Parameters
+
+| Parameter |  Type  | Description | Mandatory ? | Default |
+| :-------: | :----: | :---------: | :---------: | :-----: |
+|  `query`  | string |  anime-id   |   Yes ✔️    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get(
+  "https://anime-api-five-woad.vercel.app/api/schedule?date=2024-09-23"
+);
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": [
+    {
+      "id":string,
+      "data_id":number,
+      "title":string,
+      "japanese_title":string,
+      "releaseDate":string,
+      "time":string,
+      "episode_no":number
+    },
+    {...}
+  ]
+}
+```
+
 ### `Get` streaming info
 
 ```bash
@@ -525,8 +575,8 @@ console.log(resp.data);
 #### Parameters
 
 | Parameter | Parameter-type |   Type   | Description | Mandatory ? | Default |
-| :-------: | :------------: | :------: | :---------: | :-------: | :-----: |
-|   `id`    |    `query`     | `string` |  `keyword`  |  Yes ✔️   |   --    |
+| :-------: | :------------: | :------: | :---------: | :---------: | :-----: |
+|   `id`    |    `query`     | `string` |  `keyword`  |   Yes ✔️    |   --    |
 
 #### Example of request
 
@@ -609,7 +659,7 @@ console.log(resp.data);
 }
 ```
 
->### Pull Requests
+> ### Pull Requests
 
 - Pull requests are welcomed that address bug fixes, improvements, or new features.
 - Fork the repository and create a new branch for your changes.
@@ -617,12 +667,13 @@ console.log(resp.data);
 - Include tests if applicable.
 - Describe your changes clearly in the pull request, explaining the problem and solution.
 
->### Reporting Issues
+> ### Reporting Issues
 
 If you discover any issues or have suggestions for improvement, please open an issue. Provide a clear and concise description of the problem, steps to reproduce it, and any relevant information about your environment.
 
->### Support
-If you like the project feel free to drop a star ✨. Your appreciation means a lot.
+> ### Support
+>
+> If you like the project feel free to drop a star ✨. Your appreciation means a lot.
 
 <p align="center" style="text-decoration: none;">Made by <a href="https://github.com/itzzzme" target="_blank">itzzzme 
 </a>🫰</p>
