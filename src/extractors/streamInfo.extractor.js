@@ -16,14 +16,14 @@ export async function extractServers(id) {
     const serverData = [];
 
     $(".server-item").each((index, element) => {
-      const dataId = $(element).attr("data-id");
-      const serverId = $(element).attr("data-server-id");
+      const data_id = $(element).attr("data-id");
+      const server_id = $(element).attr("data-server-id");
       const type = $(element).attr("data-type");
       const serverName = $(element).find("a").text().trim();
       serverData.push({
         type,
-        dataId,
-        serverId,
+        data_id,
+        server_id,
         serverName,
       });
     });

@@ -17,7 +17,7 @@ export const getHomeInfo = async (req, res) => {
       topTen,
       schedule,
       topAiring,
-      mostPopular,
+      mostPopular, 
       mostFavorite,
       latestCompleted,
       latestEpisode,

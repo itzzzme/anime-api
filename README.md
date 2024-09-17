@@ -10,7 +10,7 @@
 
 >
 
-<p align="center">API made with Node.js ( scrape data from <a href="https://hianime.to" target="_blank">hianime.to</a>)</p> 
+<p align="center">API made with Node.js ( scrape data from <a href="https://hianime.to" target="_blank">hianime.to</a>)</p>
 
 # <span style="color:red">! Disclaimer !</span>
 
@@ -122,16 +122,81 @@ console.log(resp.data);
         "poster": string,
         "title": string,
         "japanese_title": string,
-      },
+      }
+      {...}
+    ],
+    "today":[
+      "schedule":[
+        {
+          "id":string,
+          "data_id":number,
+          "title":string,
+          "japanese_title":string,
+          "releaseDate":string,
+          "time":string,
+          "episode_no":number,
+        },{...}
+      ]
+    ],
+    "topAiring":[
       {
         "id":string,
-        "data_id": number,
-        "number": number,
-        "poster": string,
-        "title": string,
-        "japanese_title": string,
+        "data_id":number,
+        "poster":string,
+        "title":string,
+        "japanese_title":string,
+        "description":string,
+        tvInfo:[object]
+      }
+    ],
+    "mostPopular":[
+      {
+        "id":string,
+        "data_id":number,
+        "poster":string,
+        "title":string,
+        "japanese_title":string,
+        "description":string,
+        tvInfo:[object]
       },
-      {...}
+    "mostFavorite":[
+      {
+        "id":string,
+        "data_id":number,
+        "poster":string,
+        "title":string,
+        "japanese_title":string,
+        "description":string,
+        tvInfo:[object]
+      }
+    ],
+    "latestCompleted":[
+      {
+        "id":string,
+        "data_id":number,
+        "poster":string,
+        "title":string,
+        "japanese_title":string,
+        "description":string,
+        tvInfo:[object]
+      }
+    ],
+    "latestEpisode":[
+      {
+        "id":string,
+        "data_id":number,
+        "poster":string,
+        "title":string,
+        "japanese_title":string,
+        "description":string,
+        tvInfo:[object]
+      }
+    ],
+    "genres":[
+      string,
+      string,
+      string,
+      ...
     ]
   }
 }
@@ -578,6 +643,52 @@ console.log(resp.data);
 }
 ```
 
+### `Get` servers list
+
+```bash
+  GET /api/servers/
+```
+
+### Endpoint
+
+```bash
+  https://anime-api-five-woad.vercel.app/api/schedule?date={string}
+```
+
+#### Parameters
+
+| Parameter |  Type  | Description | Mandatory ? | Default |
+| :-------: | :----: | :---------: | :---------: | :-----: |
+| `params`  | string |  anime-id   |   Yes ✔️    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get(
+  "https://anime-api-five-woad.vercel.app/api/servers/demon-slayer-kimetsu-no-yaiba-hashira-training-arc-19107?ep=124260"
+);
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": [
+    {
+      "type":string,
+      "dataId":number,
+      "serverId":number,
+      "serverName":string,
+    },
+    {...}
+  ]
+}
+
+```
+
 ### `Get` streaming info
 
 ```bash
@@ -664,12 +775,12 @@ console.log(resp.data);
       },
       {...}
     ],
-    "episodes": [
+    "servers": [
       {
+        "type":string,
         "data_id": number,
-        "episode_no": number,
-        "title": string,
-        "japanese_title": string
+        "server_id": number,
+        "server_name": string
       },
       {...}
     ]
