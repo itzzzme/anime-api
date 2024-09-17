@@ -6,7 +6,7 @@ import baseUrl from "../utils/baseUrl.js";
 import { fetchServerData_v1 } from "../parsers/idFetch_v1.parser.js";
 import { decryptAllServers } from "../parsers/decryptors/decryptAllServers.decryptor.js";
 
-async function extractServers(id) {
+export async function extractServers(id) {
   try {
     const resp = await axios.get(
       `${baseUrl}/ajax/v2/episode/servers?episodeId=${id}`

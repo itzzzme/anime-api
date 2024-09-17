@@ -17,6 +17,7 @@ import * as searchController from "../src/controllers/search.controller.js";
 import * as episodeListController from "../src/controllers/episodeList.controller.js";
 import * as suggestionsController from "../src/controllers/suggestion.controller.js";
 import * as scheduleController from "../src/controllers/schedule.controller.js";
+import * as serversController from "../src/controllers/servers.controller.js";
 
 dotenv.config();
 
@@ -72,6 +73,9 @@ app.get("/api/episodes/:id", cacheMiddleware, async (req, res) => {
   await episodeListController.getEpisodes(req, res);
 });
 
+app.get("/api/servers/:id", async (req, res) => {
+  await serversController.getServers(req, res);
+});
 app.get("/api/stream", async (req, res) => {
   await streamController.getStreamInfo(req, res);
 });
