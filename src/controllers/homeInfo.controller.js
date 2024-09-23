@@ -10,23 +10,18 @@ const genres = routeTypes
   .map((genre) => genre.replace("genre/", ""));
 
 export const getHomeInfo = async (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.setHeader('Transfer-Encoding', 'chunked'); 
-
-  res.write('{"success": true, "results": {');
-
-  let hasSentFirstChunk = false;
-
-  const sendChunk = (key, data) => {
-    if (hasSentFirstChunk) {
-      res.write(',');
-    }
-    res.write(`"${key}": ${JSON.stringify(data)}`);
-    hasSentFirstChunk = true;
-  };
-
   try {
-    const results = await Promise.allSettled([
+    const [
+      spotlights,
+      trending,
+      topTen,
+      schedule,
+      topAiring,
+      mostPopular, 
+      mostFavorite,
+      latestCompleted,
+      latestEpisode,
+    ] = await Promise.all([
       spotlightController.getSpotlights(),
       trendingController.getTrending(),
       extractTopTen(),
@@ -37,27 +32,22 @@ export const getHomeInfo = async (req, res) => {
       extractPage(1, "completed"),
       extractPage(1, "recently-updated"),
     ]);
-    const keys = [
-      'spotlights', 'trending', 'topTen', 'today', 
-      'topAiring', 'mostPopular', 'mostFavorite', 
-      'latestCompleted', 'latestEpisode'
-    ];
 
-    keys.forEach((key, index) => {
-      const result = results[index];
-      if (result.status === 'fulfilled') {
-        if (key === 'today') {
-          sendChunk(key, { schedule: result.value });
-        } else {
-          sendChunk(key, result.value);
-        }
-      } else {
-        sendChunk(key, null); 
-      }
+    res.json({
+      success: true,
+      results: {
+        spotlights,
+        trending,
+        topTen,
+        today: { schedule },
+        topAiring,
+        mostPopular,
+        mostFavorite,
+        latestCompleted,
+        latestEpisode,
+        genres,
+      },
     });
-    sendChunk('genres', genres);
-    res.write('}}'); 
-    res.end(); 
   } catch (e) {
     console.error(e);
     res.status(500).json({ success: false, error: "Internal Server Error" });
