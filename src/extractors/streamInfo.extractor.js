@@ -42,6 +42,7 @@ async function extractStreamingInfo(id) {
       // fetchServerData_v2(id),
       extractServers(id.split("?ep=").pop()) 
     ]);
+    console.log(data_v1)
     const sortedData = [...data_v1].sort((a, b) =>
       a.type.localeCompare(b.type)
     );

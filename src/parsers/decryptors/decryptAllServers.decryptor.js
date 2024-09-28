@@ -20,7 +20,18 @@ export async function decryptAllServers(data) {
         server.type
       );
     }
-
+    else if(server.type==='raw'){
+      decryptionPromise = decryptSources_v2(
+        server.id,
+        server.name,
+        server.type
+      ).then(async (result) => {
+        if (result === undefined) {
+          return await decryptSources_v1(server.id, server.name, server.type);
+        }
+        return result;
+      });
+    }
     const decryptionResult = await decryptionPromise;
     return { decryptionResult };
   });
