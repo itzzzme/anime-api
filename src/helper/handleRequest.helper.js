@@ -3,7 +3,7 @@ import { getCachedData, setCachedData } from "../helper/cache.helper.js";
 
 export const handleRequest = async (req, res, extractorType) => {
   const requestedPage = parseInt(req.query.page) || 1;
-
+  const cacheKey = `${extractorType}_page_${requestedPage}`;
   try {
     const cachedResponse = await getCachedData(cacheKey);
     if (cachedResponse) {
