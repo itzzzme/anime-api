@@ -1,6 +1,6 @@
-import NodeCache from 'node-cache';
+import NodeCache from "node-cache";
 // import { extractOtherEpisodes, extractStreamingInfo } from "../extractors/streamInfo.extractor.js";
-import {extractStreamingInfo } from "../extractors/streamInfo.extractor.js";
+import { extractStreamingInfo } from "../extractors/streamInfo.extractor.js";
 
 const cache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
 
@@ -19,9 +19,9 @@ export const getStreamInfo = async (req, res) => {
     const finalId = match[1];
     // const [episodes, streamingInfo] = await Promise.all([
     //   extractOtherEpisodes(input),
-      // extractStreamingInfo(finalId),
+    // extractStreamingInfo(finalId),
     // ]);
-    const streamingInfo=await extractStreamingInfo(finalId);
+    const streamingInfo = await extractStreamingInfo(finalId);
     const results = { streamingInfo };
     cache.set(cacheKey, results);
     res.json({ success: true, results });

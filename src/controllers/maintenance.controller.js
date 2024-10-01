@@ -6,7 +6,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export const handleMaintenance = (req, res) => {
-  const filePath = join(dirname(dirname(__dirname)), "public", "maintenance.html");
+  const filePath = join(
+    dirname(dirname(__dirname)),
+    "public",
+    "maintenance.html"
+  );
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
       console.error(err);
