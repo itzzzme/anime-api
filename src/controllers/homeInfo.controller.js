@@ -29,6 +29,7 @@ export const getHomeInfo = async (req, res) => {
       mostFavorite,
       latestCompleted,
       latestEpisode,
+      topUpcoming,
     ] = await Promise.all([
       spotlightController.getSpotlights(),
       trendingController.getTrending(),
@@ -39,6 +40,7 @@ export const getHomeInfo = async (req, res) => {
       extractPage(1, "most-favorite"),
       extractPage(1, "completed"),
       extractPage(1, "recently-updated"),
+      extractPage(1,"top-upcoming"),
     ]);
 
     const responseData = {
@@ -53,6 +55,7 @@ export const getHomeInfo = async (req, res) => {
         mostFavorite,
         latestCompleted,
         latestEpisode,
+        topUpcoming,
         genres,
       },
     };
