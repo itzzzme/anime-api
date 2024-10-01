@@ -18,7 +18,7 @@ import * as episodeListController from "../src/controllers/episodeList.controlle
 import * as suggestionsController from "../src/controllers/suggestion.controller.js";
 import * as scheduleController from "../src/controllers/schedule.controller.js";
 import * as serversController from "../src/controllers/servers.controller.js";
-import { handleMaintenance } from "../src/controllers/maintenance.controller.js";
+// import { handleMaintenance } from "../src/controllers/maintenance.controller.js";
 
 dotenv.config();
 
@@ -52,21 +52,21 @@ const cacheMiddleware = (req, res, next) => {
 
 app.get("/", handleHomePage);
 
-app.get("/api/", cacheMiddleware, async (req, res) => {
+app.get("/api/", async (req, res) => {
   await homeInfoController.getHomeInfo(req, res);
 });
 
 routeTypes.forEach((routeType) => {
-  app.get(`/api/${routeType}`, cacheMiddleware, async (req, res) => {
+  app.get(`/api/${routeType}`, async (req, res) => {
     await categoryController.getCategory(req, res, routeType);
   });
 });
 
-app.get("/api/top-ten", cacheMiddleware, async (req, res) => {
+app.get("/api/top-ten", async (req, res) => {
   await topTenController.getTopTen(req, res);
 });
 
-app.get("/api/info", cacheMiddleware, async (req, res) => {
+app.get("/api/info", async (req, res) => {
   await animeInfoController.getAnimeInfo(req, res);
 });
 

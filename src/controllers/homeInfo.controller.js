@@ -4,20 +4,28 @@ import extractPage from "../helper/extractPages.helper.js";
 import extractTopTen from "../extractors/topten.extractor.js";
 import { routeTypes } from "../routes/category.route.js";
 import extractSchedule from "../extractors/schedule.extractor.js";
+import { getCachedData, setCachedData } from "../helper/cache.helper.js";
 
 const genres = routeTypes
   .slice(0, 41)
   .map((genre) => genre.replace("genre/", ""));
 
 export const getHomeInfo = async (req, res) => {
+  const cacheKey = "homeInfo";
+
   try {
+    const cachedResponse = await getCachedData(cacheKey);
+    if (cachedResponse) {
+      return res.json(cachedResponse);
+    }
+
     const [
       spotlights,
       trending,
       topTen,
       schedule,
       topAiring,
-      mostPopular, 
+      mostPopular,
       mostFavorite,
       latestCompleted,
       latestEpisode,
@@ -33,7 +41,7 @@ export const getHomeInfo = async (req, res) => {
       extractPage(1, "recently-updated"),
     ]);
 
-    res.json({
+    const responseData = {
       success: true,
       results: {
         spotlights,
@@ -47,9 +55,15 @@ export const getHomeInfo = async (req, res) => {
         latestEpisode,
         genres,
       },
-    });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
+    };
+
+    await setCachedData(cacheKey, responseData);
+
+    return res.json(responseData);
+  } catch (fetchError) {
+    console.error("Error fetching fresh data:", fetchError);
+    return res
+      .status(500)
+      .json({ success: false, error: "Internal Server Error" });
   }
 };
