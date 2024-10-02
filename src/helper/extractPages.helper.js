@@ -10,9 +10,9 @@ async function extractPage(page, params) {
     try {
       const resp = await axiosInstance.get(`${baseUrl}/${params}?page=${page}`);
       const $ = cheerio.load(resp.data);
-  
+      const contentSelector = params.includes("az-list") ? '.tab-content' : '#main-content';
       const data = await Promise.all(
-        $("#main-content .film_list-wrap .flw-item").map(async (index, element) => {
+        $(`${contentSelector} .film_list-wrap .flw-item`).map(async (index, element) => {
           const $fdiItems = $(".film-detail .fd-infor .fdi-item",element);
           const showType = $fdiItems
             .filter((_, item) => {
