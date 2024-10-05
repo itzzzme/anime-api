@@ -3,7 +3,7 @@ import { getCachedData, setCachedData } from "../helper/cache.helper.js";
 
 export const getEpisodes = async (req, res) => {
   const id = req.params.id;
-  const cacheKey = `episodes_${id}`; 
+  const cacheKey = `episodes_${id}`;
 
   try {
     const cachedResponse = await getCachedData(cacheKey);
@@ -12,7 +12,10 @@ export const getEpisodes = async (req, res) => {
     }
 
     const data = await extractEpisodesList(encodeURIComponent(id));
-    await setCachedData(cacheKey, data);
+
+    setCachedData(cacheKey, data).catch((err) => {
+      console.error("Failed to set cache:", err);
+    });
 
     return res.json({ success: true, results: data });
   } catch (e) {

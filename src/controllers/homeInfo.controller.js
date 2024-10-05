@@ -30,7 +30,7 @@ export const getHomeInfo = async (req, res) => {
       latestCompleted,
       latestEpisode,
       topUpcoming,
-      recentlyAdded
+      recentlyAdded,
     ] = await Promise.all([
       spotlightController.getSpotlights(),
       trendingController.getTrending(),
@@ -41,8 +41,8 @@ export const getHomeInfo = async (req, res) => {
       extractPage(1, "most-favorite"),
       extractPage(1, "completed"),
       extractPage(1, "recently-updated"),
-      extractPage(1,"top-upcoming"),
-      extractPage(1,"recently-added"),
+      extractPage(1, "top-upcoming"),
+      extractPage(1, "recently-added"),
     ]);
 
     const responseData = {
@@ -63,7 +63,9 @@ export const getHomeInfo = async (req, res) => {
       },
     };
 
-    await setCachedData(cacheKey, responseData);
+    setCachedData(cacheKey, responseData).catch((err) => {
+      console.error("Failed to set cache:", err);
+    });
 
     return res.json(responseData);
   } catch (fetchError) {

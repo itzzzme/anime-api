@@ -3,7 +3,8 @@ import { getCachedData, setCachedData } from "../helper/cache.helper.js";
 
 export const getCategory = async (req, res, routeType) => {
   const requestedPage = parseInt(req.query.page) || 1;
-  const cacheKey = `${routeType.replace(/\//g, '_')}_page_${requestedPage}`;
+  const cacheKey = `${routeType.replace(/\//g, "_")}_page_${requestedPage}`;
+
   try {
     const cachedResponse = await getCachedData(cacheKey);
     if (cachedResponse) {
@@ -21,9 +22,11 @@ export const getCategory = async (req, res, routeType) => {
 
     const responseData = { success: true, results: { totalPages, data } };
 
-    await setCachedData(cacheKey, responseData);
+    setCachedData(cacheKey, responseData).catch((err) => {
+      console.error("Failed to set cache:", err);
+    });
 
-    res.json(responseData);
+    return res.json(responseData);
   } catch (e) {
     console.error(e);
     res.status(500).json({ success: false, error: "Internal Server Error" });

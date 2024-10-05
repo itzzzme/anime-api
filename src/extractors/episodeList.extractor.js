@@ -7,11 +7,9 @@ const baseUrl = v1_base_url;
 async function extractEpisodesList(id) {
   try {
     const showId = id.split("-").pop();
-    console.log(showId);
     const response = await axios.get(
       `https://${baseUrl}/ajax/v2/episode/list/${showId}`
     );
-    console.log(response.data.html);
     const $ = cheerio.load(response.data.html);
     const episodes = new Map();
     let page = 1;

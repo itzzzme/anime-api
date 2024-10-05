@@ -5,7 +5,6 @@ import { getCachedData, setCachedData } from "../helper/cache.helper.js";
 export const getAnimeInfo = async (req, res) => {
   const id = req.query.id;
   const cacheKey = `animeInfo_${id}`;
-
   try {
     const cachedResponse = await getCachedData(cacheKey);
     if (cachedResponse) {
@@ -20,8 +19,9 @@ export const getAnimeInfo = async (req, res) => {
       success: true,
       results: { data, seasons },
     };
-
-    await setCachedData(cacheKey, responseData);
+    setCachedData(cacheKey, responseData).catch((err) => {
+      console.error("Failed to set cache:", err);
+    });
     return res.json(responseData);
   } catch (e) {
     console.error(e);
