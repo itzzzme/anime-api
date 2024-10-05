@@ -47,11 +47,16 @@ async function extractAnimeInfo(id) {
       .text()
       .trim();
     animeInfo["Overview"] = overview;
-
+    let adultContent = false;
+    const tickRateText = $(".film-poster>.tick-rate", element).text().trim();
+    if (tickRateText.includes("18+")) {
+      adultContent = true;
+    }
     const recommended_data = await extractRecommendedData($);
     const related_data = await extractRelatedData($);
 
     return {
+      adultContent,
       data_id,
       id: season_id,
       title,

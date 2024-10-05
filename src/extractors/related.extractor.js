@@ -47,7 +47,13 @@ export default async function extractRelatedData($) {
             tvInfo[property] = value;
           }
         });
-
+        let adultContent = false;
+        const tickRateText = $(".film-poster>.tick-rate", element)
+          .text()
+          .trim();
+        if (tickRateText.includes("18+")) {
+          adultContent = true;
+        }
         return {
           data_id,
           id,
@@ -55,6 +61,7 @@ export default async function extractRelatedData($) {
           japanese_title,
           poster,
           tvInfo,
+          adultContent,
         };
       })
       .get()
