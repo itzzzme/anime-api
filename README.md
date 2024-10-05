@@ -342,6 +342,107 @@ console.log(resp.data);
 }
 ```
 
+### `Get` random anime's info
+
+```bash
+  GET /api/random
+```
+
+### Endpoint
+
+```bash
+  https://anime-api-five-woad.vercel.app/api/random
+```
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get(
+  "https://anime-api-five-woad.vercel.app/api/random"
+);
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "data": {
+      "id":string,
+      "data_id": number,
+      "title": string,
+      "japanese_title": string,
+      "poster": string,
+      "animeInfo": {
+        "Overview": string,
+        "Japanese": string,
+        "Synonyms": string,
+        "Aired": string,
+        "Premiered": string,
+        "Duration": string,
+        "Status": string,
+        "MAL Score": string,
+        "Genres": [Object],
+        "Studios": string,
+        "Producers": [Object]
+      }
+    },
+    "related_data":[
+      [
+       {
+          "duration": "string",
+          "data_id": "number",
+          "id": "string",
+          "title": "string",
+          "japanese_title": "string",
+          "poster": "string",
+          "tvInfo": {
+              "dub": "number",
+              "sub": "number",
+              "showType": "string",
+              "eps": "number"
+            }
+        },{...}
+      ]
+    ],
+    "recommended_data":[
+      [
+       {
+          "duration": "string",
+          "data_id": "number",
+          "id": "string",
+          "title": "string",
+          "japanese_title": "string",
+          "poster": "string",
+          "tvInfo": {
+              "dub": "number",
+              "sub": "number",
+              "showType": "string",
+              "eps": "number"
+            }
+        },{...}
+      ]
+    ],
+    "seasons": [
+      {
+        "id":string,
+        "data_number": number,
+        "data_id": number,
+        "season": string,
+        "title": string,
+        "japanese_title": string,
+        "season_poster": string
+      },
+      {...}
+    ],
+
+  }
+}
+```
+
 ### `Get` several categories info
 
 ```bash
