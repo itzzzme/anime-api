@@ -2,6 +2,9 @@ import { extractor } from "../extractors/category.extractor.js";
 import { getCachedData, setCachedData } from "../helper/cache.helper.js";
 
 export const getCategory = async (req, res, routeType) => {
+  if (routeType === "genre/martial-arts") {
+    routeType = "genre/marial-arts";
+  }
   const requestedPage = parseInt(req.query.page) || 1;
   const cacheKey = `${routeType.replace(/\//g, "_")}_page_${requestedPage}`;
 
