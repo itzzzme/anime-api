@@ -12,6 +12,7 @@ async function extractSeasons(id) {
         const data_number = index;
         const data_id = parseInt($(element).attr("href").split("-").pop());
         const season = $(element).find(".title").text().trim();
+        const seasonPoster=$(element).find(".season-poster").attr("style").match(/url\((.*?)\)/)[1];
         const title = $(element).attr("title").trim();
         const id = formatTitle(title, data_id);
         const season_poster = $(element)
