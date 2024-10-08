@@ -26,11 +26,10 @@ async function extractAnimeInfo(id) {
       .find("a")
       .text()
       .trim();
-    const posterElement = $("#ani_detail .film-poster img");
+    const posterElement = $("#ani_detail .film-poster");
     const tvInfoElement = $("#ani_detail .film-stats");
     const tvInfo = {};
 
-    // Extract values from tick-items and spans in a single loop
     tvInfoElement.find(".tick-item, span.item").each((_, element) => {
       const text = $(element).text().trim();
       if ($(element).hasClass("tick-quality")) {
@@ -42,7 +41,6 @@ async function extractAnimeInfo(id) {
       } else if ($(element).hasClass("tick-pg")) {
         tvInfo["rating"] = text;
       } else if ($(element).is("span.item")) {
-        // Handle showType and duration from spans
         if (!tvInfo["showType"]) {
           tvInfo["showType"] = text; // First span value for showType
         } else if (!tvInfo["duration"]) {
@@ -50,13 +48,12 @@ async function extractAnimeInfo(id) {
         }
       }
     });
-
-    const element = $("#ani_detail .anisc-info > .item");
+    const element = $("#ani_detail > .ani_detail-stage > .container > .anis-content > .anisc-info-wrap > .anisc-info > .item");
     const overviewElement = $("#ani_detail .film-description .text");
 
     const title = titleElement.text().trim();
     const japanese_title = titleElement.attr("data-jname");
-    const poster = posterElement.attr("src");
+    const poster = posterElement.find('img').attr("src");
 
     const animeInfo = {};
     element.each((_, el) => {
@@ -76,10 +73,11 @@ async function extractAnimeInfo(id) {
     animeInfo["Overview"] = overviewElement.text().trim();
     animeInfo["tvInfo"] = tvInfo;
 
-    const adultContent = $(".film-poster>.tick-rate", element)
-      .text()
-      .trim()
-      .includes("18+");
+    let adultContent = false;
+    const tickRateText = $(".tick-rate", posterElement).text().trim();
+    if (tickRateText.includes("18+")) {
+      adultContent = true;
+    }
 
     const [recommended_data, related_data] = await Promise.all([
       extractRecommendedData($),
