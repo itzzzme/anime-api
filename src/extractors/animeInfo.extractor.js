@@ -20,10 +20,12 @@ async function extractAnimeInfo(id) {
 
     const titleElement = $("#ani_detail .film-name");
     const posterElement = $("#ani_detail .film-poster img");
+    const showType = $("#ani_detail .prebreadcrumb ol li").eq(1).find("a").text().trim();
+
     const element = $("#ani_detail .anisc-info > .item");
     const overviewElement = $("#ani_detail .film-description .text");
 
-    const title = titleElement.text();
+    const title = titleElement.text().trim();
     const japanese_title = titleElement.attr("data-jname");
     const poster = posterElement.attr("src");
 
@@ -43,7 +45,7 @@ async function extractAnimeInfo(id) {
 
     const season_id = formatTitle(title, data_id);
     animeInfo["Overview"] = overviewElement.text().trim();
-    
+
     const adultContent = $(".film-poster>.tick-rate", element).text().trim().includes("18+");
 
     const [recommended_data, related_data] = await Promise.all([
@@ -75,6 +77,7 @@ async function extractAnimeInfo(id) {
       title,
       japanese_title,
       poster,
+      showType,
       animeInfo,
       charactersVoiceActors,
       recommended_data,
