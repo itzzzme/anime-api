@@ -19,6 +19,7 @@ import * as suggestionsController from "../src/controllers/suggestion.controller
 import * as scheduleController from "../src/controllers/schedule.controller.js";
 import * as serversController from "../src/controllers/servers.controller.js";
 import * as randomController from "../src/controllers/random.controller.js";
+import * as qtipController from "../src/controllers/qtip.controller.js";
 // import { handleMaintenance } from "../src/controllers/maintenance.controller.js";
 
 dotenv.config();
@@ -94,6 +95,9 @@ app.get("/api/search/suggest", cacheMiddleware, async (req, res) => {
 });
 app.get("/api/random", async (req, res) => {
   await randomController.getRandom(req, res);
+});
+app.get("/api/qtip/:id", async (req, res) => {
+  await qtipController.getQtip(req, res);
 });
 
 app.get("*", handle404);
