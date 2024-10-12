@@ -9,7 +9,7 @@ async function countPages(url) {
     const { data } = await axiosInstance.get(url);
     const $ = cheerio.load(data);
     const lastPageHref = $(
-      "#main-content .pagination .page-item:last-child a"
+      ".tab-content .pagination .page-item:last-child a"
     ).attr("href");
     const lastPageNumber = lastPageHref
       ? parseInt(lastPageHref.split("=").pop())
