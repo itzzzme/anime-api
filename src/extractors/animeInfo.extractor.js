@@ -48,12 +48,14 @@ async function extractAnimeInfo(id) {
         }
       }
     });
-    const element = $("#ani_detail > .ani_detail-stage > .container > .anis-content > .anisc-info-wrap > .anisc-info > .item");
+    const element = $(
+      "#ani_detail > .ani_detail-stage > .container > .anis-content > .anisc-info-wrap > .anisc-info > .item"
+    );
     const overviewElement = $("#ani_detail .film-description .text");
 
     const title = titleElement.text().trim();
     const japanese_title = titleElement.attr("data-jname");
-    const poster = posterElement.find('img').attr("src");
+    const poster = posterElement.find("img").attr("src");
 
     const animeInfo = {};
     element.each((_, el) => {
@@ -85,7 +87,7 @@ async function extractAnimeInfo(id) {
     ]);
 
     const charactersVoiceActors = $1(".bac-list-wrap .bac-item")
-      .map((_, el) => {
+      .map((index, el) => {
         const character = {
           id:
             $1(el)
@@ -98,14 +100,39 @@ async function extractAnimeInfo(id) {
           cast: $1(el).find(".per-info.ltr .pi-detail .pi-cast").text(),
         };
 
-        const voiceActors = $1(el)
-          .find(".per-info.per-info-xx .pix-list .pi-avatar")
-          .map((_, actorEl) => ({
-            id: $1(actorEl).attr("href")?.split("/")[2] || "",
-            poster: $1(actorEl).find("img").attr("data-src") || "",
-            name: $1(actorEl).attr("title") || "",
-          }))
-          .get();
+        let voiceActors = [];
+        const rtlVoiceActors = $1(el).find(".per-info.rtl");
+        const xxVoiceActors = $1(el).find(
+          ".per-info.per-info-xx .pix-list .pi-avatar"
+        );
+        if (rtlVoiceActors.length > 0) {
+          voiceActors = rtlVoiceActors
+            .map((_, actorEl) => ({
+              id: $1(actorEl).find("a").attr("href")?.split("/").pop() || "",
+              poster: $1(actorEl).find("img").attr("data-src") || "",
+              name:
+                $1(actorEl).find(".pi-detail .pi-name a").text().trim() || "",
+            }))
+            .get();
+        } else if (xxVoiceActors.length > 0) {
+          voiceActors = xxVoiceActors
+            .map((_, actorEl) => ({
+              id: $1(actorEl).attr("href")?.split("/").pop() || "",
+              poster: $1(actorEl).find("img").attr("data-src") || "",
+              name: $1(actorEl).attr("title") || "",
+            }))
+            .get();
+        }
+        if (voiceActors.length === 0) {
+          voiceActors = $1(el)
+            .find(".per-info.per-info-xx .pix-list .pi-avatar")
+            .map((_, actorEl) => ({
+              id: $1(actorEl).attr("href")?.split("/")[2] || "",
+              poster: $1(actorEl).find("img").attr("data-src") || "",
+              name: $1(actorEl).attr("title") || "",
+            }))
+            .get();
+        }
 
         return { character, voiceActors };
       })
