@@ -21,6 +21,7 @@ import * as serversController from "../src/controllers/servers.controller.js";
 import * as randomController from "../src/controllers/random.controller.js";
 import * as qtipController from "../src/controllers/qtip.controller.js";
 import * as randomIdController from "../src/controllers/randomId.controller.js";
+import * as characterListController from "../src/controllers/voiceactor.controller.js";
 // import { handleMaintenance } from "../src/controllers/maintenance.controller.js";
 
 dotenv.config();
@@ -63,6 +64,10 @@ routeTypes.forEach((routeType) => {
   app.get(`/api/${routeType}`, async (req, res) => {
     await categoryController.getCategory(req, res, routeType);
   });
+});
+
+app.get("/api/character/list/:id", async (req, res) => {
+  await characterListController.getVoiceActors(req, res);
 });
 
 app.get("/api/top-ten", async (req, res) => {
