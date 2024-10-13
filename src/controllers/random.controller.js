@@ -2,10 +2,10 @@ import extractRandom from "../extractors/random.extractor.js";
 
 export const getRandom = async (req, res) => {
   try {
-    const random = await extractRandom();
+    const data = await extractRandom();
     res.json({
       success: true,
-      results: random,
+      results: { data },
     });
   } catch (error) {
     console.error("Error getting random anime:", error.message);
