@@ -11,9 +11,9 @@ export async function countPages(id) {
     );
     const html = response.data.html;
     const $ = cheerio.load(html);
-    const lastPageNo = $('a[title="Last"]')
-      .attr("data-url")
-      .match(/page=(\d+)/)[1];
+    const lastPageItem = $(".pre-pagination nav ul li").last();
+    const lastPageLink = lastPageItem.find("a").attr("data-url");
+    const lastPageNo = lastPageLink.match(/page=(\d+)/)[1];
     return parseInt(lastPageNo);
   } catch (error) {
     console.error("Error in countPages:", error);
