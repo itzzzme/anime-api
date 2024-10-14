@@ -15,7 +15,7 @@ export const getVoiceActors = async (req, res) => {
     }
 
     const data = await extractVoiceActor(id, requestedPage);
-    const responseData = { success: true, results: {currenPage:pageToRedirect, totalPages, data } };
+    const responseData = { success: true, results: {currentPage:pageToRedirect, totalPages, data } };
     return res.json(responseData);
   } catch (e) {
     console.error(e);
