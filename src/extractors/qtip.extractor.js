@@ -17,6 +17,7 @@ export default async function extractQtip(id) {
     const rating = $(".pqd-li i.fas.fa-star").parent().text().trim();
     const quality = $(".tick-item.tick-quality").text();
     const subCount = $(".tick-item.tick-sub").text().trim();
+    const dubCount = $(".tick-item.tick-dub").text().trim();
     const episodeCount = $(".tick-item.tick-eps").text().trim();
     const type = $(".badge.badge-quality").text();
     const description = $(".pre-qtip-description").text().trim();
@@ -40,6 +41,7 @@ export default async function extractQtip(id) {
       rating,
       quality,
       subCount,
+      dubCount,
       episodeCount,
       type,
       description,
