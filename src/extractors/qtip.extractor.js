@@ -30,6 +30,9 @@ export default async function extractQtip(id) {
     const status = $(".pre-qtip-line:contains('Status:') .stick-text")
       .text()
       .trim();
+    const Synonyms = $(".pre-qtip-line:contains('Synonyms:') .stick-text")
+      .text()
+      .trim();
     const genres = [];
     $(".pre-qtip-line:contains('Genres:') a").each((i, elem) => {
       genres.push($(elem).text().trim());
@@ -46,6 +49,7 @@ export default async function extractQtip(id) {
       type,
       description,
       japaneseTitle,
+      Synonyms,
       airedDate,
       status,
       genres,
