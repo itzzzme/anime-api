@@ -1,12 +1,10 @@
 import axios from "axios";
-import baseUrl from "../utils/baseUrl.js";
 import countPages from "../helper/countPages.helper.js";
 import extractPage from "../helper/extractPages.helper.js";
 
-async function extractor(path, page) {
+export async function extractor(path, page) {
   try {
     const [data, totalPages] = await extractPage(page, path);
-
     return { data, totalPages };
   } catch (error) {
     console.error(
@@ -16,4 +14,3 @@ async function extractor(path, page) {
     throw error;
   }
 }
-export { extractor, countPages };

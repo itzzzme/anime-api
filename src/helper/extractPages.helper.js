@@ -9,10 +9,20 @@ async function extractPage(page, params) {
   try {
     const resp = await axiosInstance.get(`${baseUrl}/${params}?page=${page}`);
     const $ = cheerio.load(resp.data);
-    const totalPagesElement = ".pre-pagination nav .pagination li.page-item";
     const totalPages =
-      $(totalPagesElement).last().find("a").attr("href")?.split("page=")[1] ||
-      1;
+      Number(
+        $('.pre-pagination nav .pagination > .page-item a[title="Last"]')
+          ?.attr("href")
+          ?.split("=")
+          .pop() ??
+          $('.pre-pagination nav .pagination > .page-item a[title="Next"]')
+            ?.attr("href")
+            ?.split("=")
+            .pop() ??
+          $(".pre-pagination nav .pagination > .page-item.active a")
+            ?.text()
+            ?.trim()
+      ) || 1;
     const contentSelector = params.includes("az-list")
       ? ".tab-content"
       : "#main-content";
@@ -37,7 +47,7 @@ async function extractPage(page, params) {
             .text()
             .trim();
           const data_id = $(".film-poster>a", element).attr("data-id");
-          const id = $(".film-poster>a", element).attr("href").split('/').pop();
+          const id = $(".film-poster>a", element).attr("href").split("/").pop();
           const tvInfo = {
             showType: showType ? showType.text().trim() : "Unknown",
             duration: $(".film-detail .fd-infor .fdi-duration", element)
@@ -72,7 +82,7 @@ async function extractPage(page, params) {
         }
       )
     );
-
+    console.log(totalPages);
     return [data, parseInt(totalPages, 10)];
   } catch (error) {
     console.error(`Error extracting data from page ${page}:`, error.message);
