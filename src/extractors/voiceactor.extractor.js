@@ -1,32 +1,7 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import baseUrl from "../utils/baseUrl.js";
-
-export async function countPages(id) {
-  try {
-    const response = await axios.get(
-      `${baseUrl}/ajax/character/list/${id.split("-").pop()}`
-    );
-    const html = response.data.html;
-    const $ = cheerio.load(html);
-    let lastPageNo = 1;
-    const paginationList = $(".pre-pagination nav").find("ul");
-    if (paginationList.length) {
-      const lastPageItem = paginationList.find("li").last();
-      const lastPageLink = lastPageItem.find("a").attr("data-url");
-      if (lastPageLink) {
-        const match = lastPageLink.match(/page=(\d+)/);
-        if (match) {
-          lastPageNo = parseInt(match[1]);
-        }
-      }
-    }
-    return lastPageNo;
-  } catch (error) {
-    console.error("Error in countPages:", error);
-    throw new Error("Could not count pages");
-  }
-}
+import { parse } from "dotenv";
 
 export default async function extractVoiceActor(id, page) {
   try {
@@ -34,6 +9,15 @@ export default async function extractVoiceActor(id, page) {
       `${baseUrl}/ajax/character/list/${id.split("-").pop()}?page=${page}`
     );
     const $ = cheerio.load(resp.data.html);
+    let lastPageNo = 1;
+    const paginationList = $(".pre-pagination nav ul");
+    if (paginationList.length) {
+      const lastPageLink = paginationList.find("li").last().find("a");
+      const pageNumber =
+        lastPageLink.attr("data-url")?.match(/page=(\d+)/)?.[1] ||
+        lastPageLink.text().trim();
+      lastPageNo = parseInt(pageNumber) || lastPageNo;
+    }
     const charactersVoiceActors = $(".bac-list-wrap .bac-item")
       .map((index, el) => {
         const character = {
@@ -85,8 +69,7 @@ export default async function extractVoiceActor(id, page) {
         return { character, voiceActors };
       })
       .get();
-
-    return charactersVoiceActors;
+    return { lastPageNo, charactersVoiceActors };
   } catch (error) {
     console.error("Error in extractVoiceActor:", error);
     throw new Error("Could not extract voice actors");

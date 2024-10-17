@@ -9,7 +9,6 @@ export const search = async (c) => {
       encodeURIComponent(keyword),
       page
     );
-    console.log(page, totalPage);
     if (page > totalPage) {
       const error = new Error("Requested page exceeds total available pages.");
       error.status = 404;
