@@ -1,4 +1,5 @@
 import extractEpisodesList from "../extractors/episodeList.extractor.js";
+import { getCachedData, setCachedData } from "../helper/cache.helper.js";
 
 export const getEpisodes = async (c) => {
   const { id } = c.req.param();
