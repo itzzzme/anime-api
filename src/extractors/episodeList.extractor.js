@@ -8,51 +8,33 @@ async function extractEpisodesList(id) {
   try {
     const showId = id.split("-").pop();
     const response = await axios.get(
-      `https://${baseUrl}/ajax/v2/episode/list/${showId}`
+      `https://${baseUrl}/ajax/v2/episode/list/${showId}`,
+      {
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          Referer: `${baseUrl}/watch/${id}`,
+        },
+      }
     );
+    if (!response.data.html) return [];
     const $ = cheerio.load(response.data.html);
-    const episodes = new Map();
-    let page = 1;
-    let hasPages = false;
-    while (true) {
-      const pageSelector = `#episodes-page-${page}`;
-      const pageExists = $(pageSelector).length > 0;
-      if (!pageExists) break;
-      hasPages = true;
-      $(pageSelector)
-        .find("a.ssl-item.ep-item")
-        .each((i, el) => {
-          const $el = $(el);
-          const episodeId = `${id}?ep=` + $el.attr("data-id");
-          episodes.set(episodeId, {
-            episode_no: $el.attr("data-number"),
-            id: episodeId,
-            season_id: showId,
-            episode_id: $el.attr("data-id"),
-            title: $el.attr("title"),
-            japanese_title: $el.find(".ep-name").attr("data-jname"),
-          });
-        });
-      page++;
-    }
-    if (!hasPages) {
-      $(".ss-list a.ssl-item.ep-item").each((i, el) => {
-        const $el = $(el);
-        const episodeId = `${id}?ep=` + $el.attr("data-id");
-        episodes.set(episodeId, {
-          number: $el.attr("data-number"),
-          id: episodeId,
-          season_id: showId,
-          episode_id: $el.attr("data-id"),
-          title: $el.attr("title"),
-          japanese_title: $el.find(".ep-name").attr("data-jname"),
-        });
+    const res = {
+      totalEpisodes: 0,
+      episodes: [],
+    };
+    res.totalEpisodes = Number($(".detail-infor-content .ss-list a").length);
+    $(".detail-infor-content .ss-list a").each((_, el) => {
+      res.episodes.push({
+        episode_no: Number($(el).attr("data-number")),
+        id: $(el)?.attr("href")?.split("/")?.pop() || null,
+        title: $(el)?.attr("title")?.trim() || null,
+        japanese_title: $(el).find(".ep-name").attr("data-jname"),
       });
-    }
-    const episodesArray = Array.from(episodes.values());
-    return episodesArray;
+    });
+    return res;
   } catch (error) {
-    return error.message;
+    console.error(error);
+    return [];
   }
 }
 export default extractEpisodesList;
