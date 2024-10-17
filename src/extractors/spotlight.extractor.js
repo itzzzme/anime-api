@@ -1,6 +1,5 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-import formatTitle from "../helper/formatTitle.helper.js";
 import baseUrl from "../utils/baseUrl.js";
 
 async function extractSpotlights() {
@@ -37,6 +36,13 @@ async function extractSpotlights() {
           )
           .text()
           .trim();
+        const id = $(ele)
+          .find(
+            ".deslide-item > .deslide-item-content > .desi-buttons > a:eq(0)"
+          )
+          .attr("href")
+          .split("/")
+          .pop();
         const data_id = $(ele)
           .find(
             ".deslide-item > .deslide-item-content > .desi-buttons > a:eq(0)"
@@ -74,7 +80,6 @@ async function extractSpotlights() {
               tvInfo[key] = value;
             })
         );
-        const id = formatTitle(title, data_id);
         return {
           id,
           data_id,
@@ -91,6 +96,7 @@ async function extractSpotlights() {
     return JSON.parse(JSON.stringify(serverData, null, 2));
   } catch (error) {
     console.error("Error fetching data:", error.message);
+    return error;
   }
 }
 

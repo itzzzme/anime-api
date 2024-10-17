@@ -1,7 +1,6 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import baseUrl from "../utils/baseUrl.js";
-// import formatTitle from "../helper/formatTitle.helper.js";
 // import { fetchServerData_v2 } from "../parsers/idFetch_v2.parser.js";
 import { fetchServerData_v1 } from "../parsers/idFetch_v1.parser.js";
 import { decryptAllServers } from "../parsers/decryptors/decryptAllServers.decryptor.js";
@@ -12,9 +11,7 @@ export async function extractServers(id) {
       `${baseUrl}/ajax/v2/episode/servers?episodeId=${id}`
     );
     const $ = cheerio.load(resp.data.html);
-
     const serverData = [];
-
     $(".server-item").each((index, element) => {
       const data_id = $(element).attr("data-id");
       const server_id = $(element).attr("data-server-id");
@@ -40,9 +37,8 @@ async function extractStreamingInfo(id) {
     const [data_v1, servers] = await Promise.all([
       fetchServerData_v1(id),
       // fetchServerData_v2(id),
-      extractServers(id.split("?ep=").pop()) 
+      extractServers(id.split("?ep=").pop()),
     ]);
-    console.log(data_v1)
     const sortedData = [...data_v1].sort((a, b) =>
       a.type.localeCompare(b.type)
     );

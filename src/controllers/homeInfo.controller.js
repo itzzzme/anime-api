@@ -1,5 +1,5 @@
-import * as spotlightController from "../helper/spotlight.helper.js";
-import * as trendingController from "../helper/trending.helper.js";
+import getSpotlights from "../extractors/spotlight.extractor.js";
+import getTrending from "../extractors/trending.extractor.js";
 import extractPage from "../helper/extractPages.helper.js";
 import extractTopTen from "../extractors/topten.extractor.js";
 import { routeTypes } from "../routes/category.route.js";
@@ -10,15 +10,13 @@ const genres = routeTypes
   .slice(0, 41)
   .map((genre) => genre.replace("genre/", ""));
 
-export const getHomeInfo = async (req, res) => {
+export const getHomeInfo = async (c) => {
   const cacheKey = "homeInfo";
-
   try {
     const cachedResponse = await getCachedData(cacheKey);
     if (cachedResponse) {
-      return res.json(cachedResponse);
+      return cachedResponse;
     }
-
     const [
       spotlights,
       trending,
@@ -32,8 +30,8 @@ export const getHomeInfo = async (req, res) => {
       topUpcoming,
       recentlyAdded,
     ] = await Promise.all([
-      spotlightController.getSpotlights(),
-      trendingController.getTrending(),
+      getSpotlights(),
+      getTrending(),
       extractTopTen(),
       extractSchedule(new Date().toISOString().split("T")[0]),
       extractPage(1, "top-airing"),
@@ -44,34 +42,27 @@ export const getHomeInfo = async (req, res) => {
       extractPage(1, "top-upcoming"),
       extractPage(1, "recently-added"),
     ]);
-
     const responseData = {
-      success: true,
-      results: {
-        spotlights,
-        trending,
-        topTen,
-        today: { schedule },
-        topAiring,
-        mostPopular,
-        mostFavorite,
-        latestCompleted,
-        latestEpisode,
-        topUpcoming,
-        recentlyAdded,
-        genres,
-      },
+      spotlights,
+      trending,
+      topTen,
+      today: { schedule },
+      topAiring: topAiring[0],
+      mostPopular: mostPopular[0],
+      mostFavorite: mostFavorite[0],
+      latestCompleted: latestCompleted[0],
+      latestEpisode: latestEpisode[0],
+      topUpcoming: topUpcoming[0],
+      recentlyAdded: recentlyAdded[0],
+      genres,
     };
 
     setCachedData(cacheKey, responseData).catch((err) => {
       console.error("Failed to set cache:", err);
     });
-
-    return res.json(responseData);
+    return responseData;
   } catch (fetchError) {
     console.error("Error fetching fresh data:", fetchError);
-    return res
-      .status(500)
-      .json({ success: false, error: "Internal Server Error" });
+    return fetchError;
   }
 };

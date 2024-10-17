@@ -1,6 +1,5 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-import formatTitle from "../helper/formatTitle.helper.js";
 import baseUrl from "../utils/baseUrl.js";
 
 async function fetchAnimeDetails(element) {
@@ -9,7 +8,7 @@ async function fetchAnimeDetails(element) {
   const poster = element.find("img").attr("data-src");
   const title = element.find(".film-title").text().trim();
   const japanese_title = element.find(".film-title").attr("data-jname").trim();
-  const id = formatTitle(title, data_id);
+  const id = element.find("a").attr("href").split("/").pop();
   return { id, data_id, number, poster, title, japanese_title };
 }
 
@@ -29,6 +28,7 @@ async function extractTrending() {
     return JSON.parse(JSON.stringify(trendingData));
   } catch (error) {
     console.error("Error fetching data:", error.message);
+    return error;
   }
 }
 

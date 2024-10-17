@@ -5,10 +5,7 @@ import extractPage from "../helper/extractPages.helper.js";
 
 async function extractor(path, page) {
   try {
-    const [data, totalPages] = await Promise.all([
-      extractPage(page, path),
-      countPages(`${baseUrl}/${path}`),
-    ]);
+    const [data, totalPages] = await extractPage(page, path);
 
     return { data, totalPages };
   } catch (error) {
@@ -19,5 +16,4 @@ async function extractor(path, page) {
     throw error;
   }
 }
-
 export { extractor, countPages };

@@ -1,20 +1,20 @@
+import axios from "axios";
 import CryptoJS from "crypto-js";
 import { v2_base_url } from "../../utils/base_v2.js";
-import { fetchData } from "../../helper/fetchData.helper.js";
 import fetchScript from "../../helper/fetchScript.helper.js";
 import getKeys from "../../helper/getKey.helper.js";
 import { PLAYER_SCRIPT_URL } from "../../configs/player_v2.config.js";
 
 async function decryptSources_v2(id, name, type) {
   try {
-    const [sourcesData, decryptKey_v2] = await Promise.all([
-      fetchData(`https://${v2_base_url}/ajax/episode/sources?id=${id}`),
+    const [{ data: sourcesData }, decryptKey_v2] = await Promise.all([
+      axios.get(`https://${v2_base_url}/ajax/episode/sources?id=${id}`),
       getKeys(await fetchScript(PLAYER_SCRIPT_URL)),
     ]);
     const ajaxResp = sourcesData.link;
     const [hostname] = /^(https?:\/\/(?:www\.)?[^\/\?]+)/.exec(ajaxResp) || [];
     const [_, sourceId] = /\/([^\/\?]+)\?/.exec(ajaxResp) || [];
-    const source = await fetchData(
+    const {data:source} = await axios.get(
       `${hostname}/ajax/embed-6-v2/getSources?id=${sourceId}`
     );
 
@@ -47,11 +47,11 @@ async function decryptSources_v2(id, name, type) {
         },
       ];
     }
-    if (source.hasOwnProperty('server')) {
+    if (source.hasOwnProperty("server")) {
       delete source.server;
     }
     return {
-      id:id,
+      id: id,
       type: type,
       source,
       server: name,

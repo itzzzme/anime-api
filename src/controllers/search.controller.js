@@ -1,24 +1,26 @@
 import extractSearchResults from "../extractors/search.extractor.js";
-import countPages from "../helper/countPages.helper.js";
 import { v1_base_url } from "../utils/base_v1.js";
 
-export const search = async (req, res) => {
+export const search = async (c) => {
   try {
-    const keyword = req.query.keyword;
-    let page = parseInt(req.query.page) || 1;
-    const totalPages = await countPages(
-      `https://${v1_base_url}/search?keyword=${keyword}`
+    let { keyword } = c.req.query();
+    let page = parseInt(c.req.query("page")) || 1;
+
+    const [totalPage, data] = await extractSearchResults(
+      encodeURIComponent(keyword),
+      page
     );
-    page = Math.min(page, totalPages);
-    if (page !== parseInt(req.query.page)) {
-      return res.redirect(
-        `${req.originalUrl.split("?")[0]}?keyword=${keyword}&page=${page}`
-      );
+    if (page > totalPage) {
+      const error = new Error("Requested page exceeds total available pages.");
+      error.status = 404;
+      throw error;
     }
-    const data = await extractSearchResults(encodeURIComponent(keyword), page);
-    res.json({ success: true, results: { totalPages, data } });
+    return { data, totalPage };
   } catch (e) {
     console.error(e);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
+    if (e.status === 404) {
+      throw e;
+    }
+    throw new Error("An error occurred while processing your request.");
   }
 };

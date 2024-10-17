@@ -1,117 +1,48 @@
-import express from "express";
 import dotenv from "dotenv";
-import cors from "cors";
-import morgan from "morgan";
-import NodeCache from "node-cache";
+import fs from "fs";
+import path from "path";
+import { cors } from "hono/cors";
+import { serve } from "@hono/node-server";
+import { Hono } from "hono";
+import { serveStatic } from "@hono/node-server/serve-static";
 import { fileURLToPath } from "url";
-import { dirname, join } from "path";
-import { handleHomePage } from "../src/controllers/home.controller.js";
-import { handle404 } from "../src/controllers/404.controller.js";
-import { routeTypes } from "../src/routes/category.route.js";
-import * as homeInfoController from "../src/controllers/homeInfo.controller.js";
-import * as categoryController from "../src/controllers/category.controller.js";
-import * as topTenController from "../src/controllers/topten.controller.js";
-import * as animeInfoController from "../src/controllers/animeInfo.controller.js";
-import * as streamController from "../src/controllers/streamInfo.controller.js";
-import * as searchController from "../src/controllers/search.controller.js";
-import * as episodeListController from "../src/controllers/episodeList.controller.js";
-import * as suggestionsController from "../src/controllers/suggestion.controller.js";
-import * as scheduleController from "../src/controllers/schedule.controller.js";
-import * as serversController from "../src/controllers/servers.controller.js";
-import * as randomController from "../src/controllers/random.controller.js";
-import * as qtipController from "../src/controllers/qtip.controller.js";
-import * as randomIdController from "../src/controllers/randomId.controller.js";
-import * as characterListController from "../src/controllers/voiceactor.controller.js";
-// import { handleMaintenance } from "../src/controllers/maintenance.controller.js";
+import { dirname } from "path";
+import { createApiRoutes } from "../src/routes/apiRoutes.js";
 
 dotenv.config();
 
-const app = express();
-const port = process.env.PORT || 4444;
+const app = new Hono();
+const PORT = process.env.PORT || 4444;
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const publicDir = path.join(dirname(dirname(__filename)), "public");
 
-const cache = new NodeCache({ stdTTL: 86400, checkperiod: 1800 });
+app.use(
+  cors({
+    allowMethods: ["GET"],
+    origin: "*",
+  })
+);
+app.use("/", serveStatic({ root: "public" }));
 
-app.use(cors());
-app.use(express.static(join(dirname(__dirname), "public")));
-app.use(morgan("combined"));
+const jsonResponse = (c, data, status = 200) =>
+  c.json({ success: true, results: data }, { status });
+const jsonError = (c, message = "Internal server error", status = 500) =>
+  c.json({ success: false, message }, { status });
 
-const cacheMiddleware = (req, res, next) => {
-  const key = req.originalUrl;
-  const cachedResponse = cache.get(key);
+createApiRoutes(app, jsonResponse, jsonError);
 
-  if (cachedResponse) {
-    return res.json(cachedResponse);
+app.get("*", async (c) => {
+  try {
+    const data = fs.readFileSync(path.join(publicDir, "404.html"), "utf-8");
+    return c.html(data, 404);
+  } catch (err) {
+    return c.text("Error loading 404 page.", 500);
   }
-
-  res.sendResponse = res.json;
-  res.json = (body) => {
-    cache.set(key, body);
-    res.sendResponse(body);
-  };
-
-  next();
-};
-
-app.get("/", handleHomePage);
-
-app.get("/api/", async (req, res) => {
-  await homeInfoController.getHomeInfo(req, res);
 });
 
-routeTypes.forEach((routeType) => {
-  app.get(`/api/${routeType}`, async (req, res) => {
-    await categoryController.getCategory(req, res, routeType);
-  });
-});
-
-app.get("/api/character/list/:id", async (req, res) => {
-  await characterListController.getVoiceActors(req, res);
-});
-
-app.get("/api/top-ten", async (req, res) => {
-  await topTenController.getTopTen(req, res);
-});
-
-app.get("/api/info", async (req, res) => {
-  await animeInfoController.getAnimeInfo(req, res);
-});
-
-app.get("/api/episodes/:id", cacheMiddleware, async (req, res) => {
-  await episodeListController.getEpisodes(req, res);
-});
-
-app.get("/api/servers/:id", async (req, res) => {
-  await serversController.getServers(req, res);
-});
-app.get("/api/stream", async (req, res) => {
-  await streamController.getStreamInfo(req, res);
-});
-
-app.get("/api/search", cacheMiddleware, async (req, res) => {
-  await searchController.search(req, res);
-});
-app.get("/api/schedule", cacheMiddleware, async (req, res) => {
-  await scheduleController.getSchedule(req, res);
-});
-
-app.get("/api/search/suggest", cacheMiddleware, async (req, res) => {
-  await suggestionsController.getSuggestions(req, res);
-});
-app.get("/api/random", async (req, res) => {
-  await randomController.getRandom(req, res);
-});
-app.get("/api/random/id", async (req, res) => {
-  await randomIdController.getRandomId(req, res);
-});
-app.get("/api/qtip/:id", async (req, res) => {
-  await qtipController.getQtip(req, res);
-});
-
-app.get("*", handle404);
-// app.get("*", handleMaintenance);
-
-app.listen(port, () => {
-  console.log(`listening on port ${port}`);
-});
+serve({
+  port: PORT,
+  fetch: app.fetch,
+}).addListener("listening", () =>
+  console.info(`Listening at http://localhost:${PORT}`)
+);

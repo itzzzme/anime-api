@@ -1,12 +1,12 @@
 import extractQtip from "../extractors/qtip.extractor.js";
 
-export const getQtip = async (req, res) => {
+export const getQtip = async (c) => {
   try {
-    const id = req.params.id;
+    const { id } = c.req.param();
     const data = await extractQtip(id);
-    res.json({ success: true, results: { data } });
+    return data;
   } catch (e) {
     console.error(e);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
+    return e;
   }
 };

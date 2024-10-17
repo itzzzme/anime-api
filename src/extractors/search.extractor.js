@@ -16,8 +16,15 @@ async function extractSearchResults(search, page) {
         },
       }
     );
+
     const $ = load(resp.data);
     const elements = "#main-content .film_list-wrap .flw-item";
+
+    const totalPagesElement = ".pre-pagination nav .pagination li.page-item";
+    const totalPage =
+      $(totalPagesElement).last().find("a").attr("href")?.split("page=")[1] ||
+      1;
+
     const result = [];
     $(elements).each((_, el) => {
       const id =
@@ -83,7 +90,8 @@ async function extractSearchResults(search, page) {
         },
       });
     });
-    return result.length > 0 ? result : [];
+
+    return [parseInt(totalPage, 10), result.length > 0 ? result : []];
   } catch (e) {
     console.error(e);
     return e;

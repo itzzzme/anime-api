@@ -1,22 +1,22 @@
 import extractTopTen from "../extractors/topten.extractor.js";
 import { getCachedData, setCachedData } from "../helper/cache.helper.js";
-export const getTopTen = async (req, res) => {
+
+export const getTopTen = async (c) => {
   const cacheKey = "topTen";
   try {
     const cachedResponse = await getCachedData(cacheKey);
     if (cachedResponse) {
-      return res.json(cachedResponse);
+      return cachedResponse;
     }
     const topTen = await extractTopTen();
-
-    const responseData = {
-      success: true,
-      results: { topTen },
-    };
-    await setCachedData(cacheKey, responseData);
-    return res.json(responseData);
+    await setCachedData(cacheKey, topTen).catch((err) => {
+      console.error("Failed to set cache:", err);
+    });
+    return topTen;
   } catch (e) {
     console.error(e);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
+    return c
+      .status(500)
+      .json({ success: false, error: "Internal Server Error" });
   }
 };

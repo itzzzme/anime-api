@@ -1,16 +1,12 @@
-import NodeCache from "node-cache";
 import { extractServers } from "../extractors/streamInfo.extractor.js";
 
-const cache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
-
-export const getServers = async (req, res) => {
+export const getServers = async (c) => {
   try {
-    const input = req.query.ep;
-    const streamingInfo = await extractServers(input);
-    const results = { streamingInfo };
-    res.json({ success: true, results });
+    const { ep } = c.req.query();
+    const servers = await extractServers(ep);
+    return servers;
   } catch (e) {
     console.error(e);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
+    return e;
   }
 };

@@ -1,7 +1,6 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import baseUrl from "../utils/baseUrl.js";
-import formatTitle from "./formatTitle.helper.js";
 import { DEFAULT_HEADERS } from "../configs/header.config.js";
 
 const axiosInstance = axios.create({ headers: DEFAULT_HEADERS });
@@ -10,6 +9,10 @@ async function extractPage(page, params) {
   try {
     const resp = await axiosInstance.get(`${baseUrl}/${params}?page=${page}`);
     const $ = cheerio.load(resp.data);
+    const totalPagesElement = ".pre-pagination nav .pagination li.page-item";
+    const totalPages =
+      $(totalPagesElement).last().find("a").attr("href")?.split("page=")[1] ||
+      1;
     const contentSelector = params.includes("az-list")
       ? ".tab-content"
       : "#main-content";
@@ -34,7 +37,7 @@ async function extractPage(page, params) {
             .text()
             .trim();
           const data_id = $(".film-poster>a", element).attr("data-id");
-          const id = formatTitle(title, data_id);
+          const id = $(".film-poster>a", element).attr("href").split('/').pop();
           const tvInfo = {
             showType: showType ? showType.text().trim() : "Unknown",
             duration: $(".film-detail .fd-infor .fdi-duration", element)
@@ -42,7 +45,9 @@ async function extractPage(page, params) {
               .trim(),
           };
           let adultContent = false;
-          const tickRateText = $(".film-poster>.tick-rate", element).text().trim();
+          const tickRateText = $(".film-poster>.tick-rate", element)
+            .text()
+            .trim();
           if (tickRateText.includes("18+")) {
             adultContent = true;
           }
@@ -62,13 +67,13 @@ async function extractPage(page, params) {
             japanese_title,
             description,
             tvInfo,
-            adultContent
+            adultContent,
           };
         }
       )
     );
 
-    return data;
+    return [data, parseInt(totalPages, 10)];
   } catch (error) {
     console.error(`Error extracting data from page ${page}:`, error.message);
     throw error;

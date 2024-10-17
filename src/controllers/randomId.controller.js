@@ -1,17 +1,11 @@
 import extractRandomId from "../extractors/randomId.extractor.js";
 
-export const getRandomId = async (req, res) => {
+export const getRandomId = async (c) => {
   try {
     const data = await extractRandomId();
-    res.json({
-      success: true,
-      data,
-    });
+    return data;
   } catch (error) {
-    console.error("Error getting random anime:", error.message);
-    res.status(500).json({
-      success: false,
-      error: "An error occurred while getting random anime",
-    });
+    console.error("Error getting random anime ID:", error.message);
+    return e;
   }
 };
