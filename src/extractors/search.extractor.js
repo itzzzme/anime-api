@@ -20,10 +20,20 @@ async function extractSearchResults(search, page) {
     const $ = load(resp.data);
     const elements = "#main-content .film_list-wrap .flw-item";
 
-    const totalPagesElement = ".pre-pagination nav .pagination li.page-item";
     const totalPage =
-      $(totalPagesElement).last().find("a").attr("href")?.split("page=")[1] ||
-      1;
+      Number(
+        $('.pre-pagination nav .pagination > .page-item a[title="Last"]')
+          ?.attr("href")
+          ?.split("=")
+          .pop() ??
+          $('.pre-pagination nav .pagination > .page-item a[title="Next"]')
+            ?.attr("href")
+            ?.split("=")
+            .pop() ??
+          $(".pre-pagination nav .pagination > .page-item.active a")
+            ?.text()
+            ?.trim()
+      ) || 1;
 
     const result = [];
     $(elements).each((_, el) => {

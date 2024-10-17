@@ -1,5 +1,4 @@
 import extractSearchResults from "../extractors/search.extractor.js";
-import { v1_base_url } from "../utils/base_v1.js";
 
 export const search = async (c) => {
   try {
@@ -10,6 +9,7 @@ export const search = async (c) => {
       encodeURIComponent(keyword),
       page
     );
+    console.log(page, totalPage);
     if (page > totalPage) {
       const error = new Error("Requested page exceeds total available pages.");
       error.status = 404;
