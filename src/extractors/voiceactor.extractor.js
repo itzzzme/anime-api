@@ -9,14 +9,14 @@ export default async function extractVoiceActor(id, page) {
       `${baseUrl}/ajax/character/list/${id.split("-").pop()}?page=${page}`
     );
     const $ = cheerio.load(resp.data.html);
-    let lastPageNo = 1;
+    let totalPages = 1;
     const paginationList = $(".pre-pagination nav ul");
     if (paginationList.length) {
       const lastPageLink = paginationList.find("li").last().find("a");
       const pageNumber =
         lastPageLink.attr("data-url")?.match(/page=(\d+)/)?.[1] ||
         lastPageLink.text().trim();
-      lastPageNo = parseInt(pageNumber) || lastPageNo;
+      totalPages = parseInt(pageNumber) || totalPages;
     }
     const charactersVoiceActors = $(".bac-list-wrap .bac-item")
       .map((index, el) => {
