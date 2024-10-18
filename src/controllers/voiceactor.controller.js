@@ -4,11 +4,11 @@ export const getVoiceActors = async (c) => {
   const requestedPage = parseInt(c.req.query("page")) || 1;
   const id = c.req.param("id");
   try {
-    const { lastPageNo, charactersVoiceActors: data } = await extractVoiceActor(
+    const { totalPages, charactersVoiceActors: data } = await extractVoiceActor(
       id,
       requestedPage
     );
-    return { currentPage: requestedPage, lastPageNo, data };
+    return { currentPage: requestedPage, totalPages, data };
   } catch (e) {
     console.error(e);
     return e;

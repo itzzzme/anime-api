@@ -82,7 +82,6 @@ async function extractPage(page, params) {
         }
       )
     );
-    console.log(totalPages);
     return [data, parseInt(totalPages, 10)];
   } catch (error) {
     console.error(`Error extracting data from page ${page}:`, error.message);
