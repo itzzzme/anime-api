@@ -8,20 +8,20 @@ export async function decryptAllServers(data) {
 
     let decryptionPromise;
     if (server.type === "sub") {
-      decryptionPromise = decryptSources_v2(
+      decryptionPromise = decryptSources_v1(
         server.id,
         server.name,
         server.type
       );
     } else if (server.type === "dub") {
-      decryptionPromise = decryptSources_v2(
+      decryptionPromise = decryptSources_v1(
         server.id,
         server.name,
         server.type
       );
     }
     else if(server.type==='raw'){
-      decryptionPromise = decryptSources_v2(
+      decryptionPromise = decryptSources_v1(
         server.id,
         server.name,
         server.type
