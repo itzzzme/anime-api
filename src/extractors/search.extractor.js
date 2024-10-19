@@ -1,5 +1,5 @@
 import axios from "axios";
-import { load } from "cheerio";
+import * as cheerio from "cheerio";
 import { DEFAULT_HEADERS } from "../configs/header.config.js";
 import baseUrl from "../utils/baseUrl.js";
 
@@ -17,7 +17,7 @@ async function extractSearchResults(search, page) {
       }
     );
 
-    const $ = load(resp.data);
+    const $ = cheerio.load(resp.data);
     const elements = "#main-content .film_list-wrap .flw-item";
 
     const totalPage =

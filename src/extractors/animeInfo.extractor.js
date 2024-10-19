@@ -29,25 +29,19 @@ async function extractAnimeInfo(id) {
     const posterElement = $("#ani_detail .film-poster");
     const tvInfoElement = $("#ani_detail .film-stats");
     const tvInfo = {};
-
     tvInfoElement.find(".tick-item, span.item").each((_, element) => {
-      const text = $(element).text().trim();
-      if ($(element).hasClass("tick-quality")) {
-        tvInfo["quality"] = text;
-      } else if ($(element).hasClass("tick-sub")) {
-        tvInfo["sub"] = text;
-      } else if ($(element).hasClass("tick-dub")) {
-        tvInfo["dub"] = text;
-      } else if ($(element).hasClass("tick-pg")) {
-        tvInfo["rating"] = text;
-      } else if ($(element).is("span.item")) {
-        if (!tvInfo["showType"]) {
-          tvInfo["showType"] = text; // First span value for showType
-        } else if (!tvInfo["duration"]) {
-          tvInfo["duration"] = text; // Second span value for duration
-        }
+      const el = $(element);
+      const text = el.text().trim();
+      if (el.hasClass("tick-quality")) tvInfo.quality = text;
+      else if (el.hasClass("tick-sub")) tvInfo.sub = text;
+      else if (el.hasClass("tick-dub")) tvInfo.dub = text;
+      else if (el.hasClass("tick-pg")) tvInfo.rating = text;
+      else if (el.is("span.item")) {
+        if (!tvInfo.showType) tvInfo.showType = text;
+        else if (!tvInfo.duration) tvInfo.duration = text;
       }
     });
+
     const element = $(
       "#ani_detail > .ani_detail-stage > .container > .anis-content > .anisc-info-wrap > .anisc-info > .item"
     );
@@ -60,15 +54,14 @@ async function extractAnimeInfo(id) {
     const animeInfo = {};
     element.each((_, el) => {
       const key = $(el).find(".item-head").text().trim().replace(":", "");
-      const value = $(el).find(".name").text().trim();
-      if (key === "Genres" || key === "Producers") {
-        animeInfo[key] = $(el)
-          .find("a")
-          .map((_, anchor) => $(anchor).text().trim())
-          .get();
-      } else {
-        animeInfo[key] = value;
-      }
+      const value =
+        key === "Genres" || key === "Producers"
+          ? $(el)
+              .find("a")
+              .map((_, a) => $(a).text().trim())
+              .get()
+          : $(el).find(".name").text().trim();
+      animeInfo[key] = value;
     });
 
     const season_id = formatTitle(title, data_id);

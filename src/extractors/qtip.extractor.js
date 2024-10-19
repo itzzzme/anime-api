@@ -6,13 +6,11 @@ const baseUrl = v2_base_url;
 
 export default async function extractQtip(id) {
   try {
-    // Fetch data from the specified URL
     const { data } = await axios.get(
       `https://${baseUrl}/ajax/movie/qtip/${id}`
     );
     const $ = cheerio.load(data);
 
-    // Extract data
     const title = $(".pre-qtip-title").text();
     const rating = $(".pqd-li i.fas.fa-star").parent().text().trim();
     const quality = $(".tick-item.tick-quality").text();
