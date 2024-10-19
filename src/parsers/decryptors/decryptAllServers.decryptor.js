@@ -8,7 +8,7 @@ export async function decryptAllServers(data) {
 
     let decryptionPromise;
     if (server.type === "sub") {
-      decryptionPromise = decryptSources_v1(
+      decryptionPromise = decryptSources_v2(
         server.id,
         server.name,
         server.type
@@ -27,7 +27,7 @@ export async function decryptAllServers(data) {
         server.type
       ).then(async (result) => {
         if (result === undefined) {
-          return await decryptSources_v1(server.id, server.name, server.type);
+          return await decryptSources_v2(server.id, server.name, server.type);
         }
         return result;
       });
