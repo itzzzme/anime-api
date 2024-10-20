@@ -42,11 +42,11 @@ async function extractStreamingInfo(id) {
     const sortedData = [...data_v1].sort((a, b) =>
       a.type.localeCompare(b.type)
     );
-    const decryptedResults = await decryptAllServers(sortedData);
-    return { decryptedResults, servers };
+    const streamingLink = await decryptAllServers(sortedData);
+    return { streamingLink, servers };
   } catch (error) {
     console.error("An error occurred:", error);
-    return { decryptedResults: [], servers: [] };
+    return { streamingLink: [], servers: [] };
   }
 }
 

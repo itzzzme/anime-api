@@ -33,19 +33,16 @@ export async function decryptSources_v1(id, name, type) {
         }
         currentIndex += index[1];
       }
-
       const decrypted = CryptoJS.AES.decrypt(
         sourcesArray.join(""),
         extractedKey
       ).toString(CryptoJS.enc.Utf8);
       const decryptedSources = JSON.parse(decrypted);
       source.sources = null;
-      source.sources = [
-        {
-          file: decryptedSources[0].file,
-          type: "hls",
-        },
-      ];
+      source.sources = {
+        file: decryptedSources[0].file,
+        type: "hls",
+      };
     }
     if (source.hasOwnProperty("server")) {
       delete source.server;
@@ -53,7 +50,8 @@ export async function decryptSources_v1(id, name, type) {
     return {
       id: id,
       type: type,
-      source,
+      link: source.sources,
+      tracks: source.tracks,
       server: name,
     };
   } catch (error) {

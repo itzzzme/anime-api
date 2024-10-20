@@ -7,8 +7,7 @@ export const getStreamInfo = async (c) => {
     if (!match) throw new Error("Invalid URL format");
     const finalId = match[1];
     const streamingInfo = await extractStreamingInfo(finalId);
-    const data = { streamingInfo };
-    return data;
+    return streamingInfo;
   } catch (e) {
     console.error(e);
     return e;
