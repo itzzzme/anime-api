@@ -14,7 +14,7 @@ async function decryptSources_v2(id, name, type) {
     const ajaxResp = sourcesData.link;
     const [hostname] = /^(https?:\/\/(?:www\.)?[^\/\?]+)/.exec(ajaxResp) || [];
     const [_, sourceId] = /\/([^\/\?]+)\?/.exec(ajaxResp) || [];
-    const {data:source} = await axios.get(
+    const { data: source } = await axios.get(
       `${hostname}/ajax/embed-6-v2/getSources?id=${sourceId}`
     );
 
@@ -40,12 +40,10 @@ async function decryptSources_v2(id, name, type) {
       ).toString(CryptoJS.enc.Utf8);
       const decryptedSources = JSON.parse(decrypted);
       source.sources = null;
-      source.sources = [
-        {
-          file: decryptedSources[0].file,
-          type: "hls",
-        },
-      ];
+      source.sources = {
+        file: decryptedSources[0].file,
+        type: "hls",
+      };
     }
     if (source.hasOwnProperty("server")) {
       delete source.server;
@@ -53,7 +51,10 @@ async function decryptSources_v2(id, name, type) {
     return {
       id: id,
       type: type,
-      source,
+      link: source.sources,
+      tracks: source.tracks,
+      intro: source.intro,
+      outro: source.outro,
       server: name,
     };
   } catch (error) {

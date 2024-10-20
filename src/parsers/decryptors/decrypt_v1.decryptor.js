@@ -52,6 +52,8 @@ export async function decryptSources_v1(id, name, type) {
       type: type,
       link: source.sources,
       tracks: source.tracks,
+      intro: source.intro,
+      outro: source.outro,
       server: name,
     };
   } catch (error) {
