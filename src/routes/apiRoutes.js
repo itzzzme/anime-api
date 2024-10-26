@@ -48,7 +48,7 @@ export const createApiRoutes = (app, jsonResponse, jsonError) => {
   createRoute("/api/stream", streamController.getStreamInfo);
   createRoute("/api/search", searchController.search);
   createRoute("/api/search/suggest", suggestionsController.getSuggestions);
-  createRoute("/api/schedule", scheduleController.getSuggestions);
+  createRoute("/api/schedule", scheduleController.getSchedule);
   createRoute("/api/random", randomController.getRandom);
   createRoute("/api/random/id", randomIdController.getRandomId);
   createRoute("/api/qtip/:id", qtipController.getQtip);
