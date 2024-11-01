@@ -12,6 +12,8 @@ import * as randomController from "../controllers/random.controller.js";
 import * as qtipController from "../controllers/qtip.controller.js";
 import * as randomIdController from "../controllers/randomId.controller.js";
 import * as characterListController from "../controllers/voiceactor.controller.js";
+import * as nextEpisodeScheduleController from "../controllers/nextEpisodeSchedule.controller.js";
+
 import { routeTypes } from "./category.route.js";
 
 export const createApiRoutes = (app, jsonResponse, jsonError) => {
@@ -49,6 +51,10 @@ export const createApiRoutes = (app, jsonResponse, jsonError) => {
   createRoute("/api/search", searchController.search);
   createRoute("/api/search/suggest", suggestionsController.getSuggestions);
   createRoute("/api/schedule", scheduleController.getSchedule);
+  createRoute(
+    "/api/schedule/:id",
+    nextEpisodeScheduleController.getNextEpisodeSchedule
+  );
   createRoute("/api/random", randomController.getRandom);
   createRoute("/api/random/id", randomIdController.getRandomId);
   createRoute("/api/qtip/:id", qtipController.getQtip);
