@@ -13,10 +13,9 @@ export const getAnimeInfo = async (c) => {
       extractAnimeInfo(id),
     ]);
     const responseData = { data: data, seasons: seasons };
-    if ((seasons && seasons.length > 0) || (data && data.length > 0))
-      setCachedData(cacheKey, responseData).catch((err) => {
-        console.error("Failed to set cache:", err);
-      });
+    setCachedData(cacheKey, responseData).catch((err) => {
+      console.error("Failed to set cache:", err);
+    });
     return responseData;
   } catch (e) {
     console.error(e);
