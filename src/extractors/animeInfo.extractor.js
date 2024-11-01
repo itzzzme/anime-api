@@ -9,15 +9,21 @@ const baseUrl = v1_base_url;
 
 async function extractAnimeInfo(id) {
   try {
-    const [resp, characterData] = await Promise.all([
+    const [resp, characterData, nextEpisodeAiringDate] = await Promise.all([
       axios.get(`https://${baseUrl}/${id}`),
       axios.get(
         `https://${baseUrl}/ajax/character/list/${id.split("-").pop()}`
       ),
+      axios.get(`https://${baseUrl}/watch/${id}`),
     ]);
 
     const $1 = cheerio.load(characterData.data.html);
     const $ = cheerio.load(resp.data);
+    const $2 = cheerio.load(nextEpisodeAiringDate.data);
+
+    const nextEpisodeSchedule = $2(
+      ".schedule-alert > .alert.small > span:last"
+    ).attr("data-value");
     const data_id = id.split("-").pop();
 
     const titleElement = $("#ani_detail .film-name");
@@ -133,6 +139,7 @@ async function extractAnimeInfo(id) {
 
     return {
       adultContent,
+      ...(nextEpisodeSchedule && { nextEpisodeSchedule }),
       data_id,
       id: season_id,
       title,
