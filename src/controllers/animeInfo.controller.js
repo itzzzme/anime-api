@@ -7,7 +7,9 @@ export const getAnimeInfo = async (c) => {
   const cacheKey = `animeInfo_${id}`;
   try {
     const cachedResponse = await getCachedData(cacheKey);
-    if (cachedResponse) return cachedResponse;
+    if (cachedResponse && Object.keys(cachedResponse).length > 0) {
+      return cachedResponse;
+    }
     const [seasons, data] = await Promise.all([
       extractSeasons(id),
       extractAnimeInfo(id),

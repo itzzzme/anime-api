@@ -14,7 +14,7 @@ export const getHomeInfo = async (c) => {
   const cacheKey = "homeInfo";
   try {
     const cachedResponse = await getCachedData(cacheKey);
-    if (cachedResponse) {
+    if (cachedResponse && Object.keys(cachedResponse).length > 0) {
       return cachedResponse;
     }
     const [

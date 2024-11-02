@@ -15,7 +15,6 @@ async function extractAnimeInfo(id) {
         `https://${baseUrl}/ajax/character/list/${id.split("-").pop()}`
       ),
     ]);
-
     const $1 = cheerio.load(characterData.data.html);
     const $ = cheerio.load(resp.data);
     const data_id = id.split("-").pop();

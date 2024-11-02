@@ -9,7 +9,8 @@ export const getCategory = async (c, routeType) => {
   const cacheKey = `${routeType.replace(/\//g, "_")}_page_${requestedPage}`;
   try {
     const cachedResponse = await getCachedData(cacheKey);
-    if (cachedResponse) return cachedResponse;
+    if (cachedResponse && Object.keys(cachedResponse).length > 0)
+      return cachedResponse;
     const { data, totalPages } = await extractor(routeType, requestedPage);
     if (requestedPage > totalPages) {
       const error = new Error("Requested page exceeds total available pages.");

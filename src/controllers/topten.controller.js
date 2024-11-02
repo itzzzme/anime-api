@@ -5,7 +5,7 @@ export const getTopTen = async (c) => {
   const cacheKey = "topTen";
   try {
     const cachedResponse = await getCachedData(cacheKey);
-    if (cachedResponse) {
+    if (cachedResponse && Object.keys(cachedResponse).length > 0) {
       return cachedResponse;
     }
     const topTen = await extractTopTen();
