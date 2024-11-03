@@ -19,7 +19,7 @@ const publicDir = path.join(dirname(dirname(__filename)), "public");
 app.use(
   cors({
     allowMethods: ["GET"],
-    origin: "*",
+    origin: ["http://localhost:5173", "https://zenimestream.pages.dev"],
   })
 );
 app.use("/", serveStatic({ root: "public" }));
