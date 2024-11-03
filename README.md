@@ -1,6 +1,6 @@
 <p align="center">
       <img
-        src="https://media1.tenor.com/m/zZOt7alSzAMAAAAd/gojo-gojo-satoru.gif"
+        src="https://i.pinimg.com/originals/91/8d/cf/918dcf743df1f2a4086246ef6afc9b0c.gif"
         width="200"
         height="200"
       />
@@ -10,9 +10,9 @@
 
 >
 
-<p align="center">API made with Node.js ( scrape data from <a href="https://hianime.to" target="_blank">hianime.to</a>)</p>
+<p align="center">RestFul API made with Node.js <br/>( Checkout this anime streaming website  <a href="https://zenimestream.pages.dev" tarGET="_blank">Zenime</a> powered by this API)</p>
 
-# <span style="color:red">! Disclaimer !</span>
+# <span style="color:red">! Disclaimer</span>
 
 1.  Please don't spam the `api`. This `api` is deployed on a free web service. You can clone this repository on your local server for testing purposes.
 
@@ -68,7 +68,7 @@ Host your own instance of anime-api on Render.
 
 > # Documentation
 
-### `Get` Basic info
+### `GET` Home info
 
 ```bash
   GET /api/
@@ -202,7 +202,7 @@ console.log(resp.data);
 }
 ```
 
-### `Get` Top 10 anime's info
+### `GET` Top 10 anime's info
 
 ```bash
   GET /api/top-ten
@@ -271,7 +271,7 @@ console.log(resp.data);
 }
 ```
 
-### `Get` specified anime's info
+### `GET` specified anime's info
 
 ```bash
   GET /api/info
@@ -285,9 +285,9 @@ console.log(resp.data);
 
 #### Parameters
 
-| Parameter |  Type  | Description | Mandatory ? | Default |
-| :-------: | :----: | :---------: | :---------: | :-----: |
-|   `id`    | string |  anime-id   |   Yes ✔️    |   --    |
+| Parameter | Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :-------: | :------------: | :-------: | :---------: | :---------: | :-----: |
+|   `id`    |    `query`     |  string   |  anime-id   |   Yes ✔️    |   --    |
 
 #### Example of request
 
@@ -306,11 +306,13 @@ console.log(resp.data);
   "success": true,
   "results": {
     "data": {
+      "adultContent":boolean,
       "id":string,
       "data_id": number,
       "title": string,
       "japanese_title": string,
       "poster": string,
+      "showType":string,
       "animeInfo": {
         "Overview": string,
         "Japanese": string,
@@ -342,7 +344,7 @@ console.log(resp.data);
 }
 ```
 
-### `Get` random anime's info
+### `GET` random anime's info
 
 ```bash
   GET /api/random
@@ -371,11 +373,13 @@ console.log(resp.data);
   "success": true,
   "results": {
     "data": {
+      "adultContent":boolean,
       "id":string,
       "data_id": number,
       "title": string,
       "japanese_title": string,
       "poster": string,
+      "showType":string,
       "animeInfo": {
         "Overview": string,
         "Japanese": string,
@@ -443,7 +447,7 @@ console.log(resp.data);
 }
 ```
 
-### `Get` several categories info
+### `GET` Categories info
 
 ```bash
   GET /api/<category>
@@ -459,7 +463,7 @@ console.log(resp.data);
 
 #### Parameters
 
-| Parameter  | Parameter-type | Data-type | Description | Mandatory ? | Default |
+| Parameter  | Parameter-Type | Data-Type | Description | Mandatory ? | Default |
 | :--------: | :------------: | :-------: | :---------: | :---------: | :-----: |
 | `category` |     `path`     | `string`  | `Category`  |   Yes ✔️    |   --    |
 |   `page`   |    `query`     | `number`  | `Page-no.`  |    No ❌    |   `1`   |
@@ -476,6 +480,76 @@ console.log(resp.data);
 - subbed-anime
 - dubbed-anime
 - top-upcoming
+- genre/action
+- genre/adventure
+- genre/cars
+- genre/comedy
+- genre/dementia
+- genre/demons
+- genre/drama
+- genre/ecchi
+- genre/fantasy
+- genre/game
+- genre/harem
+- genre/historical
+- genre/horror
+- genre/isekai
+- genre/josei
+- genre/kids
+- genre/magic
+- genre/martial-arts
+- genre/mecha
+- genre/military
+- genre/music
+- genre/mystery
+- genre/parody
+- genre/police
+- genre/psychological
+- genre/romance
+- genre/samurai
+- genre/school
+- genre/sci-fi
+- genre/seinen
+- genre/shoujo
+- genre/shoujo-ai
+- genre/shounen
+- genre/shounen-ai
+- genre/slice-of-life
+- genre/space
+- genre/sports
+- genre/super-power
+- genre/supernatural
+- genre/thriller
+- genre/vampire
+- az-list
+- az-list/other
+- az-list/0-9
+- az-list/a
+- az-list/b
+- az-list/c
+- az-list/d
+- az-list/e
+- az-list/f
+- az-list/g
+- az-list/h
+- az-list/i
+- az-list/j
+- az-list/k
+- az-list/l
+- az-list/m
+- az-list/n
+- az-list/o
+- az-list/p
+- az-list/q
+- az-list/r
+- az-list/s
+- az-list/t
+- az-list/u
+- az-list/v
+- az-list/w
+- az-list/x
+- az-list/y
+- az-list/z
 - movie
 - special
 - ova
@@ -512,7 +586,8 @@ console.log(resp.data);
           "duration": string,
           "sub": number,
           "dub": number
-        }
+        },
+        "adultContent":boolean,
       },
       {
         "id":string,
@@ -527,15 +602,17 @@ console.log(resp.data);
           "sub": number,
           "dub": number,
           "eps": number
-        }
+        },
+        "adultContent":boolean,
       },
       {...}
-    ]
+    ],
+    "totalPages":number
   }
 }
 ```
 
-### `Get` search result's info
+### `GET` search result's info
 
 ```bash
   GET /api/search
@@ -549,7 +626,7 @@ console.log(resp.data);
 
 #### Parameters
 
-| Parameter | Parameter-type |   Type   | Description | Mandatory ? | Default |
+| Parameter | Parameter-Type |   Type   | Description | Mandatory ? | Default |
 | :-------: | :------------: | :------: | :---------: | :---------: | :-----: |
 | `keyword` |    `query`     | `string` |  `keyword`  |   Yes ✔️    |   --    |
 
@@ -590,7 +667,7 @@ console.log(resp.data);
 }
 ```
 
-### `Get` suggestions
+### `GET` suggestions
 
 ```bash
   GET /api/search
@@ -604,7 +681,7 @@ console.log(resp.data);
 
 #### Parameters
 
-| Parameter | Parameter-type |   Type   | Description | Mandatory ? | Default |
+| Parameter | Parameter-Type |   Type   | Description | Mandatory ? | Default |
 | :-------: | :------------: | :------: | :---------: | :---------: | :-----: |
 | `keyword` |    `query`     | `string` |  `keyword`  |   Yes ✔️    |   --    |
 
@@ -649,7 +726,7 @@ console.log(resp.data);
 }
 ```
 
-### `Get` anime's episode list
+### `GET` anime's episode list
 
 ```bash
   GET /api/episode/
@@ -663,9 +740,9 @@ console.log(resp.data);
 
 #### Parameters
 
-| Parameter |  Type  | Description | Mandatory ? | Default |
-| :-------: | :----: | :---------: | :---------: | :-----: |
-|  `param`  | string |  anime-id   |   Yes ✔️    |   --    |
+| Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :------------: | :-------: | :---------: | :---------: | :-----: |
+|    `param`     |  string   |  anime-id   |   Yes ✔️    |   --    |
 
 #### Example of request
 
@@ -683,8 +760,9 @@ console.log(resp.data);
 {
   "success": true,
   "results": [
-    {
-      "episode_no": number,
+    "totalEpisodes":number,
+    "episodes":[
+    { "episode_no": number,
       "id": string,
       "data_id": number,
       "jname": string,
@@ -692,11 +770,12 @@ console.log(resp.data);
       "japanese_title": string
     },
     {...}
+    ]
   ]
 }
 ```
 
-### `Get` schedule of upcoming anime
+### `GET` schedule of upcoming anime
 
 ```bash
   GET /api/schedule
@@ -710,9 +789,9 @@ console.log(resp.data);
 
 #### Parameters
 
-| Parameter |  Type  | Description | Mandatory ? | Default |
-| :-------: | :----: | :---------: | :---------: | :-----: |
-|  `query`  | string |  anime-id   |   Yes ✔️    |   --    |
+| Parameter | Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :-------: | :------------: | :-------: | :---------: | :---------: | :-----: |
+|  `date`   |     query      |  string   |  anime-id   |   Yes ✔️    |   --    |
 
 #### Example of request
 
@@ -744,7 +823,7 @@ console.log(resp.data);
 }
 ```
 
-### `Get` servers list
+### `GET` servers list
 
 ```bash
   GET /api/servers/
@@ -758,9 +837,9 @@ console.log(resp.data);
 
 #### Parameters
 
-| Parameter |  Type  | Description | Mandatory ? | Default |
-| :-------: | :----: | :---------: | :---------: | :-----: |
-| `params`  | string |  anime-id   |   Yes ✔️    |   --    |
+| paramter-type | Data-Type | Description | Mandatory ? | Default |
+| :-----------: | :-------: | :---------: | :---------: | :-----: |
+|   `params`    |  string   |  anime-id   |   Yes ✔️    |   --    |
 
 #### Example of request
 
@@ -790,7 +869,123 @@ console.log(resp.data);
 
 ```
 
-### `Get` streaming info
+### `GET` Qtip info
+
+```bash
+   GET /api/qtip/
+```
+
+### Endpoint
+
+```bash
+   https://anime-api-five-woad.vercel.app/api/qtip/{id}
+```
+
+#### Parameters
+
+| Parameter | Data-Type | Description | Mandatory ? | Default |
+| :-------: | :-------: | :---------: | :---------: | :-----: |
+|  `param`  | `number`  |     id      |   Yes ✔️    | Yes ✔️  |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get(
+  "https://anime-api-five-woad.vercel.app/api/qtip/3365"
+);
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "title": string,
+    "rating": double,
+    "quality": string,
+    "subCount": number,
+    "dubCount": number,
+    "episodeCount": number,
+    "type": string,
+    "description": string,
+    "japaneseTitle": string,
+    "Synonyms": string,
+    "airedDate": string,
+    "status": string,
+    "genres": [Object],
+    "watchLink": string
+  }
+}
+```
+
+### `GET` Characters
+
+```bash
+   GET /api/character/list/
+```
+
+### Endpoint
+
+```bash
+   https://anime-api-five-woad.vercel.app/api/character/list/{id}
+```
+
+#### Parameters
+
+| Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :------------: | :-------: | :---------: | :---------: | :-----: |
+|    `param`     | `string`  |  anime-id   |   Yes ✔️    | Yes ✔️  |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get(
+  "https://anime-api-five-woad.vercel.app/api/character/list/one-piece-100"
+);
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "currentPage": number,
+    "totalPages": number,
+    "data": [
+      {
+        "character": {
+          "id": string,
+          "poster": string,
+          "name": string,
+          "cast": string
+        },
+        "voiceActors": [
+          {
+            "id": string,
+            "poster": string,
+            "name": string
+          },
+          {
+            "id": string,
+            "poster": string,
+            "name": string
+          },
+          {...}
+        ]
+      },{...}
+    ]
+  }
+}
+
+```
+
+### `GET` streaming info
 
 ```bash
   GET /api/stream
@@ -804,7 +999,7 @@ console.log(resp.data);
 
 #### Parameters
 
-| Parameter | Parameter-type |   Type   | Description | Mandatory ? | Default |
+| Parameter | Parameter-Type |   Type   | Description | Mandatory ? | Default |
 | :-------: | :------------: | :------: | :---------: | :---------: | :-----: |
 |   `id`    |    `query`     | `string` |  `keyword`  |   Yes ✔️    |   --    |
 
@@ -824,55 +1019,45 @@ console.log(resp.data);
 {
   "success": true,
   "results": {
-    "streamingInfo": [
+    "streamingLink": [
       {
-        "status": "fulfilled",
-        "value": {
-          "decryptionResult": {
-            "link": string,
-            "server": string,
-            "type": "dub"
-          },
-          "subtitleResult": {
-            "subtitles": [
+            "id":number,
+            "type": "dub",
+            "link": {
+              "file":string,
+              "type":string,
+            },
+            "tracks": [
               {
                 "file": string,
                 "label": string,
                 "kind": string,
                 "default": boolean
-              },
-              {
-                "file": string,
-                "kind": string
-              }
+              },{...}
             ],
             "intro": [Object],
-            "outro": [Object]
-          }
-        }
-      },
+            "outro": [Object],
+            "server":string
+      }
       {...},
       {
-        "status": "fulfilled",
-        "value": {
-          "decryptionResult": {
-            "link": string,
-            "server": string,
-            "type": "sub"
-          },
-          "subtitleResult": {
-            "subtitles": [
+            "id":number,
+            "type": "sub",
+            "link": {
+              "file":string,
+              "type":string,
+            },
+            "tracks": [
               {
                 "file": string,
                 "label": string,
-                "kind": string
-              },
-              {...}
+                "kind": string,
+                "default": boolean
+              },{...}
             ],
             "intro": [Object],
-            "outro": [Object]
-          }
-        }
+            "outro": [Object],
+            "server":string
       },
       {...}
     ],
@@ -886,6 +1071,51 @@ console.log(resp.data);
       {...}
     ]
   }
+}
+```
+
+### `GET` Available servers of anime
+
+```bash
+  GET /api/servers/
+```
+
+### Endpoint
+
+```bash
+  https://anime-api-five-woad.vercel.app/api/servers/{id}
+```
+
+#### Parameters
+
+| Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :------------: | :-------: | :---------: | :---------: | :-----: |
+|    `params`    | `string`  |  `keyword`  |   Yes ✔️    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get(
+  "https://anime-api-five-woad.vercel.app/api/servers/demon-slayer-kimetsu-no-yaiba-hashira-training-arc-19107?ep=124260"
+);
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": [
+    {
+      "type": string,
+      "data_id": number,
+      "server_id": number,
+      "serverName": string
+    },
+    {...},
+  ]
 }
 ```
 
@@ -905,5 +1135,5 @@ If you discover any issues or have suggestions for improvement, please open an i
 >
 > If you like the project feel free to drop a star ✨. Your appreciation means a lot.
 
-<p align="center" style="text-decoration: none;">Made by <a href="https://github.com/itzzzme" target="_blank">itzzzme 
+<p align="center" style="text-decoration: none;">Made by <a href="https://github.com/itzzzme" tarGET="_blank">itzzzme 
 </a>🫰</p>
