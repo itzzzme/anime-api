@@ -1,6 +1,6 @@
 <p align="center">
       <img
-        src="https://iili.io/2oQCOhB.gif"
+        src="./public/anya.gif"
         width="200"
         height="200"
       />
