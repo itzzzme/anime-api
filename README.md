@@ -1,3 +1,13 @@
+![Static Badge](https://img.shields.io/badge/node.js-grey?logo=nodedotjs) ![Static Badge](https://img.shields.io/badge/stars-21-green?logo=github) ![Static Badge](https://img.shields.io/badge/forks-14-green?logo=github)  ![Static Badge](https://img.shields.io/badge/version-2.0-blue)
+
+# <span style="color:red">! Disclaimer</span>
+
+1.  Please don't spam the `api`. This `api` is deployed on a free web service. You can clone this repository on your local server for testing purposes.
+
+2.  This `api` does not store any files , it only link to the media which is hosted on 3rd party services.
+
+3.  This `api` is explicitly made for educational purposes only and not for commercial usage. This repo will not be responsible for any misuse of it.
+
 <p align="center">
       <img
         src="./public/anya.gif"
@@ -10,15 +20,8 @@
 
 >
 
-<p align="center">RestFul API made with Node.js <br/>( Checkout this anime streaming website  <a href="https://zenimestream.pages.dev" tarGET="_blank">Zenime</a> powered by this API)</p>
+<p align="center">RestFul API made with Node.js <br/>(Checkout this anime streaming website  <a href="https://zenimestream.pages.dev" tarGET="_blank">Zenime</a> powered by this API)</p>
 
-# <span style="color:red">! Disclaimer</span>
-
-1.  Please don't spam the `api`. This `api` is deployed on a free web service. You can clone this repository on your local server for testing purposes.
-
-2.  This `api` does not store any files , it only link to the media which is hosted on 3rd party services.
-
-3.  This `api` is explicitly made for educational purposes only and not for commercial usage. This repo will not be responsible for any misuse of it.
 
 > <h2> Table of Contents </h2>
 
