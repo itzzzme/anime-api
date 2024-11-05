@@ -83,7 +83,7 @@ Host your own instance of anime-api on Render.
 ### Endpoint
 
 ```bash
-  https://anime-api-five-woad.vercel.app/api/
+  /api/
 ```
 
 > #### No parameter required ❌
@@ -92,7 +92,7 @@ Host your own instance of anime-api on Render.
 
 ```javascript
 import axios from "axios";
-const resp = await axios.get("https://anime-api-five-woad.vercel.app/api/");
+const resp = await axios.get("/api/");
 console.log(resp.data);
 ```
 
@@ -217,7 +217,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://anime-api-five-woad.vercel.app/api/info?id={string}
+  /api/top-ten
 ```
 
 > #### No parameter required ❌
@@ -227,7 +227,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-five-woad.vercel.app/api/top-ten"
+  "/api/top-ten"
 );
 console.log(resp.data);
 ```
@@ -286,7 +286,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://anime-api-five-woad.vercel.app/api/info?id={string}
+  /api/info?id={string}
 ```
 
 #### Parameters
@@ -300,7 +300,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-five-woad.vercel.app/api/info?id=yami-shibai-9-17879"
+  "/api/info?id=yami-shibai-9-17879"
 );
 console.log(resp.data);
 ```
@@ -359,7 +359,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://anime-api-five-woad.vercel.app/api/random
+  /api/random
 ```
 
 #### Example of request
@@ -367,7 +367,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-five-woad.vercel.app/api/random"
+  "/api/random"
 );
 console.log(resp.data);
 ```
@@ -462,9 +462,9 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://anime-api-five-woad.vercel.app/api/{string}?page={number}
+  /api/{string}?page={number}
   #or
-  https://anime-api-five-woad.vercel.app/api/{string}
+  /api/{string}
 ```
 
 #### Parameters
@@ -567,7 +567,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-five-woad.vercel.app/api/most-popular?page=1"
+  "/api/most-popular?page=1"
 );
 console.log(resp.data);
 ```
@@ -627,7 +627,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://anime-api-five-woad.vercel.app/api/search?keyword={string}
+  /api/search?keyword={string}
 ```
 
 #### Parameters
@@ -641,7 +641,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-five-woad.vercel.app/api/search?keyword=one%20punch%20man"
+  "/api/search?keyword=one%20punch%20man"
 );
 console.log(resp.data);
 ```
@@ -676,13 +676,13 @@ console.log(resp.data);
 ### `GET` suggestions
 
 ```bash
-  GET /api/search
+  GET /api/search/suggest
 ```
 
 ### Endpoint
 
 ```bash
-  https://anime-api-five-woad.vercel.app/api/search/suggest?keyword={string}
+  /api/search/suggest?keyword={string}
 ```
 
 #### Parameters
@@ -696,7 +696,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-five-woad.vercel.app/api/search/suggest?keyword=demon"
+  "/api/search/suggest?keyword=demon"
 );
 console.log(resp.data);
 ```
@@ -735,13 +735,13 @@ console.log(resp.data);
 ### `GET` anime's episode list
 
 ```bash
-  GET /api/episode/
+  GET /api/episodes/
 ```
 
 ### Endpoint
 
 ```bash
-  https://anime-api-five-woad.vercel.app/api/episode/{param}
+  /api/episodes/{param}
 ```
 
 #### Parameters
@@ -755,7 +755,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-five-woad.vercel.app/api/episodes/one-piece-100"
+  "/api/episodes/one-piece-100"
 );
 console.log(resp.data);
 ```
@@ -790,7 +790,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://anime-api-five-woad.vercel.app/api/schedule?date={string}
+  /api/schedule?date={string}
 ```
 
 #### Parameters
@@ -804,7 +804,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-five-woad.vercel.app/api/schedule?date=2024-09-23"
+  "/api/schedule?date=2024-09-23"
 );
 console.log(resp.data);
 ```
@@ -838,7 +838,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://anime-api-five-woad.vercel.app/api/schedule?date={string}
+  /api/servers/{string}
 ```
 
 #### Parameters
@@ -852,7 +852,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-five-woad.vercel.app/api/servers/demon-slayer-kimetsu-no-yaiba-hashira-training-arc-19107?ep=124260"
+  "/api/servers/demon-slayer-kimetsu-no-yaiba-hashira-training-arc-19107?ep=124260"
 );
 console.log(resp.data);
 ```
@@ -884,7 +884,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-   https://anime-api-five-woad.vercel.app/api/qtip/{id}
+   /api/qtip/{id}
 ```
 
 #### Parameters
@@ -898,7 +898,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-five-woad.vercel.app/api/qtip/3365"
+  "/api/qtip/3365"
 );
 console.log(resp.data);
 ```
@@ -936,7 +936,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-   https://anime-api-five-woad.vercel.app/api/character/list/{id}
+   /api/character/list/{id}
 ```
 
 #### Parameters
@@ -950,7 +950,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-five-woad.vercel.app/api/character/list/one-piece-100"
+  "/api/character/list/one-piece-100"
 );
 console.log(resp.data);
 ```
@@ -1000,7 +1000,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://anime-api-five-woad.vercel.app/api/stream?id={string}
+  /api/stream?id={string}
 ```
 
 #### Parameters
@@ -1014,7 +1014,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-five-woad.vercel.app/api/stream?id=frieren-beyond-journeys-end-18542?ep=107257"
+  "/api/stream?id=frieren-beyond-journeys-end-18542?ep=107257"
 );
 console.log(resp.data);
 ```
@@ -1089,7 +1089,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  https://anime-api-five-woad.vercel.app/api/servers/{id}
+  /api/servers/{id}
 ```
 
 #### Parameters
@@ -1103,7 +1103,7 @@ console.log(resp.data);
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "https://anime-api-five-woad.vercel.app/api/servers/demon-slayer-kimetsu-no-yaiba-hashira-training-arc-19107?ep=124260"
+  "/api/servers/demon-slayer-kimetsu-no-yaiba-hashira-training-arc-19107?ep=124260"
 );
 console.log(resp.data);
 ```
