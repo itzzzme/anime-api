@@ -4,13 +4,11 @@
 
 </div>
 
-# <span style="color:red">! Disclaimer</span>
+## <span>Disclaimer</span>
 
-1.  Please don't spam the `api`. This `api` is deployed on a free web service. You can clone this repository on your local server for testing purposes.
+1.  This `api` does not store any files , it only link to the media which is hosted on 3rd party services.
 
-2.  This `api` does not store any files , it only link to the media which is hosted on 3rd party services.
-
-3.  This `api` is explicitly made for educational purposes only and not for commercial usage. This repo will not be responsible for any misuse of it.
+2.  This `api` is explicitly made for educational purposes only and not for commercial usage. This repo will not be responsible for any misuse of it.
 
 <p align="center">
       <img
@@ -226,9 +224,7 @@ console.log(resp.data);
 
 ```javascript
 import axios from "axios";
-const resp = await axios.get(
-  "/api/top-ten"
-);
+const resp = await axios.get("/api/top-ten");
 console.log(resp.data);
 ```
 
@@ -299,9 +295,7 @@ console.log(resp.data);
 
 ```javascript
 import axios from "axios";
-const resp = await axios.get(
-  "/api/info?id=yami-shibai-9-17879"
-);
+const resp = await axios.get("/api/info?id=yami-shibai-9-17879");
 console.log(resp.data);
 ```
 
@@ -366,9 +360,7 @@ console.log(resp.data);
 
 ```javascript
 import axios from "axios";
-const resp = await axios.get(
-  "/api/random"
-);
+const resp = await axios.get("/api/random");
 console.log(resp.data);
 ```
 
@@ -566,9 +558,7 @@ console.log(resp.data);
 
 ```javascript
 import axios from "axios";
-const resp = await axios.get(
-  "/api/most-popular?page=1"
-);
+const resp = await axios.get("/api/most-popular?page=1");
 console.log(resp.data);
 ```
 
@@ -640,9 +630,7 @@ console.log(resp.data);
 
 ```javascript
 import axios from "axios";
-const resp = await axios.get(
-  "/api/search?keyword=one%20punch%20man"
-);
+const resp = await axios.get("/api/search?keyword=one%20punch%20man");
 console.log(resp.data);
 ```
 
@@ -695,9 +683,7 @@ console.log(resp.data);
 
 ```javascript
 import axios from "axios";
-const resp = await axios.get(
-  "/api/search/suggest?keyword=demon"
-);
+const resp = await axios.get("/api/search/suggest?keyword=demon");
 console.log(resp.data);
 ```
 
@@ -754,9 +740,7 @@ console.log(resp.data);
 
 ```javascript
 import axios from "axios";
-const resp = await axios.get(
-  "/api/episodes/one-piece-100"
-);
+const resp = await axios.get("/api/episodes/one-piece-100");
 console.log(resp.data);
 ```
 
@@ -803,9 +787,7 @@ console.log(resp.data);
 
 ```javascript
 import axios from "axios";
-const resp = await axios.get(
-  "/api/schedule?date=2024-09-23"
-);
+const resp = await axios.get("/api/schedule?date=2024-09-23");
 console.log(resp.data);
 ```
 
@@ -897,9 +879,7 @@ console.log(resp.data);
 
 ```javascript
 import axios from "axios";
-const resp = await axios.get(
-  "/api/qtip/3365"
-);
+const resp = await axios.get("/api/qtip/3365");
 console.log(resp.data);
 ```
 
@@ -949,9 +929,7 @@ console.log(resp.data);
 
 ```javascript
 import axios from "axios";
-const resp = await axios.get(
-  "/api/character/list/one-piece-100"
-);
+const resp = await axios.get("/api/character/list/one-piece-100");
 console.log(resp.data);
 ```
 
