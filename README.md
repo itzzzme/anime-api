@@ -811,52 +811,6 @@ console.log(resp.data);
 }
 ```
 
-### `GET` servers list
-
-```bash
-  GET /api/servers/
-```
-
-### Endpoint
-
-```bash
-  /api/servers/{string}
-```
-
-#### Parameters
-
-| paramter-type | Data-Type | Description | Mandatory ? | Default |
-| :-----------: | :-------: | :---------: | :---------: | :-----: |
-|   `params`    |  string   |  anime-id   |   Yes ✔️    |   --    |
-
-#### Example of request
-
-```javascript
-import axios from "axios";
-const resp = await axios.get(
-  "/api/servers/demon-slayer-kimetsu-no-yaiba-hashira-training-arc-19107?ep=124260"
-);
-console.log(resp.data);
-```
-
-#### Sample Response
-
-```javascript
-{
-  "success": true,
-  "results": [
-    {
-      "type":string,
-      "dataId":number,
-      "serverId":number,
-      "serverName":string,
-    },
-    {...}
-  ]
-}
-
-```
-
 ### `GET` Qtip info
 
 ```bash
