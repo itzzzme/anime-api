@@ -22,7 +22,7 @@
 
 >
 
-<p align="center">RestFul API made with Node.js <br/>(Checkout this anime streaming website  <a href="https://zenimestream.pages.dev" tarGET="_blank">Zenime</a> powered by this API)</p>
+<p align="center">RestFul API made with Node.js <br/>(Checkout this anime streaming website  <a href="https://zenime.site" tarGET="_blank">Zenime</a> powered by this API)</p>
 
 > <h2> Table of Contents </h2>
 
