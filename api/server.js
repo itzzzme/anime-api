@@ -15,13 +15,15 @@ const app = new Hono();
 const PORT = process.env.PORT || 4444;
 const __filename = fileURLToPath(import.meta.url);
 const publicDir = path.join(dirname(dirname(__filename)), "public");
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(",");
 
 app.use(
   cors({
     allowMethods: ["GET"],
-    origin: "*",
+    origin: allowedOrigins,
   })
 );
+
 app.use("/", serveStatic({ root: "public" }));
 
 const jsonResponse = (c, data, status = 200) =>
