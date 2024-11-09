@@ -29,6 +29,7 @@ async function extractEpisodesList(id) {
         id: $(el)?.attr("href")?.split("/")?.pop() || null,
         title: $(el)?.attr("title")?.trim() || null,
         japanese_title: $(el).find(".ep-name").attr("data-jname"),
+        filler: $(el).hasClass("ssl-item-filler"),
       });
     });
     return res;
