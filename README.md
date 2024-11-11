@@ -1,6 +1,6 @@
 <div align="center">
 
-![Static Badge](https://img.shields.io/badge/node.js-grey?logo=nodedotjs) ![Static Badge](https://img.shields.io/badge/stars-21-green?logo=github) ![Static Badge](https://img.shields.io/badge/forks-14-green?logo=github) ![Static Badge](https://img.shields.io/badge/version-2.0-blue)
+![Static Badge](https://img.shields.io/badge/node.js-grey?logo=nodedotjs) ![Static Badge](https://img.shields.io/badge/stars-30-green?logo=github) ![Static Badge](https://img.shields.io/badge/forks-17-green?logo=github) ![Static Badge](https://img.shields.io/badge/version-1.0.0-blue)
 
 </div>
 
