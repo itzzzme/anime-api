@@ -9,7 +9,7 @@ function matchingKey(value, script) {
   const regex = new RegExp(`,${value}=((?:0x)?([0-9a-fA-F]+))`);
   const match = script.match(regex);
   if (match) {
-    return match[1].replace(/^0x/, "");
+    return match[2];
   } else {
     throw new ErrorLoadingException("Failed to match the key");
   }
