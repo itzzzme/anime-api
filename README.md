@@ -34,6 +34,20 @@
   - [Vercel](#Vercel)
   - [Render](#Render)
 - [Documentation](#documentation)
+  - [GET Home Info](#get-home-info)
+  - [GET Top 10 Anime's Info](#get-top-10-animes-info)
+  - [GET Specified Anime's Info](#get-specified-animes-info)
+  - [GET Random Anime's Info](#get-random-animes-info)
+  - [GET Categories Info](#get-categories-info)
+  - [GET Producer's & studio's Anime](#get-anime-of-specific-producers-or-studio)
+  - [GET Search Result's Info](#get-search-results-info)
+  - [GET Search Suggestions](#get-search-suggestions)
+  - [GET Anime Episodes](#get-animes-episode-list)
+  - [GET Anime Schedule](#get-schedule-of-upcoming-anime)
+  - [GET Anime Qtip Info](#get-qtip-info)
+  - [GET Anime Characters](#get-characters)
+  - [GET Anime Stream Info](#get-streaming-info)
+  - [GET Anime Episode's Available Servers](#get-available-servers-of-anime)
 - [Pull Requests](#pull-requests)
 - [Reporting Issues](#reporting-issues)
 - [Support](#support)
@@ -275,7 +289,7 @@ console.log(resp.data);
 }
 ```
 
-### `GET` specified anime's info
+### `GET` Specified anime's info
 
 ```bash
   GET /api/info
@@ -346,7 +360,7 @@ console.log(resp.data);
 }
 ```
 
-### `GET` random anime's info
+### `GET` Random anime's info
 
 ```bash
   GET /api/random
@@ -609,7 +623,7 @@ console.log(resp.data);
   }
 }
 ```
-### `GET` Anime of specific producers & studio
+### `GET` Anime of specific producers or studio
 
 ```bash
   GET /api/<producer>/
@@ -685,7 +699,7 @@ console.log(resp.data);
 ```
 
 
-### `GET` search result's info
+### `GET` Search result's info
 
 ```bash
   GET /api/search
@@ -738,7 +752,7 @@ console.log(resp.data);
 }
 ```
 
-### `GET` suggestions
+### `GET` Search suggestions
 
 ```bash
   GET /api/search/suggest
@@ -795,7 +809,7 @@ console.log(resp.data);
 }
 ```
 
-### `GET` anime's episode list
+### `GET` Anime's episode list
 
 ```bash
   GET /api/episodes/
@@ -842,7 +856,7 @@ console.log(resp.data);
 }
 ```
 
-### `GET` schedule of upcoming anime
+### `GET` Schedule of upcoming anime
 
 ```bash
   GET /api/schedule
@@ -1000,7 +1014,7 @@ console.log(resp.data);
 
 ```
 
-### `GET` streaming info
+### `GET` Streaming info
 
 ```bash
   GET /api/stream
