@@ -23,6 +23,7 @@ async function extractPage(page, params) {
             ?.text()
             ?.trim()
       ) || 1;
+      
     const contentSelector = params.includes("az-list")
       ? ".tab-content"
       : "#main-content";
@@ -68,7 +69,6 @@ async function extractPage(page, params) {
               tvInfo[property] = value;
             }
           });
-
           return {
             id,
             data_id,

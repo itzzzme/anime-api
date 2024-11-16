@@ -11,6 +11,7 @@ import * as serversController from "../controllers/servers.controller.js";
 import * as randomController from "../controllers/random.controller.js";
 import * as qtipController from "../controllers/qtip.controller.js";
 import * as randomIdController from "../controllers/randomId.controller.js";
+import * as producerController from "../controllers/producer.controller.js";
 import * as characterListController from "../controllers/voiceactor.controller.js";
 import * as nextEpisodeScheduleController from "../controllers/nextEpisodeSchedule.controller.js";
 
@@ -58,6 +59,7 @@ export const createApiRoutes = (app, jsonResponse, jsonError) => {
   createRoute("/api/random", randomController.getRandom);
   createRoute("/api/random/id", randomIdController.getRandomId);
   createRoute("/api/qtip/:id", qtipController.getQtip);
+  createRoute("/api/producer/:id", producerController.getProducer);
   createRoute(
     "/api/character/list/:id",
     characterListController.getVoiceActors
