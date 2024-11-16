@@ -609,6 +609,81 @@ console.log(resp.data);
   }
 }
 ```
+### `GET` Anime of specific producers & studio
+
+```bash
+  GET /api/<producer>/
+```
+
+### Endpoint
+
+```bash
+  /api/producer/{string}?page={number}
+  #or
+  /api/producer/{string}
+```
+
+#### Parameters
+
+| Parameter  | Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :--------: | :------------: | :-------: | :---------: | :---------: | :-----: |
+| `producer` |     `path`     | `string`  | `Producer`  |   Yes ✔️    |   --    |
+|   `page`   |    `query`     | `number`  | `Page-no.`  |    No ❌    |   `1`   |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get("/api/producer/ufotable?page=1");
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "totalPages": number,
+    "data": [
+      {
+        "id":string,
+        "data_id": number,
+        "poster": string,
+        "title": string,
+        "japanese_title": string,
+        "description": string,
+        "tvInfo": {
+          "showType": string,
+          "duration": string,
+          "sub": number,
+          "dub": number
+        },
+        "adultContent":boolean,
+      },
+      {
+        "id":string,
+        "data_id": number,
+        "poster": string,
+        "title": string,
+        "japanese_title": string,
+        "description": string,
+        "tvInfo": {
+          "showType": sting,
+          "duration": string,
+          "sub": number,
+          "dub": number,
+          "eps": number
+        },
+        "adultContent":boolean,
+      },
+      {...}
+    ],
+    "totalPages":number
+  }
+}
+```
+
 
 ### `GET` search result's info
 
