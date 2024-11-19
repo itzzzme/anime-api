@@ -7,6 +7,9 @@ const CACHE_SERVER_URL = process.env.CACHE_URL;
 
 export const getCachedData = async (key) => {
   try {
+    if (!CACHE_SERVER_URL) {
+      return;
+    }
     const response = await axios.get(`${CACHE_SERVER_URL}/${key}`);
     return response.data;
   } catch (error) {
@@ -19,6 +22,9 @@ export const getCachedData = async (key) => {
 
 export const setCachedData = async (key, value) => {
   try {
+    if (!CACHE_SERVER_URL) {
+      return;
+    }
     await axios.post(CACHE_SERVER_URL, { key, value });
   } catch (error) {
     console.error("Error setting cache data:", error);
