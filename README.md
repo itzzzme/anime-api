@@ -2,7 +2,7 @@
 
 ![Static Badge](https://img.shields.io/badge/node.js-grey?logo=nodedotjs) ![GitHub stars](https://img.shields.io/github/stars/itzzzme/anime-api?logo=github)
 ![GitHub forks](https://img.shields.io/github/forks/itzzzme/anime-api?logo=github)
- ![Static Badge](https://img.shields.io/badge/version-1.0.0-blue)
+![Static Badge](https://img.shields.io/badge/version-1.0.0-blue)
 
 </div>
 
@@ -64,6 +64,14 @@ Run the following code to clone the repository and install all required dependen
 $ git clone https://github.com/itzzzme/anime-api.git
 $ cd anime-api
 $ npm install
+```
+
+Refer the `.env.example` file to setup `.env` file
+
+```bash
+# Origins you want to allow
+
+ALLOWED_ORIGIN=<https://site1.com>,<https://site2.com>,...
 ```
 
 Start the server
@@ -623,6 +631,7 @@ console.log(resp.data);
   }
 }
 ```
+
 ### `GET` Anime of specific producers or studio
 
 ```bash
@@ -697,7 +706,6 @@ console.log(resp.data);
   }
 }
 ```
-
 
 ### `GET` Search result's info
 
