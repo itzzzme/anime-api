@@ -46,5 +46,5 @@ serve({
   port: PORT,
   fetch: app.fetch,
 }).addListener("listening", () =>
-  console.info(`Listening at http://localhost:${PORT}`)
+  console.info(`Listening at ${PORT}`)
 );
