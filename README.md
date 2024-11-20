@@ -58,7 +58,7 @@
 
 Make sure you have node installed on your device
 
-Run the following code to clone the repository and install all required dependencies
+1) Run the following code to clone the repository and install all required dependencies
 
 ```bash
 $ git clone https://github.com/itzzzme/anime-api.git
@@ -66,7 +66,7 @@ $ cd anime-api
 $ npm install
 ```
 
-Refer the `.env.example` file to setup `.env` file
+2) Refer the [.env.example](https://github.com/itzzzme/anime-api/blob/main/.env.example) file to setup `.env` file
 
 ```bash
 # Origins you want to allow
@@ -74,7 +74,7 @@ Refer the `.env.example` file to setup `.env` file
 ALLOWED_ORIGIN=<https://site1.com>,<https://site2.com>,...
 ```
 
-Start the server
+3) Start the server
 
 ```bash
 $ npm start #or npm run devStart
