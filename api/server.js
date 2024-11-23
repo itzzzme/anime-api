@@ -8,6 +8,7 @@ import { serveStatic } from "@hono/node-server/serve-static";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import { createApiRoutes } from "../src/routes/apiRoutes.js";
+import { all } from "axios";
 
 dotenv.config();
 
@@ -20,7 +21,7 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",");
 app.use(
   cors({
     allowMethods: ["GET"],
-    origin: allowedOrigins,
+    origin: allowedOrigins || "*",
   })
 );
 
@@ -45,6 +46,4 @@ app.get("*", async (c) => {
 serve({
   port: PORT,
   fetch: app.fetch,
-}).addListener("listening", () =>
-  console.info(`Listening at ${PORT}`)
-);
+}).addListener("listening", () => console.info(`Listening at ${PORT}`));
