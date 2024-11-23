@@ -3,11 +3,12 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const CACHE_SERVER_URL = process.env.CACHE_URL;
+const CACHE_SERVER_URL = process.env.CACHE_URL || null;
 
 export const getCachedData = async (key) => {
   try {
     if (!CACHE_SERVER_URL) {
+      console.log(CACHE_SERVER_URL);
       return;
     }
     const response = await axios.get(`${CACHE_SERVER_URL}/${key}`);
