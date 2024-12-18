@@ -1,6 +1,6 @@
 import extractRandomId from "../extractors/randomId.extractor.js";
 
-export const getRandomId = async (c) => {
+export const getRandomId = async (req,res) => {
   try {
     const data = await extractRandomId();
     return data;

@@ -2,9 +2,10 @@ import extractAnimeInfo from "../extractors/animeInfo.extractor.js";
 import extractSeasons from "../extractors/seasons.extractor.js";
 import { getCachedData, setCachedData } from "../helper/cache.helper.js";
 
-export const getAnimeInfo = async (c) => {
-  const { id } = c.req.query();
+export const getAnimeInfo = async (req, res) => {
+  const { id } = req.query;
   const cacheKey = `animeInfo_${id}`;
+
   try {
     const cachedResponse = await getCachedData(cacheKey);
     if (cachedResponse && Object.keys(cachedResponse).length > 0) {
@@ -21,6 +22,6 @@ export const getAnimeInfo = async (c) => {
     return responseData;
   } catch (e) {
     console.error(e);
-    return e;
+    return res.status(500).json({ error: "An error occurred" });
   }
 };

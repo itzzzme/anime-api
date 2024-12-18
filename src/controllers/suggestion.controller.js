@@ -1,7 +1,7 @@
 import getSuggestion from "../extractors/suggestion.extractor.js";
 
-export const getSuggestions = async (c) => {
-  const { keyword } = c.req.query();
+export const getSuggestions = async (req) => {
+  const { keyword } = req.query;
   try {
     const data = await getSuggestion(encodeURIComponent(keyword));
     return data;

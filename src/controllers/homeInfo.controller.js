@@ -10,7 +10,7 @@ const genres = routeTypes
   .slice(0, 41)
   .map((genre) => genre.replace("genre/", ""));
 
-export const getHomeInfo = async (c) => {
+export const getHomeInfo = async (req,res) => {
   const cacheKey = "homeInfo";
   try {
     const cachedResponse = await getCachedData(cacheKey);

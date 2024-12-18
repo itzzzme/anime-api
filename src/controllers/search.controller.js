@@ -1,9 +1,9 @@
 import extractSearchResults from "../extractors/search.extractor.js";
 
-export const search = async (c) => {
+export const search = async (req) => {
   try {
-    let { keyword } = c.req.query();
-    let page = parseInt(c.req.query("page")) || 1;
+    let { keyword } = req.query;
+    let page = parseInt(req.query.page) || 1;
 
     const [totalPage, data] = await extractSearchResults(
       encodeURIComponent(keyword),

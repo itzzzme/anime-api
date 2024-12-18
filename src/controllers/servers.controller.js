@@ -1,8 +1,8 @@
 import { extractServers } from "../extractors/streamInfo.extractor.js";
 
-export const getServers = async (c) => {
+export const getServers = async (req) => {
   try {
-    const { ep } = c.req.query();
+    const { ep } = req.query;
     const servers = await extractServers(ep);
     return servers;
   } catch (e) {

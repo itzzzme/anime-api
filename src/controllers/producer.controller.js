@@ -1,15 +1,16 @@
 import { getCachedData, setCachedData } from "../helper/cache.helper.js";
 import extractPage from "../helper/extractPages.helper.js";
 
-export const getProducer = async (c) => {
-  const { id } = c.req.param();
+export const getProducer = async (req) => {
+  const { id } = req.params;
   const routeType = `producer/${id}`;
-  const requestedPage = parseInt(c.req.query("page")) || 1;
+  const requestedPage = parseInt(req.query.page) || 1;
   const cacheKey = `${routeType.replace(/\//g, "_")}_page_${requestedPage}`;
   try {
     const cachedResponse = await getCachedData(cacheKey);
-    if (cachedResponse && Object.keys(cachedResponse).length > 0)
+    if (cachedResponse && Object.keys(cachedResponse).length > 0) {
       return cachedResponse;
+    }
     const [data, totalPages] = await extractPage(requestedPage, routeType);
     if (requestedPage > totalPages) {
       const error = new Error("Requested page exceeds total available pages.");

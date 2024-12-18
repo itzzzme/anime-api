@@ -1,7 +1,7 @@
 import extractTopTen from "../extractors/topten.extractor.js";
 import { getCachedData, setCachedData } from "../helper/cache.helper.js";
 
-export const getTopTen = async (c) => {
+export const getTopTen = async (req,res) => {
   const cacheKey = "topTen";
   try {
     const cachedResponse = await getCachedData(cacheKey);

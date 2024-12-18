@@ -14,33 +14,32 @@ import * as randomIdController from "../controllers/randomId.controller.js";
 import * as producerController from "../controllers/producer.controller.js";
 import * as characterListController from "../controllers/voiceactor.controller.js";
 import * as nextEpisodeScheduleController from "../controllers/nextEpisodeSchedule.controller.js";
-
 import { routeTypes } from "./category.route.js";
 
 export const createApiRoutes = (app, jsonResponse, jsonError) => {
   const createRoute = (path, controllerMethod) => {
-    app.get(path, async (c) => {
+    app.get(path, async (req, res) => {
       try {
-        const data = await controllerMethod(c);
-        return jsonResponse(c, data);
+        const data = await controllerMethod(req, res);
+        return jsonResponse(res, data);
       } catch (err) {
-        return jsonError(c);
+        return jsonError(res);
       }
     });
   };
 
   ["/api", "/api/"].forEach((route) => {
-    app.get(route, (c) =>
+    app.get(route, (req, res) =>
       homeInfoController
-        .getHomeInfo(c)
-        .then((data) => jsonResponse(c, data))
-        .catch((err) => jsonError(c))
+        .getHomeInfo(req, res)
+        .then((data) => jsonResponse(res, data))
+        .catch((err) => jsonError(res))
     );
   });
 
   routeTypes.forEach((routeType) =>
-    createRoute(`/api/${routeType}`, (c) =>
-      categoryController.getCategory(c, routeType)
+    createRoute(`/api/${routeType}`, (req, res) =>
+      categoryController.getCategory(req, res, routeType)
     )
   );
 
