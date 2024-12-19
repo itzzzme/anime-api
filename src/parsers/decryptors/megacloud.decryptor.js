@@ -758,7 +758,6 @@ const decryptSource = async (embed_url) => {
       "&b=" +
       browser_version;
   }
-  console.log(getSourcesUrl);
   let { data: resp } = await axios.get(getSourcesUrl, {
     headers: {
       "User-Agent": user_agent,
@@ -772,7 +771,6 @@ const decryptSource = async (embed_url) => {
   Q5 = new Uint8Array(Q5);
   let Q8 = resp.t != 0 ? (i(Q5, Q1), Q5) : ((Q8 = resp.k), i(Q8, Q1), Q8);
   let str = btoa(String.fromCharCode.apply(null, new Uint8Array(Q8)));
-  console.log(resp);
   var decryptedSource = M(resp.sources, str);
   resp.sources = decryptedSource;
   return resp;
