@@ -1032,7 +1032,7 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  /api/stream?id={string}&server={string}&type={setring}
+  /api/stream?id={string}&server={string}&type={string}
 ```
 
 #### Parameters
