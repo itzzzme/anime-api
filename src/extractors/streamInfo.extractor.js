@@ -1,9 +1,7 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import baseUrl from "../utils/baseUrl.js";
-// import { fetchServerData_v2 } from "../parsers/idFetch_v2.parser.js";
-import { fetchServerData_v1 } from "../parsers/idFetch_v1.parser.js";
-import { decryptAllServers } from "../parsers/decryptors/decryptAllServers.decryptor.js";
+import decryptMegacloud from "../parsers/decryptors/megacloud.decryptor.js";
 
 export async function extractServers(id) {
   try {
@@ -32,22 +30,28 @@ export async function extractServers(id) {
   }
 }
 
-async function extractStreamingInfo(id) {
+async function extractStreamingInfo(id, name, type) {
   try {
-    const [data_v1, servers] = await Promise.all([
-      fetchServerData_v1(id),
-      extractServers(id.split("?ep=").pop()),
-    ]);
-    const sortedData = [...data_v1].sort((a, b) =>
-      a.type.localeCompare(b.type)
+    const servers = await extractServers(id.split("?ep=").pop());
+
+    // const sortedData = [...data_v1].sort((a, b) =>
+    //   a.type.localeCompare(b.type)
+    // );
+
+    const requestedServer = servers.filter(
+      (server) =>
+        server.serverName.toLowerCase() === name.toLowerCase() &&
+        server.type.toLowerCase() === type.toLowerCase()
     );
-    const streamingLink = await decryptAllServers(sortedData);
+    const streamingLink = await decryptMegacloud(
+      requestedServer[0].data_id,
+      name,
+      type
+    );
     return { streamingLink, servers };
   } catch (error) {
     console.error("An error occurred:", error);
     return { streamingLink: [], servers: [] };
   }
 }
-
-// export { extractOtherEpisodes, extractStreamingInfo };
 export { extractStreamingInfo };
