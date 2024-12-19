@@ -758,11 +758,11 @@ const decryptSource = async (embed_url) => {
       "&b=" +
       browser_version;
   }
+  console.log(getSourcesUrl);
   let { data: resp } = await axios.get(getSourcesUrl, {
     headers: {
       "User-Agent": user_agent,
-      Referrer: embed_url + "&autoPlay=1&oa=0&asi=1",
-      "accept-encoding": "gzip, deflate, br, zstd",
+      Referrer: embed_url,
       "X-Requested-With": "XMLHttpRequest",
       "Sec-Fetch-Mode": "cors",
     },
@@ -772,6 +772,7 @@ const decryptSource = async (embed_url) => {
   Q5 = new Uint8Array(Q5);
   let Q8 = resp.t != 0 ? (i(Q5, Q1), Q5) : ((Q8 = resp.k), i(Q8, Q1), Q8);
   let str = btoa(String.fromCharCode.apply(null, new Uint8Array(Q8)));
+  console.log(resp);
   var decryptedSource = M(resp.sources, str);
   resp.sources = decryptedSource;
   return resp;
@@ -782,6 +783,7 @@ export default async function decryptMegacloud(id, name, type) {
     const { data: sourcesData } = await axios.get(
       `${baseUrl}/ajax/v2/episode/sources?id=${id}`
     );
+    console.log(sourcesData.link);
     const source = await decryptSource(sourcesData.link);
     return {
       id: id,
