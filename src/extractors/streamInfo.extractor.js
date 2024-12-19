@@ -36,7 +36,6 @@ async function extractStreamingInfo(id) {
   try {
     const [data_v1, servers] = await Promise.all([
       fetchServerData_v1(id),
-      // fetchServerData_v2(id),
       extractServers(id.split("?ep=").pop()),
     ]);
     const sortedData = [...data_v1].sort((a, b) =>

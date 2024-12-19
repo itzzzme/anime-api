@@ -1,19 +1,21 @@
 //inspired from https://github.com/drblgn/rabbit_wasm
 
-import { data } from "./decodedpng.js";
 import util from "util";
-import { webcrypto } from "crypto";
-import { dataURL } from "./dataUrl.js";
-const embed_url = "https://megacloud.tv/embed-2/e-1/";
-const referrer = "https://hianime.to/";
-const baseUrl = "https://megacloud.tv";
+import pixels from "image-pixels";
+import cryptoJs from "crypto-js";
+import axios from "axios";
 const user_agent =
   "Mozilla/5.0 (X11; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0";
+import { webcrypto } from "crypto";
 const crypto = webcrypto;
+import { dataURL } from "../../configs/dataUrl.js";
+import baseUrl from "../../utils/baseUrl.js";
+
 let wasm;
 let arr = new Array(128).fill(void 0);
 const dateNow = Date.now();
 let content;
+let referrer = "";
 
 function isDetached(buffer) {
   if (buffer.byteLength === 0) {
@@ -30,11 +32,11 @@ const meta = {
 const image_data = {
   height: 50,
   width: 65,
-  data: data.data,
+  data: new Uint8ClampedArray(),
 };
 
 const canvas = {
-  baseUrl: baseUrl,
+  baseUrl: "",
   width: 0,
   height: 0,
   style: {
@@ -59,10 +61,10 @@ const fake_window = {
   document: {
     cookie: "",
   },
-  origin: baseUrl,
+  origin: "",
   location: {
-    href: baseUrl,
-    origin: baseUrl,
+    href: "",
+    origin: "",
   },
   performance: {
     timeOrigin: dateNow,
@@ -85,7 +87,7 @@ const fake_window = {
 
 const nodeList = {
   image: {
-    src: `${baseUrl}/images/image.png`,
+    src: "",
     height: 50,
     width: 65,
     complete: true,
@@ -101,7 +103,7 @@ function get(index) {
 arr.push(void 0, null, true, false);
 
 let size = 0;
-let memoryBuff = null;
+let memoryBuff;
 
 function getMemBuff() {
   return (memoryBuff =
@@ -150,7 +152,7 @@ function parse(text, func, func2) {
   );
 }
 
-let dataView = null;
+let dataView;
 
 function isNull(test) {
   return null == test;
@@ -645,8 +647,8 @@ const grootLoader = {
 
 let wasmLoader = Object.assign(loadWasm, { initSync: QZ }, grootLoader);
 
-const V = async () => {
-  let Q0 = await wasmLoader(`${baseUrl}/images/loading.png`);
+const V = async (url) => {
+  let Q0 = await wasmLoader(url);
   fake_window.bytes = Q0;
   try {
     wasmLoader.groot();
@@ -654,6 +656,7 @@ const V = async () => {
     console.log("error: ", error);
   }
   fake_window.jwt_plugin(Q0);
+  return fake_window.navigate();
 };
 
 const getMeta = async (url) => {
@@ -670,30 +673,126 @@ const getMeta = async (url) => {
   meta.content = content + "==";
 };
 
-export const extractURL = async (embed_id) => {
-  await getMeta(embed_url + embed_id + "?k=");
-  fake_window.xrax = embed_id;
-  fake_window.G = embed_id;
-  let browser_version = 1676800512;
-  await V();
-  let getSourcesUrl =
-    `${baseUrl}/embed-2/ajax/e-1/getSources?id=` +
-    fake_window.pid +
-    "&v=" +
-    fake_window.localStorage.kversion +
-    "&h=" +
-    fake_window.localStorage.kid +
-    "&b=" +
-    browser_version;
-  let resp_json = await (
-    await fetch(getSourcesUrl, {
-      headers: {
-        "User-Agent": user_agent,
-        Referrer: fake_window.origin + "/embed-2/e-1/" + embed_id + "?k=",
-      },
-      method: "GET",
-      mode: "cors",
-    })
-  ).json();
-  return resp_json;
+const i = (a, P) => {
+  try {
+    for (let Q0 = 0; Q0 < a.length; Q0++) {
+      a[Q0] = a[Q0] ^ P[Q0 % P.length];
+    }
+  } catch (Q1) {
+    return null;
+  }
 };
+
+const M = (a, P) => {
+  try {
+    var Q0 = cryptoJs.AES.decrypt(a, P);
+    return JSON.parse(Q0.toString(cryptoJs.enc.Utf8));
+  } catch (Q1) {
+    var Q0 = cryptoJs.AES.decrypt(a, P);
+  }
+  return [];
+};
+
+function z(a) {
+  return [
+    (a & 4278190080) >> 24,
+    (a & 16711680) >> 16,
+    (a & 65280) >> 8,
+    a & 255,
+  ];
+}
+
+const decryptSource = async (embed_url) => {
+  referrer = embed_url.includes("mega") ? baseUrl : new URL(embed_url).origin;
+  let regx = /([A-Z])\w+/;
+  let xrax = embed_url.split("/").pop().split("?").shift();
+  regx = /https:\/\/[a-zA-Z0-9.]*/;
+  let base_url = embed_url.match(regx)[0];
+  nodeList.image.src = base_url + "/images/image.png?v=0.0.9";
+  let data = new Uint8ClampedArray((await pixels(nodeList.image.src)).data);
+  image_data.data = data;
+  let test = embed_url.split("/");
+
+  let browser_version = 1676800512;
+  canvas.baseUrl = base_url;
+  fake_window.origin = base_url;
+  fake_window.location.origin = base_url;
+  fake_window.location.href = embed_url;
+  fake_window.xrax = xrax;
+  fake_window.G = xrax;
+
+  await getMeta(embed_url);
+
+  let Q5 = await V(base_url + "/images/loading.png?v=0.0.9");
+
+  let getSourcesUrl = "";
+
+  if (base_url.includes("mega")) {
+    getSourcesUrl =
+      base_url +
+      "/" +
+      test[3] +
+      "/ajax/" +
+      test[4] +
+      "/getSources?id=" +
+      fake_window.pid +
+      "&v=" +
+      fake_window.localStorage.kversion +
+      "&h=" +
+      fake_window.localStorage.kid +
+      "&b=" +
+      browser_version;
+  } else {
+    getSourcesUrl =
+      base_url +
+      "/ajax/" +
+      test[3] +
+      "/" +
+      test[4] +
+      "/getSources?id=" +
+      fake_window.pid +
+      "&v=" +
+      fake_window.localStorage.kversion +
+      "&h=" +
+      fake_window.localStorage.kid +
+      "&b=" +
+      browser_version;
+  }
+  let { data: resp } = await axios.get(getSourcesUrl, {
+    headers: {
+      "User-Agent": user_agent,
+      Referrer: embed_url + "&autoPlay=1&oa=0&asi=1",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "X-Requested-With": "XMLHttpRequest",
+      "Sec-Fetch-Mode": "cors",
+    },
+  });
+  let Q3 = fake_window.localStorage.kversion;
+  let Q1 = z(Q3);
+  Q5 = new Uint8Array(Q5);
+  let Q8 = resp.t != 0 ? (i(Q5, Q1), Q5) : ((Q8 = resp.k), i(Q8, Q1), Q8);
+  let str = btoa(String.fromCharCode.apply(null, new Uint8Array(Q8)));
+  var decryptedSource = M(resp.sources, str);
+  resp.sources = decryptedSource;
+  return resp;
+};
+
+export default async function decryptMegacloud(id, name, type) {
+  try {
+    const { data: sourcesData } = await axios.get(
+      `${baseUrl}/ajax/v2/episode/sources?id=${id}`
+    );
+    const source = await decryptSource(sourcesData.link);
+    return {
+      id: id,
+      type: type,
+      link: source.sources,
+      tracks: source.tracks,
+      intro: source.intro,
+      outro: source.outro,
+      server: name,
+    };
+  } catch (error) {
+    console.error("Error during decryption:", error);
+  }
+}
