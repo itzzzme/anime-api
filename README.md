@@ -1024,6 +1024,7 @@ console.log(resp.data);
 
 ### `GET` Streaming info
 
+
 ```bash
   GET /api/stream
 ```
@@ -1031,21 +1032,21 @@ console.log(resp.data);
 ### Endpoint
 
 ```bash
-  /api/stream?id={string}
+  /api/stream?id={string}&server={string}&type={setring}
 ```
 
 #### Parameters
 
-| Parameter | Parameter-Type |   Type   | Description | Mandatory ? | Default |
+| Parameters | Parameter-Type |   Type   | Description | Mandatory ? | Default |
 | :-------: | :------------: | :------: | :---------: | :---------: | :-----: |
-|   `id`    |    `query`     | `string` |  `keyword`  |   Yes ✔️    |   --    |
+|   `id` , `server` , `type`    |    `query`     | `string` |  `keyword`  |   Yes ✔️    |   --    |
 
 #### Example of request
 
 ```javascript
 import axios from "axios";
 const resp = await axios.get(
-  "/api/stream?id=frieren-beyond-journeys-end-18542?ep=107257"
+  "/api/stream?id=frieren-beyond-journeys-end-18542?ep=107257&server=hd-1&type=sub"
 );
 console.log(resp.data);
 ```
@@ -1057,26 +1058,6 @@ console.log(resp.data);
   "success": true,
   "results": {
     "streamingLink": [
-      {
-            "id":number,
-            "type": "dub",
-            "link": {
-              "file":string,
-              "type":string,
-            },
-            "tracks": [
-              {
-                "file": string,
-                "label": string,
-                "kind": string,
-                "default": boolean
-              },{...}
-            ],
-            "intro": [Object],
-            "outro": [Object],
-            "server":string
-      }
-      {...},
       {
             "id":number,
             "type": "sub",
@@ -1095,8 +1076,7 @@ console.log(resp.data);
             "intro": [Object],
             "outro": [Object],
             "server":string
-      },
-      {...}
+      }
     ],
     "servers": [
       {
