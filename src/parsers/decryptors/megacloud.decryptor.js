@@ -618,25 +618,25 @@ function assignWasm(resp) {
 
 function QZ(QP) {
   let Qn;
-  return void 0 !== wasm
-    ? wasm
-    : ((Qn = initWasm()),
-      QP instanceof WebAssembly.Module || (QP = new WebAssembly.Module(QP)),
-      assignWasm(new WebAssembly.Instance(QP, Qn)));
+  return (
+    (Qn = initWasm()),
+    QP instanceof WebAssembly.Module || (QP = new WebAssembly.Module(QP)),
+    assignWasm(new WebAssembly.Instance(QP, Qn))
+  );
 }
 
 async function loadWasm(url) {
   let mod, buffer;
-  return void 0 !== wasm
-    ? wasm
-    : ((mod = initWasm()),
-      ({
-        instance: url,
-        module: mod,
-        bytes: buffer,
-      } = ((url = fetch(url)), void 0, await QN(await url, mod))),
-      assignWasm(url),
-      buffer);
+  return (
+    (mod = initWasm()),
+    ({
+      instance: url,
+      module: mod,
+      bytes: buffer,
+    } = ((url = fetch(url)), void 0, await QN(await url, mod))),
+    assignWasm(url),
+    buffer
+  );
 }
 
 const grootLoader = {
@@ -653,7 +653,7 @@ const V = async (url) => {
   try {
     wasmLoader.groot();
   } catch (error) {
-    console.log("error: ", error);
+    console.error("error: ", error);
   }
   fake_window.jwt_plugin(Q0);
   return fake_window.navigate();
@@ -758,14 +758,23 @@ const decryptSource = async (embed_url) => {
       "&b=" +
       browser_version;
   }
+
   let { data: resp } = await axios.get(getSourcesUrl, {
     headers: {
       "User-Agent": user_agent,
-      Referrer: embed_url,
+      Referrer: embed_url + "&autoPlay=1&oa=0&asi=1",
+      "Accept-Language": "en,bn;q=0.9,en-US;q=0.8",
+      "sec-ch-ua":
+        '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+      "sec-ch-ua-mobile": "?1",
+      "sec-ch-ua-platform": '"Android"',
+      "Sec-Fetch-Dest": "empty",
+      "Sec-Fetch-Site": "same-origin",
       "X-Requested-With": "XMLHttpRequest",
       "Sec-Fetch-Mode": "cors",
     },
   });
+
   let Q3 = fake_window.localStorage.kversion;
   let Q1 = z(Q3);
   Q5 = new Uint8Array(Q5);
@@ -781,7 +790,6 @@ export default async function decryptMegacloud(id, name, type) {
     const { data: sourcesData } = await axios.get(
       `${baseUrl}/ajax/v2/episode/sources?id=${id}`
     );
-    console.log(sourcesData.link);
     const source = await decryptSource(sourcesData.link);
     return {
       id: id,
