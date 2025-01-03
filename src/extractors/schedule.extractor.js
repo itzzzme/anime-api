@@ -10,8 +10,12 @@ export default async function extractSchedule(date) {
     const $ = cheerio.load(resp.data.html);
     const results = [];
     $("li").each((i, element) => {
-      const id = $(element).find("a").attr("href").split("?")[0].replace("/", "");
-      const data_id = id.split("-").pop();
+      const id = $(element)
+        ?.find("a")
+        .attr("href")
+        .split("?")[0]
+        .replace("/", "");
+      const data_id = id?.split("-").pop();
       const title = $(element).find(".film-name").text().trim();
       const japanese_title = $(element)
         .find(".film-name")
@@ -19,7 +23,12 @@ export default async function extractSchedule(date) {
         .trim();
       const releaseDate = date;
       const time = $(element).find(".time").text().trim();
-      const episode_no = $(element).find(".btn-play").text().trim().split(" ").pop();
+      const episode_no = $(element)
+        ?.find(".btn-play")
+        .text()
+        .trim()
+        .split(" ")
+        .pop();
       results.push({
         id,
         data_id,
@@ -33,6 +42,6 @@ export default async function extractSchedule(date) {
     return results;
   } catch (error) {
     console.log(error.message);
+    return [];
   }
 }
-
