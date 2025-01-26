@@ -22,7 +22,7 @@ export async function extractServers(id) {
         serverName,
       });
     });
-
+    console.log(serverData);
     return serverData;
   } catch (error) {
     console.log(error);
@@ -33,16 +33,23 @@ export async function extractServers(id) {
 async function extractStreamingInfo(id, name, type) {
   try {
     const servers = await extractServers(id.split("?ep=").pop());
-
-    // const sortedData = [...data_v1].sort((a, b) =>
-    //   a.type.localeCompare(b.type)
-    // );
-
-    const requestedServer = servers.filter(
+    let requestedServer = servers.filter(
       (server) =>
         server.serverName.toLowerCase() === name.toLowerCase() &&
         server.type.toLowerCase() === type.toLowerCase()
     );
+    if (requestedServer.length === 0) {
+      requestedServer = servers.filter(
+        (server) =>
+          server.serverName.toLowerCase() === name.toLowerCase() &&
+          server.type.toLowerCase() === "raw"
+      );
+    }
+    if (requestedServer.length === 0) {
+      throw new Error(
+        `No matching server found for name: ${name}, type: ${type}`
+      );
+    }
     const streamingLink = await decryptMegacloud(
       requestedServer[0].data_id,
       name,
