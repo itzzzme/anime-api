@@ -1,16 +1,15 @@
+import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import cors from "cors";
-import path from "path";
 import fs from "fs";
+import path, { dirname } from "path";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
 import { createApiRoutes } from "../src/routes/apiRoutes.js";
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 4444;
+const PORT = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const publicDir = path.join(dirname(dirname(__filename)), "public");
 const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",");
