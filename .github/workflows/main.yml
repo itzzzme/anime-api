@@ -18,7 +18,16 @@ jobs:
 
       - name: Extract branch name
         id: extract_branch
-        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr '/' '-' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+        run: |
+          BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}" | tr '/' '-' | tr '[:upper:]' '[:lower:]')
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Validate Docker Hub Username
+        run: |
+          if [ -z "${{ secrets.DOCKER_HUB_USERNAME }}" ]; then
+            echo "Error: DOCKER_HUB_USERNAME is not set in secrets!" >&2
+            exit 1
+          fi
 
       - name: Build Docker Image
         uses: docker/build-push-action@v5
