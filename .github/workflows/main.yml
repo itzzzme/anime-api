@@ -1,0 +1,44 @@
+name: Build and Deploy Anime Application
+
+on: 
+  push:
+    branches: 
+      - main
+      - dev
+      
+jobs: 
+  build-deploy: 
+    name: Build and Deploy Anime Application
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Extract branch name
+        id: extract_branch
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          dockerfile: Dockerfile
+          push: false
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/transport-teori-123:anime-api-${{ env.BRANCH_NAME }}
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          dockerfile: Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/transport-teori-123:anime-api-${{ env.BRANCH_NAME }}
