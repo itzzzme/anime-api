@@ -44,6 +44,7 @@
   - [GET Search Suggestions](#get-search-suggestions)
   - [GET Anime Episodes](#get-animes-episode-list)
   - [GET Anime Schedule](#get-schedule-of-upcoming-anime)
+  - [GET Anime's Next Epiosde's Schedule](#get-schedule-of-next-episode-of-anime)
   - [GET Anime Qtip Info](#get-qtip-info)
   - [GET Anime Characters](#get-characters)
   - [GET Anime Stream Info](#get-streaming-info)
