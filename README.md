@@ -58,7 +58,7 @@
 
 Make sure you have node installed on your device
 
-1) Run the following code to clone the repository and install all required dependencies
+1. Run the following code to clone the repository and install all required dependencies
 
 ```bash
 $ git clone https://github.com/itzzzme/anime-api.git
@@ -66,7 +66,7 @@ $ cd anime-api
 $ npm install
 ```
 
-2) Refer the [.env.example](https://github.com/itzzzme/anime-api/blob/main/.env.example) file to setup `.env` file
+2. Refer the [.env.example](https://github.com/itzzzme/anime-api/blob/main/.env.example) file to setup `.env` file
 
 ```bash
 # Origins you want to allow
@@ -74,7 +74,7 @@ $ npm install
 ALLOWED_ORIGIN=<https://site1.com>,<https://site2.com>,...
 ```
 
-3) Start the server
+3. Start the server
 
 ```bash
 $ npm start #or npm run devStart
@@ -880,7 +880,7 @@ console.log(resp.data);
 
 | Parameter | Parameter-Type | Data-Type | Description | Mandatory ? | Default |
 | :-------: | :------------: | :-------: | :---------: | :---------: | :-----: |
-|  `date`   |     query      |  string   |  anime-id   |   Yes ✔️    |   --    |
+|  `date`   |     query      |  string   |    date     |   Yes ✔️    |   --    |
 
 #### Example of request
 
@@ -907,6 +907,44 @@ console.log(resp.data);
     },
     {...}
   ]
+}
+```
+
+### `GET` Schedule of next episode of Anime
+
+```bash
+  GET /api/schedule/
+```
+
+### Endpoint
+
+```bash
+  /api/schedule/:id
+```
+
+#### Parameters
+
+| Parameter | Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :-------: | :------------: | :-------: | :---------: | :---------: | :-----: |
+|   `id`    |     param      |  string   |  anime-id   |   Yes ✔️    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get("/api/schedule/one-piece-100");
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success":true,
+  "results":
+  {
+    "nextEpisodeSchedule":"2025-02-08 16:30:00"
+  }
 }
 ```
 
@@ -1024,7 +1062,6 @@ console.log(resp.data);
 
 ### `GET` Streaming info
 
-
 ```bash
   GET /api/stream
 ```
@@ -1037,9 +1074,9 @@ console.log(resp.data);
 
 #### Parameters
 
-| Parameters | Parameter-Type |   Type   | Description | Mandatory ? | Default |
-| :-------: | :------------: | :------: | :---------: | :---------: | :-----: |
-|   `id` , `server` , `type`    |    `query`     | `string` |  `keyword`  |   Yes ✔️    |   --    |
+|        Parameters        | Parameter-Type |   Type   | Description | Mandatory ? | Default |
+| :----------------------: | :------------: | :------: | :---------: | :---------: | :-----: |
+| `id` , `server` , `type` |    `query`     | `string` |  `keyword`  |   Yes ✔️    |   --    |
 
 #### Example of request
 
