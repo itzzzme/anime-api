@@ -45,7 +45,7 @@ export async function extractCharacter(id) {
     $(".anif-block-ul li").each((_, el) => {
       const item = $(el);
       const title = item.find(".film-name a").text().trim();
-      const id = item.find(".film-name a").attr("href")?.split("-").pop();
+      const id = item.find(".film-name a").attr("href")?.split("/").pop();
       const role = item.find(".fdi-item").first().text().trim();
       const type = item.find(".fdi-item").last().text().trim();
       const poster = item.find(".film-poster img").attr("src");
@@ -54,7 +54,7 @@ export async function extractCharacter(id) {
         animeography.push({
           title,
           id,
-          role: role.replace(" (Role)", ""), // Remove "(Role)" suffix if present
+          role: role.replace(" (Role)", ""), 
           type,
           poster
         });
