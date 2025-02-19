@@ -1211,6 +1211,7 @@ console.log(resp.data);
     "data": [{
       "id": "asta-340",
       "name": "Asta",
+      "profile": "https://cdn.noitatnemucod.net/thumbnail/400x400/100/945515d313d02fdcd33be3085512c550.jpg",
       "japaneseName": "アスタ",
       "about": {
         "description": "Asta is the main protagonist of Black Clover...",
@@ -1287,6 +1288,7 @@ console.log(resp.data);
     "data": [{
       "id": "gakuto-kajiwara-534",
       "name": "Kajiwara, Gakuto",
+      "profile": "https://cdn.noitatnemucod.net/thumbnail/400x400/100/945515d313d02fdcd33be3085512c550.jpg",
       "japaneseName": "梶原岳人",
       "about": {
         "description": "Kajiwara Gakuto is a Japanese voice actor...",

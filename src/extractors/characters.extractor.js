@@ -11,6 +11,9 @@ export async function extractCharacter(id) {
     const name = $(".apw-detail .name").text().trim();
     const japaneseName = $(".apw-detail .sub-name").text().trim();
     
+    // Extract profile image
+    const profile = $(".avatar-circle img").attr("src");
+
     // Extract about information
     const bioText = $("#bio .bio").text().trim();
     const bioHtml = $("#bio .bio").html();
@@ -67,6 +70,7 @@ export async function extractCharacter(id) {
         data: [{
           id,
           name,
+          profile,
           japaneseName,
           about,
           voiceActors,

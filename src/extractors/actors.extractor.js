@@ -11,6 +11,9 @@ export async function extractVoiceActor(id) {
     const name = $(".apw-detail .name").text().trim();
     const japaneseName = $(".apw-detail .sub-name").text().trim();
     
+    // Extract profile image
+    const profile = $(".avatar-circle img").attr("src"); // Extracting the profile image URL
+
     // Extract about information as a full bio description
     const bioText = $("#bio .bio").text().trim();
     const bioHtml = $("#bio .bio").html(); // Capture the raw HTML
@@ -46,10 +49,10 @@ export async function extractVoiceActor(id) {
     const voiceActorData = {
       success: true,
       results: {
-        
         data: [{
           id,
           name,
+          profile,
           japaneseName,
           about,
           roles
