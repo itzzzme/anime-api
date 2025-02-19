@@ -30,13 +30,14 @@ export async function extractVoiceActor(id) {
 
       const role = {
         anime: {
+          id: animeElement.find(".pi-name a").attr("href")?.split("/").pop(),
           title: animeElement.find(".pi-name a").text().trim(),
           poster: animeElement.find(".pi-avatar img").attr("data-src") || animeElement.find(".pi-avatar img").attr("src"),
           type: animeElement.find(".pi-cast").text().trim().split(",")[0].trim(),
-          year: animeElement.find(".pi-cast").text().trim().split(",")[1]?.trim(),
-          id: animeElement.find(".pi-name a").attr("href")?.split("/").pop()
+          year: animeElement.find(".pi-cast").text().trim().split(",")[1]?.trim()
         },
         character: {
+          id: characterElement.find(".pi-name a").attr("href")?.split("/").pop(),
           name: characterElement.find(".pi-name a").text().trim(),
           profile: characterElement.find(".pi-avatar img").attr("data-src") || characterElement.find(".pi-avatar img").attr("src"),
           role: characterElement.find(".pi-cast").text().trim()
