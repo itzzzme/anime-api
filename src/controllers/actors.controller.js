@@ -1,20 +1,20 @@
 import extractVoiceActor from "../extractors/actors.extractor.js";
 
-const getVoiceActors = async (req, res) => {
+const getVoiceActor = async (req, res) => {
   const id = req.params.id;
   try {
-    const { charactersVoiceActors } = await extractVoiceActor(id);
+    const voiceActorData = await extractVoiceActor(id);
 
     // Ensure the data is structured correctly
-    if (!charactersVoiceActors || charactersVoiceActors.length === 0) {
-      return res.status(404).json({ error: "No voice actors found." });
+    if (!voiceActorData || voiceActorData.results.data.length === 0) {
+      return res.status(404).json({ error: "No voice actor found." });
     }
 
-    return res.json({ charactersVoiceActors }); // Return the desired structure
+    return res.json(voiceActorData); // Return the desired structure
   } catch (e) {
     console.error(e);
     return res.status(500).json({ error: "An error occurred" });
   }
 };
 
-export default getVoiceActors;
+export default getVoiceActor;

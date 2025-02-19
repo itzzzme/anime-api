@@ -1208,7 +1208,7 @@ console.log(resp.data);
 {
   "success": true,
   "results": {
-    "characters": [{
+    "data": [{
       "id": "asta-340",
       "name": "Asta",
       "japaneseName": "アスタ",
@@ -1284,7 +1284,7 @@ console.log(resp.data);
 {
   "success": true,
   "results": {
-    "charactersVoiceActors": [{
+    "data": [{
       "id": "gakuto-kajiwara-534",
       "name": "Kajiwara, Gakuto",
       "japaneseName": "梶原岳人",

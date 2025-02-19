@@ -62,14 +62,17 @@ export async function extractCharacter(id) {
 
     // Construct the final response
     const characterData = {
-      characters: [{
-        id,
-        name,
-        japaneseName,
-        about,
-        voiceActors,
-        animeography
-      }]
+      success: true,
+      results: {
+        data: [{
+          id,
+          name,
+          japaneseName,
+          about,
+          voiceActors,
+          animeography
+        }]
+      }
     };
 
     return characterData;

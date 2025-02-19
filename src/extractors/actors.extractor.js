@@ -44,13 +44,17 @@ export async function extractVoiceActor(id) {
 
     // Construct the final response
     const voiceActorData = {
-      charactersVoiceActors: [{
-        id,
-        name,
-        japaneseName,
-        about,
-        roles
-      }]
+      success: true,
+      results: {
+        
+        data: [{
+          id,
+          name,
+          japaneseName,
+          about,
+          roles
+        }]
+      }
     };
 
     return voiceActorData;
