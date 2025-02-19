@@ -49,6 +49,8 @@
   - [GET Anime Characters](#get-characters)
   - [GET Anime Stream Info](#get-streaming-info)
   - [GET Anime Episode's Available Servers](#get-available-servers-of-anime)
+  - [GET Character Details](#get-character-details)
+  - [GET Voice Actor Details](#get-voice-actor-details)
 - [Pull Requests](#pull-requests)
 - [Reporting Issues](#reporting-issues)
 - [Support](#support)
@@ -1173,6 +1175,145 @@ console.log(resp.data);
   ]
 }
 ```
+
+### `GET` Character Details
+
+```bash
+  GET /api/character/
+```
+
+### Endpoint
+
+```bash
+  /api/character/{id}
+```
+
+#### Parameters
+
+| Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :------------: | :-------: | :---------: | :---------: | :-----: |
+|    `params`    | `string`  | character-id|   Yes ✔️    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get("/api/character/asta-340");
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "characters": [{
+      "id": "asta-340",
+      "name": "Asta",
+      "japaneseName": "アスタ",
+      "about": {
+        "description": "Asta is the main protagonist of Black Clover...",
+        "style": "<p>Asta is the main protagonist of Black Clover...</p>"
+      },
+      "voiceActors": [
+        {
+          "name": "Kajiwara, Gakuto",
+          "profile": "https://example.com/profile.jpg",
+          "language": "Japanese",
+          "id": "gakuto-kajiwara-534"
+        },
+        {
+          "name": "Dallas Reid",
+          "profile": "https://example.com/profile2.jpg",
+          "language": "English",
+          "id": "dallas-reid-892"
+        }
+      ],
+      "animeography": [
+        {
+          "title": "Black Clover",
+          "id": "2404",
+          "role": "Main",
+          "type": "TV",
+          "poster": "https://example.com/poster.jpg"
+        },
+        {
+          "title": "Black Clover: Sword of the Wizard King",
+          "id": "2405",
+          "role": "Main",
+          "type": "Movie",
+          "poster": "https://example.com/poster2.jpg"
+        }
+      ]
+    }]
+  }
+}
+```
+
+
+### `GET` Voice Actor Details
+
+```bash
+  GET /api/actors/
+```
+
+### Endpoint
+
+```bash
+  /api/actors/{id}
+```
+
+#### Parameters
+
+| Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :------------: | :-------: | :---------: | :---------: | :-----: |
+|    `params`    | `string`  | voice-actor-id|   Yes ✔️    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get("/api/actors/gakuto-kajiwara-534");
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "charactersVoiceActors": [{
+      "id": "gakuto-kajiwara-534",
+      "name": "Kajiwara, Gakuto",
+      "japaneseName": "梶原岳人",
+      "about": {
+        "description": "Kajiwara Gakuto is a Japanese voice actor...",
+        "style": "<p>Kajiwara Gakuto is a Japanese voice actor...</p>"
+      },
+      "roles": [
+        {
+          "anime": {
+            "title": "Black Clover",
+            "poster": "https://example.com/poster.jpg",
+            "type": "TV",
+            "year": "2017",
+            "id": "black-clover"
+          },
+          "character": {
+            "name": "Asta",
+            "profile": "https://example.com/asta.jpg",
+            "role": "Main"
+          }
+        },
+        // ... more roles ...
+      ]
+    }]
+  }
+}
+```
+
 
 > ### Pull Requests
 

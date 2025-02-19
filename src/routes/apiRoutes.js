@@ -16,6 +16,8 @@ import * as characterListController from "../controllers/voiceactor.controller.j
 import * as nextEpisodeScheduleController from "../controllers/nextEpisodeSchedule.controller.js";
 import { routeTypes } from "./category.route.js";
 import { getWatchlist } from "../controllers/watchlist.controller.js";
+import getVoiceActors from "../controllers/actors.controller.js";
+import getCharacter from "../controllers/characters.controller.js";
 
 export const createApiRoutes = (app, jsonResponse, jsonError) => {
   const createRoute = (path, controllerMethod) => {
@@ -77,4 +79,6 @@ export const createApiRoutes = (app, jsonResponse, jsonError) => {
     characterListController.getVoiceActors
   );
   createRoute("/api/watchlist/:userId/:page?", getWatchlist);
+  createRoute("/api/actors/:id", getVoiceActors);
+  createRoute("/api/character/:id", getCharacter);
 };
