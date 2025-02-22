@@ -15,6 +15,18 @@ const __filename = fileURLToPath(import.meta.url);
 const publicDir = path.join(dirname(dirname(__filename)), "public");
 const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",");
 
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (!origin || !allowedOrigins.includes(origin)) {
+    return res.status(403).json({ success: false, message: "Forbidden: Origin not allowed" });
+  }
+  res.setHeader("Access-Control-Allow-Origin", origin);
+  res.setHeader("Access-Control-Allow-Methods", "GET");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
+
+
 app.use(
   cors({
     origin: allowedOrigins || "*",
