@@ -17,19 +17,24 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",");
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  if (!origin || !allowedOrigins.includes(origin)) {
-    return res.status(403).json({ success: false, message: "Forbidden: Origin not allowed" });
+  if (
+    !allowedOrigins ||
+    allowedOrigins.includes("*") ||
+    (origin && allowedOrigins.includes(origin))
+  ) {
+    res.setHeader("Access-Control-Allow-Origin", origin || "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    return next();
   }
-  res.setHeader("Access-Control-Allow-Origin", origin);
-  res.setHeader("Access-Control-Allow-Methods", "GET");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  next();
+  res
+    .status(403)
+    .json({ success: false, message: "Forbidden: Origin not allowed" });
 });
-
 
 app.use(
   cors({
-    origin: allowedOrigins || "*",
+    origin: allowedOrigins?.includes("*") ? "*" : allowedOrigins || [],
     methods: ["GET"],
   })
 );
