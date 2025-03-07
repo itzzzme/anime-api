@@ -18,7 +18,7 @@ import { routeTypes } from "./category.route.js";
 import { getWatchlist } from "../controllers/watchlist.controller.js";
 import getVoiceActors from "../controllers/actors.controller.js";
 import getCharacter from "../controllers/characters.controller.js";
-
+import * as filterController from "../controllers/filter.controller.js";
 export const createApiRoutes = (app, jsonResponse, jsonError) => {
   const createRoute = (path, controllerMethod) => {
     app.get(path, async (req, res) => {
@@ -64,6 +64,7 @@ export const createApiRoutes = (app, jsonResponse, jsonError) => {
   createRoute("/api/servers/:id", serversController.getServers);
   createRoute("/api/stream", streamController.getStreamInfo);
   createRoute("/api/search", searchController.search);
+  createRoute("/api/filter", filterController.filter);
   createRoute("/api/search/suggest", suggestionsController.getSuggestions);
   createRoute("/api/schedule", scheduleController.getSchedule);
   createRoute(
