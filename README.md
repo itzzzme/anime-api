@@ -42,12 +42,14 @@
   - [GET Producer's & studio's Anime](#get-anime-of-specific-producers-or-studio)
   - [GET Search Result's Info](#get-search-results-info)
   - [GET Search Suggestions](#get-search-suggestions)
-  - [GET Anime Episodes](#get-animes-episode-list)
   - [GET Anime Schedule](#get-schedule-of-upcoming-anime)
   - [GET Anime's Next Epiosde's Schedule](#get-schedule-of-next-episode-of-anime)
   - [GET Anime Qtip Info](#get-qtip-info)
   - [GET Anime Characters](#get-characters)
+  - [GET Character Details](#get-character-details)
+  - [GET Voice Actor Details](#get-voice-actor-details)
   - [GET Anime Stream Info](#get-streaming-info)
+  - [GET Anime Episodes](#get-animes-episode-list)
   - [GET Anime Episode's Available Servers](#get-available-servers-of-anime)
 - [Pull Requests](#pull-requests)
 - [Reporting Issues](#reporting-issues)
@@ -818,6 +820,86 @@ console.log(resp.data);
 }
 ```
 
+### `GET` Filter Anime
+
+```bash
+GET /api/filter
+```
+
+#### Endpoint
+
+```bash
+/api/filter
+```
+
+#### Parameters
+
+| Parameter  | Parameter-Type | Data-Type | Description                                   | Mandatory ? | Default |
+| :--------: | :------------: | :-------: | :------------------------------------------- | :---------: | :-----: |
+| `type`     |    `query`     |  string   | Type of anime (e.g., `movie`, `tv`, etc.)   |    No ❌    | `ALL`  |
+| `status`   |    `query`     |  string   | Status of anime (e.g., `finished`, `currently_airing`, etc.) |    No ❌    | `ALL`  |
+| `rated`    |    `query`     |  string   | Rating of anime (e.g., `G`, `PG`, etc.)      |    No ❌    | `ALL`  |
+| `score`    |    `query`     |  string   | Score rating (e.g., `1` to `10`)             |    No ❌    | `ALL`  |
+| `season`   |    `query`     |  string   | Season of anime (e.g., `spring`, `summer`, etc.) |    No ❌    | `ALL`  |
+| `language` |    `query`     |  string   | Language of anime (e.g., `sub`, `dub`)       |    No ❌    | `ALL`  |
+| `genres`   |    `query`     |  string   | Comma-separated list of genres (e.g., `action, comedy`) |    No ❌    | `ALL`  |
+| `sort`     |    `query`     |  string   | Sorting method (e.g., `default`, `score`, etc.) |    No ❌    | `DEFAULT` |
+| `page`     |    `query`     |  number   | Page number for pagination                    |    No ❌    | `1`    |
+| `sy`       |    `query`     |  number   | Start year                                   |    No ❌    | `undefined` |
+| `sm`       |    `query`     |  number   | Start month                                  |    No ❌    | `undefined` |
+| `sd`       |    `query`     |  number   | Start day                                    |    No ❌    | `undefined` |
+| `ey`       |    `query`     |  number   | End year                                     |    No ❌    | `undefined` |
+| `em`       |    `query`     |  number   | End month                                    |    No ❌    | `undefined` |
+| `ed`       |    `query`     |  number   | End day                                      |    No ❌    | `undefined` |
+| `keyword`  |    `query`     |  string   | Search keyword                                |    No ❌    | `undefined` |
+
+#### Example of Request
+
+```javascript
+import axios from "axios";
+
+const params = {
+  type: '2', // TV
+  status: '1', // Finished
+  rated: '5', // R+
+  sort: 'default',
+  page: 1
+};
+
+const resp = await axios.get("/api/filter", { params });
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "totalPages": number,
+    "data": [
+      {
+        "id": string,
+        "data_id": number,
+        "poster": string,
+        "title": string,
+        "japanese_title": string,
+        "description": string,
+        "tvInfo": {
+          "showType": string,
+          "duration": string,
+          "sub": number,
+          "dub": number
+        },
+        "adultContent": boolean
+      },
+      {...}
+    ]
+  }
+}
+```
+
+
 ### `GET` Anime's episode list
 
 ```bash
@@ -1173,6 +1255,147 @@ console.log(resp.data);
   ]
 }
 ```
+
+### `GET` Character Details
+
+```bash
+  GET /api/character/
+```
+
+### Endpoint
+
+```bash
+  /api/character/{id}
+```
+
+#### Parameters
+
+| Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :------------: | :-------: | :---------: | :---------: | :-----: |
+|    `params`    | `string`  | character-id|   Yes ✔️    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get("/api/character/asta-340");
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "data": [{
+      "id": "asta-340",
+      "name": "Asta",
+      "profile": "https://cdn.noitatnemucod.net/thumbnail/400x400/100/945515d313d02fdcd33be3085512c550.jpg",
+      "japaneseName": "アスタ",
+      "about": {
+        "description": "Asta is the main protagonist of Black Clover...",
+        "style": "<p>Asta is the main protagonist of Black Clover...</p>"
+      },
+      "voiceActors": [
+        {
+          "name": "Kajiwara, Gakuto",
+          "profile": "https://example.com/profile.jpg",
+          "language": "Japanese",
+          "id": "gakuto-kajiwara-534"
+        },
+        {
+          "name": "Dallas Reid",
+          "profile": "https://example.com/profile2.jpg",
+          "language": "English",
+          "id": "dallas-reid-892"
+        }
+      ],
+      "animeography": [
+        {
+          "title": "Black Clover",
+          "id": "2404",
+          "role": "Main",
+          "type": "TV",
+          "poster": "https://example.com/poster.jpg"
+        },
+        {
+          "title": "Black Clover: Sword of the Wizard King",
+          "id": "2405",
+          "role": "Main",
+          "type": "Movie",
+          "poster": "https://example.com/poster2.jpg"
+        }
+      ]
+    }]
+  }
+}
+```
+
+
+### `GET` Voice Actor Details
+
+```bash
+  GET /api/actors/
+```
+
+### Endpoint
+
+```bash
+  /api/actors/{id}
+```
+
+#### Parameters
+
+| Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :------------: | :-------: | :---------: | :---------: | :-----: |
+|    `params`    | `string`  | voice-actor-id|   Yes ✔️    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get("/api/actors/gakuto-kajiwara-534");
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "data": [{
+      "id": "gakuto-kajiwara-534",
+      "name": "Kajiwara, Gakuto",
+      "profile": "https://cdn.noitatnemucod.net/thumbnail/400x400/100/945515d313d02fdcd33be3085512c550.jpg",
+      "japaneseName": "梶原岳人",
+      "about": {
+        "description": "Kajiwara Gakuto is a Japanese voice actor...",
+        "style": "<p>Kajiwara Gakuto is a Japanese voice actor...</p>"
+      },
+      "roles": [
+        {
+          "anime": {
+            "title": "Black Clover",
+            "poster": "https://example.com/poster.jpg",
+            "type": "TV",
+            "year": "2017",
+            "id": "black-clover"
+          },
+          "character": {
+            "name": "Asta",
+            "profile": "https://example.com/asta.jpg",
+            "role": "Main"
+          }
+        },
+        // ... more roles ...
+      ]
+    }]
+  }
+}
+```
+
 
 > ### Pull Requests
 
