@@ -15,9 +15,28 @@ const __filename = fileURLToPath(import.meta.url);
 const publicDir = path.join(dirname(dirname(__filename)), "public");
 const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",");
 
+// Custom CORS middleware
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (
+    !allowedOrigins ||
+    allowedOrigins.includes("*") ||
+    (origin && allowedOrigins.includes(origin))
+  ) {
+    res.setHeader("Access-Control-Allow-Origin", origin || "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    return next();
+  }
+  res
+    .status(403)
+    .json({ success: false, message: "Forbidden: Origin not allowed" });
+});
+
+// Express CORS setup
 app.use(
   cors({
-    origin: allowedOrigins || "*",
+    origin: allowedOrigins?.includes("*") ? "*" : allowedOrigins || [],
     methods: ["GET"],
   })
 );
@@ -40,10 +59,10 @@ const jsonResponse = (res, data, status = 200) => {
           return value;
         };
       };
-      
+
       return res.status(status).json({
         success: true,
-        results: JSON.parse(JSON.stringify(data, getCircularReplacer()))
+        results: JSON.parse(JSON.stringify(data, getCircularReplacer())),
       });
     } catch (err) {
       console.error("Error in jsonResponse:", err);
