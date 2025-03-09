@@ -45,7 +45,7 @@ export const filter = async (req) => {
     if (pageNum > 1) params.page = pageNum;
 
     // Log params for debugging
-    console.log("Controller params:", params);
+    // console.log("Controller params:", params);
 
     const [totalPage, data] = await extractFilterResults(params);
 
