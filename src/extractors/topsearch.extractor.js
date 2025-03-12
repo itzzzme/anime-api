@@ -6,7 +6,6 @@ async function extractTopSearch() {
   try {
     const { data } = await axios.get(baseUrl);
     const $ = cheerio.load(data);
-    console.log(data);
     const results = [];
     $(".xhashtag a.item").each((_, element) => {
       const title = $(element).text().trim();

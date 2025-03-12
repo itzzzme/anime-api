@@ -22,7 +22,6 @@ export async function extractServers(id) {
         serverName,
       });
     });
-    console.log(serverData);
     return serverData;
   } catch (error) {
     console.log(error);
