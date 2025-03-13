@@ -799,6 +799,7 @@ export default async function decryptMegacloud(id, name, type) {
       intro: source.intro,
       outro: source.outro,
       server: name,
+      iframe: sourcesData.link,
     };
   } catch (error) {
     console.error("Error during decryption:", error);
