@@ -15,7 +15,8 @@ async function extractAnimeInfo(id) {
         `https://${baseUrl}/ajax/character/list/${id.split("-").pop()}`
       ),
     ]);
-    const $1 = cheerio.load(characterData.data.html);
+    const characterHtml = characterData.data?.html || "";
+    const $1 = cheerio.load(characterHtml);
     const $ = cheerio.load(resp.data);
     const data_id = id.split("-").pop();
     const titleElement = $("#ani_detail .film-name");
@@ -76,58 +77,61 @@ async function extractAnimeInfo(id) {
       extractRecommendedData($),
       extractRelatedData($),
     ]);
+    let charactersVoiceActors = [];
+    if (characterHtml) {
+      charactersVoiceActors = $1(".bac-list-wrap .bac-item")
+        .map((index, el) => {
+          const character = {
+            id:
+              $1(el)
+                .find(".per-info.ltr .pi-avatar")
+                .attr("href")
+                ?.split("/")[2] || "",
+            poster:
+              $1(el).find(".per-info.ltr .pi-avatar img").attr("data-src") ||
+              "",
+            name: $1(el).find(".per-info.ltr .pi-detail a").text(),
+            cast: $1(el).find(".per-info.ltr .pi-detail .pi-cast").text(),
+          };
 
-    const charactersVoiceActors = $1(".bac-list-wrap .bac-item")
-      .map((index, el) => {
-        const character = {
-          id:
-            $1(el)
-              .find(".per-info.ltr .pi-avatar")
-              .attr("href")
-              ?.split("/")[2] || "",
-          poster:
-            $1(el).find(".per-info.ltr .pi-avatar img").attr("data-src") || "",
-          name: $1(el).find(".per-info.ltr .pi-detail a").text(),
-          cast: $1(el).find(".per-info.ltr .pi-detail .pi-cast").text(),
-        };
+          let voiceActors = [];
+          const rtlVoiceActors = $1(el).find(".per-info.rtl");
+          const xxVoiceActors = $1(el).find(
+            ".per-info.per-info-xx .pix-list .pi-avatar"
+          );
+          if (rtlVoiceActors.length > 0) {
+            voiceActors = rtlVoiceActors
+              .map((_, actorEl) => ({
+                id: $1(actorEl).find("a").attr("href")?.split("/").pop() || "",
+                poster: $1(actorEl).find("img").attr("data-src") || "",
+                name:
+                  $1(actorEl).find(".pi-detail .pi-name a").text().trim() || "",
+              }))
+              .get();
+          } else if (xxVoiceActors.length > 0) {
+            voiceActors = xxVoiceActors
+              .map((_, actorEl) => ({
+                id: $1(actorEl).attr("href")?.split("/").pop() || "",
+                poster: $1(actorEl).find("img").attr("data-src") || "",
+                name: $1(actorEl).attr("title") || "",
+              }))
+              .get();
+          }
+          if (voiceActors.length === 0) {
+            voiceActors = $1(el)
+              .find(".per-info.per-info-xx .pix-list .pi-avatar")
+              .map((_, actorEl) => ({
+                id: $1(actorEl).attr("href")?.split("/")[2] || "",
+                poster: $1(actorEl).find("img").attr("data-src") || "",
+                name: $1(actorEl).attr("title") || "",
+              }))
+              .get();
+          }
 
-        let voiceActors = [];
-        const rtlVoiceActors = $1(el).find(".per-info.rtl");
-        const xxVoiceActors = $1(el).find(
-          ".per-info.per-info-xx .pix-list .pi-avatar"
-        );
-        if (rtlVoiceActors.length > 0) {
-          voiceActors = rtlVoiceActors
-            .map((_, actorEl) => ({
-              id: $1(actorEl).find("a").attr("href")?.split("/").pop() || "",
-              poster: $1(actorEl).find("img").attr("data-src") || "",
-              name:
-                $1(actorEl).find(".pi-detail .pi-name a").text().trim() || "",
-            }))
-            .get();
-        } else if (xxVoiceActors.length > 0) {
-          voiceActors = xxVoiceActors
-            .map((_, actorEl) => ({
-              id: $1(actorEl).attr("href")?.split("/").pop() || "",
-              poster: $1(actorEl).find("img").attr("data-src") || "",
-              name: $1(actorEl).attr("title") || "",
-            }))
-            .get();
-        }
-        if (voiceActors.length === 0) {
-          voiceActors = $1(el)
-            .find(".per-info.per-info-xx .pix-list .pi-avatar")
-            .map((_, actorEl) => ({
-              id: $1(actorEl).attr("href")?.split("/")[2] || "",
-              poster: $1(actorEl).find("img").attr("data-src") || "",
-              name: $1(actorEl).attr("title") || "",
-            }))
-            .get();
-        }
-
-        return { character, voiceActors };
-      })
-      .get();
+          return { character, voiceActors };
+        })
+        .get();
+    }
 
     return {
       adultContent,
