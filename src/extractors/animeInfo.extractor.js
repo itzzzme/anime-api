@@ -155,7 +155,7 @@ async function extractAnimeInfo(id) {
       malId,
       title,
       japanese_title,
-      synonyms: null,
+      synonyms,
       poster,
       showType,
       animeInfo,
