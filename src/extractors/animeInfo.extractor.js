@@ -48,6 +48,7 @@ async function extractAnimeInfo(id) {
 
     const title = titleElement.text().trim();
     const japanese_title = titleElement.attr("data-jname");
+    const synonyms = $('.item.item-title span.name').text().trim();
     const poster = posterElement.find("img").attr("src");
     const syncDataScript = $("#syncData").html();
     let anilistId = null;
@@ -154,6 +155,7 @@ async function extractAnimeInfo(id) {
       malId,
       title,
       japanese_title,
+      synonyms,
       poster,
       showType,
       animeInfo,
