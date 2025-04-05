@@ -49,6 +49,19 @@ async function extractAnimeInfo(id) {
     const title = titleElement.text().trim();
     const japanese_title = titleElement.attr("data-jname");
     const poster = posterElement.find("img").attr("src");
+    const syncDataScript = $("#syncData").html();
+    let anilistId = null;
+    let malId = null;
+
+    if (syncDataScript) {
+      try {
+        const syncData = JSON.parse(syncDataScript);
+        anilistId = syncData.anilist_id || null;
+        malId = syncData.mal_id || null;
+      } catch (error) {
+        console.error("Error parsing syncData:", error);
+      }
+    }
 
     const animeInfo = {};
     element.each((_, el) => {
@@ -137,6 +150,8 @@ async function extractAnimeInfo(id) {
       adultContent,
       data_id,
       id: season_id,
+      anilistId,
+      malId,
       title,
       japanese_title,
       poster,
