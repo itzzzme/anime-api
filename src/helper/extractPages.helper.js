@@ -1,13 +1,13 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-import baseUrl from "../utils/baseUrl.js";
+import { v1_base_url } from "../utils/base_v1.js";
 import { DEFAULT_HEADERS } from "../configs/header.config.js";
 
 const axiosInstance = axios.create({ headers: DEFAULT_HEADERS });
 
 async function extractPage(page, params) {
   try {
-    const resp = await axiosInstance.get(`${baseUrl}/${params}?page=${page}`);
+    const resp = await axiosInstance.get(`https://${v1_base_url}/${params}?page=${page}`);
     const $ = cheerio.load(resp.data);
     const totalPages =
       Number(

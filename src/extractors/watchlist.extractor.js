@@ -1,26 +1,28 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-import baseUrl from "../utils/baseUrl.js";
+import { v1_base_url } from "../utils/base_v1.js";
+
 export default async function extractWatchlist(userId, page = 1) {
   try {
-    const url = `${baseUrl}/community/user/${userId}/watch-list?page=${page}`;
+    const url = `https://${v1_base_url}/community/user/${userId}/watch-list?page=${page}`;
     const { data } = await axios.get(url);
     const $ = cheerio.load(data);
     const watchlist = [];
 
-    const totalPages = Number(
-      $('.pre-pagination nav .pagination > .page-item a[title="Last"]')
-        ?.attr("href")
-        ?.split("=")
-        .pop() ??
-      $('.pre-pagination nav .pagination > .page-item a[title="Next"]')
-        ?.attr("href")
-        ?.split("=")
-        .pop() ??
-      $(".pre-pagination nav .pagination > .page-item.active a")
-        ?.text()
-        ?.trim()
-    ) || 1;
+    const totalPages =
+      Number(
+        $('.pre-pagination nav .pagination > .page-item a[title="Last"]')
+          ?.attr("href")
+          ?.split("=")
+          .pop() ??
+          $('.pre-pagination nav .pagination > .page-item a[title="Next"]')
+            ?.attr("href")
+            ?.split("=")
+            .pop() ??
+          $(".pre-pagination nav .pagination > .page-item.active a")
+            ?.text()
+            ?.trim()
+      ) || 1;
 
     $(".flw-item").each((index, element) => {
       const title = $(".film-name a", element).text().trim();
@@ -32,7 +34,7 @@ export default async function extractWatchlist(userId, page = 1) {
       const dubCount = $(".tick-item.tick-dub", element).text().trim();
       const link = $(".film-name a", element).attr("href");
 
-      const animeId = link.split('/').pop();
+      const animeId = link.split("/").pop();
 
       watchlist.push({
         id: animeId,
@@ -42,7 +44,7 @@ export default async function extractWatchlist(userId, page = 1) {
         type,
         subCount,
         dubCount,
-        link: `${baseUrl}${link}`,
+        link: `https://${v1_base_url}${link}`,
         showType: type,
         tvInfo: {
           showType: type,
@@ -58,4 +60,4 @@ export default async function extractWatchlist(userId, page = 1) {
     console.error("Error fetching watchlist:", error.message);
     throw error;
   }
-} 
+}

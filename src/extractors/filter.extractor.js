@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import { DEFAULT_HEADERS } from "../configs/header.config.js";
-import baseUrl from "../utils/baseUrl.js";
+import { v1_base_url } from "../utils/base_v1.js";
 import {
   FILTER_LANGUAGE_MAP,
   GENRE_MAP,
@@ -15,27 +15,21 @@ import {
 
 async function extractFilterResults(params = {}) {
   try {
-    // console.log("Received params:", params);
-
-    // Normalize function for text parameters
     const normalizeParam = (param, mapping) => {
       if (!param) return undefined;
 
       if (typeof param === "string") {
-        // Check if it's already a numeric ID (checking if it's in the values of the mapping)
         const isAlreadyId = Object.values(mapping).includes(param);
         if (isAlreadyId) {
-          return param; // Use as is if already an ID
+          return param;
         }
 
-        // Otherwise, try to convert from text to ID
         const key = param.trim().toUpperCase();
         return mapping.hasOwnProperty(key) ? mapping[key] : undefined;
       }
-      return param; // Use numbers as they are
+      return param;
     };
 
-    // Normalize parameters
     const typeParam = normalizeParam(params.type, FILTER_TYPES);
     const statusParam = normalizeParam(params.status, FILTER_STATUS);
     const ratedParam = normalizeParam(params.rated, FILTER_RATED);
@@ -43,14 +37,12 @@ async function extractFilterResults(params = {}) {
     const seasonParam = normalizeParam(params.season, FILTER_SEASON);
     const sortParam = normalizeParam(params.sort, FILTER_SORT);
 
-    // Normalize language parameter
     let languageParam = params.language;
     if (typeof languageParam === "string") {
       languageParam = languageParam.trim().toUpperCase();
       languageParam = FILTER_LANGUAGE_MAP[languageParam] || undefined;
     }
 
-    // Normalize genres parameter
     let genresParam = params.genres;
     if (typeof genresParam === "string") {
       genresParam = genresParam
@@ -69,18 +61,15 @@ async function extractFilterResults(params = {}) {
       genres: genresParam,
       sort: sortParam,
       page: params.page || 1,
-      sy: params.sy || undefined, // Start year
-      sm: params.sm || undefined, // Start month
-      sd: params.sd || undefined, // Start day
-      ey: params.ey || undefined, // End year
-      em: params.em || undefined, // End month
-      ed: params.ed || undefined, // End day
-      keyword: params.keyword || undefined, // Search keyword
+      sy: params.sy || undefined,
+      sm: params.sm || undefined,
+      sd: params.sd || undefined,
+      ey: params.ey || undefined,
+      em: params.em || undefined,
+      ed: params.ed || undefined,
+      keyword: params.keyword || undefined,
     };
 
-    // console.log("Filtered params before cleanup:", filteredParams);
-
-    // Remove undefined values
     Object.keys(filteredParams).forEach((key) => {
       if (filteredParams[key] === undefined) {
         delete filteredParams[key];
@@ -88,16 +77,18 @@ async function extractFilterResults(params = {}) {
     });
 
     const queryParams = new URLSearchParams(filteredParams).toString();
-    // console.log(`Fetching data from: ${baseUrl}/filter?${queryParams}`);
 
-    const resp = await axios.get(`${baseUrl}/filter?${queryParams}`, {
-      headers: {
-        Accept:
-          "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
-        "Accept-Encoding": "gzip, deflate, br",
-        "User-Agent": DEFAULT_HEADERS,
-      },
-    });
+    const resp = await axios.get(
+      `https://${v1_base_url}/filter?${queryParams}`,
+      {
+        headers: {
+          Accept:
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+          "Accept-Encoding": "gzip, deflate, br",
+          "User-Agent": DEFAULT_HEADERS,
+        },
+      }
+    );
 
     const $ = cheerio.load(resp.data);
     const elements = ".flw-item";

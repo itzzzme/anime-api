@@ -1,5 +1,3 @@
-import axios from "axios";
-import countPages from "../helper/countPages.helper.js";
 import extractPage from "../helper/extractPages.helper.js";
 
 export async function extractor(path, page) {

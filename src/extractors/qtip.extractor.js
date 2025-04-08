@@ -2,12 +2,10 @@ import axios from "axios";
 import * as cheerio from "cheerio";
 import { v1_base_url } from "../utils/base_v1.js";
 
-const baseUrl = v1_base_url;
-
 export default async function extractQtip(id) {
   try {
     const { data } = await axios.get(
-      `https://${baseUrl}/ajax/movie/qtip/${id}`,
+      `https://${v1_base_url}/ajax/movie/qtip/${id}`,
       {
         headers: {
           "x-requested-with": "XMLHttpRequest",

@@ -1,12 +1,12 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import { DEFAULT_HEADERS } from "../configs/header.config.js";
-import baseUrl from "../utils/baseUrl.js";
+import { v1_base_url } from "../utils/base_v1.js";
 
 async function extractSearchResults(search, page) {
   try {
     const resp = await axios.get(
-      `${baseUrl}/search?keyword=${search}&page=${page}`,
+      `https://${v1_base_url}/search?keyword=${search}&page=${page}`,
       {
         headers: {
           Accept:

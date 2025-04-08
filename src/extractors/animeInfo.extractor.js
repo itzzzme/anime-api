@@ -5,14 +5,12 @@ import { v1_base_url } from "../utils/base_v1.js";
 import extractRecommendedData from "./recommend.extractor.js";
 import extractRelatedData from "./related.extractor.js";
 
-const baseUrl = v1_base_url;
-
 async function extractAnimeInfo(id) {
   try {
     const [resp, characterData] = await Promise.all([
-      axios.get(`https://${baseUrl}/${id}`),
+      axios.get(`https://${v1_base_url}/${id}`),
       axios.get(
-        `https://${baseUrl}/ajax/character/list/${id.split("-").pop()}`
+        `https://${v1_base_url}/ajax/character/list/${id.split("-").pop()}`
       ),
     ]);
     const characterHtml = characterData.data?.html || "";

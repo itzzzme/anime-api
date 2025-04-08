@@ -1,19 +1,15 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-import baseUrl from "../utils/baseUrl.js";
-
-// Set Axios defaults
-axios.defaults.baseURL = baseUrl;
+import { v1_base_url } from "../utils/base_v1.js";
 
 async function extractTopTen() {
   try {
-    const resp = await axios.get("/home");
+    const resp = await axios.get(`https://${v1_base_url}/home`);
     const $ = cheerio.load(resp.data);
 
     const labels = ["today", "week", "month"];
     const result = {};
 
-    // Loop through eq(0), eq(1), eq(2) for today, week, and month respectively
     labels.forEach((label, idx) => {
       const data = $(
         `#main-sidebar .block_area-realtime .block_area-content ul:eq(${idx})>li`

@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-import baseUrl from "../utils/baseUrl.js";
+import { v1_base_url } from "../utils/base_v1.js";
 
 async function fetchAnimeDetails(element) {
   const data_id = element.attr("data-id");
@@ -14,7 +14,7 @@ async function fetchAnimeDetails(element) {
 
 async function extractTrending() {
   try {
-    const resp = await axios.get(`${baseUrl}/home`);
+    const resp = await axios.get(`https://${v1_base_url}/home`);
     const $ = cheerio.load(resp.data);
 
     const trendingElements = $("#anime-trending #trending-home .swiper-slide");

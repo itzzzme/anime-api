@@ -1,12 +1,13 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-import baseUrl from "../utils/baseUrl.js";
-import { parse } from "dotenv";
+import { v1_base_url } from "../utils/base_v1.js";
 
 export default async function extractVoiceActor(id, page) {
   try {
     const resp = await axios.get(
-      `${baseUrl}/ajax/character/list/${id.split("-").pop()}?page=${page}`
+      `https://${v1_base_url}/ajax/character/list/${id
+        .split("-")
+        .pop()}?page=${page}`
     );
     const $ = cheerio.load(resp.data.html);
     let totalPages = 1;

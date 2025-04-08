@@ -788,7 +788,7 @@ const decryptSource = async (embed_url) => {
 export default async function decryptMegacloud(id, name, type) {
   try {
     const { data: sourcesData } = await axios.get(
-      `${baseUrl}/ajax/v2/episode/sources?id=${id}`
+      `https://${v1_base_url}/ajax/v2/episode/sources?id=${id}`
     );
     const source = await decryptSource(sourcesData.link);
     return {
