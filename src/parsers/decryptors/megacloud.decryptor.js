@@ -9,7 +9,7 @@ const user_agent =
 import { webcrypto } from "crypto";
 const crypto = webcrypto;
 import { dataURL } from "../../configs/dataUrl.js";
-import baseUrl from "../../utils/baseUrl.js";
+import { v1_base_url } from "../../utils/base_v1.js";
 
 let wasm;
 let arr = new Array(128).fill(void 0);
@@ -703,7 +703,9 @@ function z(a) {
 }
 
 const decryptSource = async (embed_url) => {
-  referrer = embed_url.includes("mega") ? baseUrl : new URL(embed_url).origin;
+  referrer = embed_url.includes("mega")
+    ? v1_base_url
+    : new URL(embed_url).origin;
   let regx = /([A-Z])\w+/;
   let xrax = embed_url.split("/").pop().split("?").shift();
   regx = /https:\/\/[a-zA-Z0-9.]*/;
