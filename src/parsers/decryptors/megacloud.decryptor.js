@@ -704,7 +704,7 @@ function z(a) {
 
 const decryptSource = async (embed_url) => {
   referrer = embed_url.includes("mega")
-    ? v1_base_url
+    ? `https://${v1_base_url}`
     : new URL(embed_url).origin;
   let regx = /([A-Z])\w+/;
   let xrax = embed_url.split("/").pop().split("?").shift();
