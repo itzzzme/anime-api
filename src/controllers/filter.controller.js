@@ -47,7 +47,7 @@ export const filter = async (req) => {
     // Log params for debugging
     // console.log("Controller params:", params);
 
-    const [totalPage, data] = await extractFilterResults(params);
+    const [totalPage, data, currentPage, hasNextPage] = await extractFilterResults(params);
 
     if (pageNum > totalPage) {
       const error = new Error("Requested page exceeds total available pages.");
@@ -55,7 +55,7 @@ export const filter = async (req) => {
       throw error;
     }
 
-    return { data, totalPage };
+    return { data, totalPage, currentPage, hasNextPage };
   } catch (e) {
     console.error(e);
     if (e.status === 404) {
