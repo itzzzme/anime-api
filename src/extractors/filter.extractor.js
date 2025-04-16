@@ -136,6 +136,9 @@ async function extractFilterResults(params = {}) {
                 .replace(/[^0-9]/g, "")
             ) || null,
         },
+         adultContent:
+          $el.find(".tick-rate").text().trim() ||
+          null,
       });
     });
 
