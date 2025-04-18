@@ -136,6 +136,9 @@ async function extractFilterResults(params = {}) {
                 .replace(/[^0-9]/g, "")
             ) || null,
         },
+        adultContent:
+          $el.find(".tick-rate").text().trim() ||
+          null,
       });
     });
 
@@ -154,7 +157,12 @@ async function extractFilterResults(params = {}) {
         1
     );
 
-    return [parseInt(totalPage, 10), result.length > 0 ? result : []];
+    return [
+      parseInt(totalPage, 10),
+      result.length > 0 ? result : [],
+      parseInt(params.page, 10) || 1,
+      parseInt(params.page, 10) < parseInt(totalPage, 10),
+    ];
   } catch (e) {
     console.error("Error fetching data:", e);
     throw e;

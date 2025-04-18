@@ -1,1 +1,1 @@
-export const v1_base_url = "hianime.sx";
+export const v1_base_url = "hianime.nz";
