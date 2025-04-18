@@ -1018,6 +1018,8 @@ console.log(resp.data);
       "releaseDate":string,
       "time":string,
       "episode_no":number
+      "poster": string,
+      "adultContent":boolean,
     },
     {...}
   ]
