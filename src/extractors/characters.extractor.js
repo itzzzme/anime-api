@@ -41,7 +41,6 @@ export async function extractCharacter(id) {
 
     // Extract animeography
     const animeography = [];
-    console.log("Extracting animeography...");
     $(".anif-block-ul li").each((_, el) => {
       const item = $(el);
       const title = item.find(".film-name a").text().trim();
@@ -60,8 +59,6 @@ export async function extractCharacter(id) {
         });
       }
     });
-
-    console.log(`Found ${animeography.length} animeography items`);
 
     const characterData = {
       success: true,
