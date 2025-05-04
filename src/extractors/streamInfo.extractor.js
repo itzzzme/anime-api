@@ -2,6 +2,7 @@ import axios from "axios";
 import * as cheerio from "cheerio";
 import { v1_base_url } from "../utils/base_v1.js";
 import decryptMegacloud from "../parsers/decryptors/megacloud.decryptor.js";
+import AniplayExtractor from "../parsers/aniplay.parser.js";
 
 export async function extractServers(id) {
   try {
@@ -29,7 +30,13 @@ export async function extractServers(id) {
   }
 }
 
-async function extractStreamingInfo(id, name, type) {
+async function extractStreamingInfo(
+  id,
+  name,
+  type,
+  anilistId = null,
+  epnum = null
+) {
   try {
     const servers = await extractServers(id.split("?ep=").pop());
     let requestedServer = servers.filter(
@@ -48,6 +55,11 @@ async function extractStreamingInfo(id, name, type) {
       throw new Error(
         `No matching server found for name: ${name}, type: ${type}`
       );
+    }
+    if (anilistId && epnum) {
+      const extractor = new AniplayExtractor();
+      const streamingLink = await extractor.fetchEpisode(anilistId, epnum);
+      return { streamingLink: streamingLink.sources, servers };
     }
     const streamingLink = await decryptMegacloud(
       requestedServer[0].data_id,
