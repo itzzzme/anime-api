@@ -7,7 +7,7 @@ import AniplayExtractor from "../parsers/aniplay.parser.js";
 export async function extractServers(id) {
   try {
     const resp = await axios.get(
-      `https://${v1_base_url}/ajax/v2/episode/servers?episodeId=${id}`,
+      `https://${v1_base_url}/ajax/v2/episode/servers?episodeId=${id}`
     );
     const $ = cheerio.load(resp.data.html);
     const serverData = [];
@@ -35,28 +35,28 @@ async function extractStreamingInfo(
   name,
   type,
   anilistId = null,
-  epnum = null,
+  epnum = null
 ) {
   try {
     const servers = await extractServers(id.split("?ep=").pop());
     let requestedServer = servers.filter(
       (server) =>
         server.serverName.toLowerCase() === name.toLowerCase() &&
-        server.type.toLowerCase() === type.toLowerCase(),
+        server.type.toLowerCase() === type.toLowerCase()
     );
     if (requestedServer.length === 0) {
       requestedServer = servers.filter(
         (server) =>
           server.serverName.toLowerCase() === name.toLowerCase() &&
-          server.type.toLowerCase() === "raw",
+          server.type.toLowerCase() === "raw"
       );
     }
-    if (requestedServer.length === 0 && name.toLowerCase() !== "hd-3") {
+    if (requestedServer.length === 0 && name.toLowerCase() !== "hd-4") {
       throw new Error(
-        `No matching server found for name: ${name}, type: ${type}`,
+        `No matching server found for name: ${name}, type: ${type}`
       );
     }
-    if (name.toLowerCase() === "hd-3" && anilistId && epnum) {
+    if (name.toLowerCase() === "hd-4" && anilistId && epnum) {
       const extractor = new AniplayExtractor();
       const streamingLink = await extractor.fetchEpisode(anilistId, epnum);
       return { streamingLink: streamingLink.sources, servers };
@@ -64,7 +64,7 @@ async function extractStreamingInfo(
     const streamingLink = await decryptMegacloud(
       requestedServer[0].data_id,
       name,
-      type,
+      type
     );
     return { streamingLink, servers };
   } catch (error) {
