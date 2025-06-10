@@ -9,7 +9,8 @@ const user_agent =
 import { webcrypto } from "crypto";
 const crypto = webcrypto;
 import { dataURL } from "../../configs/dataUrl.js";
-import { v1_base_url } from "../../utils/base_v1.js";
+// import { v1_base_url } from "../../utils/base_v1.js";
+import { v4_base_url } from "../../utils/base_v4.js";
 
 let wasm;
 let arr = new Array(128).fill(void 0);
@@ -704,17 +705,17 @@ function z(a) {
 
 const decryptSource = async (embed_url) => {
   referrer = embed_url.includes("mega")
-    ? `https://${v1_base_url}`
+    ? `https://${v4_base_url}`
     : new URL(embed_url).origin;
-  let regx = /([A-Z])\w+/;
+  // let regx = /([A-Z])\w+/;
   let xrax = embed_url.split("/").pop().split("?").shift();
-  regx = /https:\/\/[a-zA-Z0-9.]*/;
-  let base_url = embed_url.match(regx)[0];
+  // regx = /https:\/\/[a-zA-Z0-9.]*/;
+  // let base_url = embed_url.match(regx)[0];
+  const base_url = new URL(embed_url).origin;
   nodeList.image.src = base_url + "/images/image.png?v=0.0.9";
   let data = new Uint8ClampedArray((await pixels(nodeList.image.src)).data);
   image_data.data = data;
   let test = embed_url.split("/");
-
   let browser_version = 1676800512;
   canvas.baseUrl = base_url;
   fake_window.origin = base_url;
@@ -749,8 +750,8 @@ const decryptSource = async (embed_url) => {
       base_url +
       "/ajax/" +
       test[3] +
-      "/" +
-      test[4] +
+      // "/" +
+      // test[4] +
       "/getSources?id=" +
       fake_window.pid +
       "&v=" +
@@ -790,7 +791,8 @@ const decryptSource = async (embed_url) => {
 export default async function decryptMegacloud(id, name, type) {
   try {
     const { data: sourcesData } = await axios.get(
-      `https://${v1_base_url}/ajax/v2/episode/sources?id=${id}`
+      // `https://${v1_base_url}/ajax/v2/episode/sources?id=${id}`
+      `https://${v4_base_url}/ajax/episode/sources?id=${id}`
     );
     const source = await decryptSource(sourcesData.link);
     return {
