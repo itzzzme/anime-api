@@ -1,60 +1,58 @@
-// this is kept as backup in case megacloud's architecture rollback to it's previous architecture
+import axios from "axios";
+import CryptoJS from "crypto-js";
+import { v1_base_url } from "../../utils/base_v1.js";
 
+export async function decryptSources_v1(id, name, type) {
+  try {
+    //Thanks superbillgalaxy for the keys
+    // Parallel request for source metadata and decryption key
+    const [{ data: sourcesData }, { data: keyData }] = await Promise.all([
+      axios.get(`https://${v1_base_url}/ajax/v2/episode/sources?id=${id}`),
+      axios.get(
+        "https://raw.githubusercontent.com/superbillgalaxy/megacloud-keys/refs/heads/main/api.json"
+      ),
+    ]);
 
-// import axios from "axios";
-// import CryptoJS from "crypto-js";
-// import { v1_base_url } from "../../utils/base_v1.js";
-// import fetchScript from "../../helper/fetchScript.helper.js";
-// import getKeys from "../../helper/getKey.helper.js";
-// import { PLAYER_SCRIPT_URL } from "../../configs/player_v1.config.js";
-// import { extractURL } from "./megacloud.decryptor.js";
+    const ajaxLink = sourcesData?.link;
+    if (!ajaxLink) throw new Error("Missing link in sourcesData");
 
-// export async function decryptSources_v1(id, name, type) {
-//   try {
-//     const [{ data: sourcesData }, decryptKey_v1] = await Promise.all([
-//       axios.get(`https://${v1_base_url}/ajax/v2/episode/sources?id=${id}`),
-//       getKeys(await fetchScript(PLAYER_SCRIPT_URL)),
-//     ]);
-//     const ajaxResp = sourcesData.link;
-//     const [_, sourceId] = /\/([^\/\?]+)\?/.exec(ajaxResp) || [];
-//     const source = await extractURL(sourceId);
-//     const sourcesArray = source.sources.split("");
-//     let extractedKey = "";
-//     let currentIndex = 0;
+    const match = /\/([^\/\?]+)\?/.exec(ajaxLink);
+    const sourceId = match?.[1];
+    if (!sourceId) throw new Error("Unable to extract sourceId from link");
 
-//     for (const index of decryptKey_v1) {
-//       const start = index[0] + currentIndex;
-//       const end = start + index[1];
+    // Get encrypted source
+    const { data: rawSourceData } = await axios.get(
+      `https://megacloud.blog/embed-2/v2/e-1/getSources?id=${sourceId}`
+    );
+    const encrypted = rawSourceData?.sources;
+    if (!encrypted) throw new Error("Encrypted source missing in response");
 
-//       for (let i = start; i < end; i++) {
-//         extractedKey += sourcesArray[i];
-//         sourcesArray[i] = "";
-//       }
-//       currentIndex += index[1];
-//     }
-//     const decrypted = CryptoJS.AES.decrypt(
-//       sourcesArray.join(""),
-//       extractedKey
-//     ).toString(CryptoJS.enc.Utf8);
-//     const decryptedSources = JSON.parse(decrypted);
-//     source.sources = null;
-//     source.sources = {
-//       file: decryptedSources[0].file,
-//       type: "hls",
-//     };
-//     if (source.hasOwnProperty("server")) {
-//       delete source.server;
-//     }
-//     return {
-//       id: id,
-//       type: type,
-//       link: source.sources,
-//       tracks: source.tracks,
-//       intro: source.intro,
-//       outro: source.outro,
-//       server: name,
-//     };
-//   } catch (error) {
-//     console.error("Error during decryption:", error);
-//   }
-// }
+    // Decrypt using key
+    const decrypted = CryptoJS.AES.decrypt(encrypted, keyData.megacloud).toString(CryptoJS.enc.Utf8);
+    if (!decrypted) throw new Error("Failed to decrypt source");
+
+    let decryptedSources;
+    try {
+      decryptedSources = JSON.parse(decrypted);
+    } catch (e) {
+      throw new Error("Decrypted data is not valid JSON");
+    }
+
+    // Build response
+    return {
+      id,
+      type,
+      link: {
+        file: decryptedSources?.[0]?.file ?? "",
+        type: "hls",
+      },
+      tracks: rawSourceData.tracks ?? [],
+      intro: rawSourceData.intro ?? null,
+      outro: rawSourceData.outro ?? null,
+      server: name,
+    };
+  } catch (error) {
+    console.error(`Error during decryptSources_v1(${id}):`, error.message);
+    return null;
+  }
+}

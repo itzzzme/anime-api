@@ -11,12 +11,12 @@ const genres = routeTypes
   .map((genre) => genre.replace("genre/", ""));
 
 export const getHomeInfo = async (req,res) => {
-  const cacheKey = "homeInfo";
+  // const cacheKey = "homeInfo";
   try {
-    const cachedResponse = await getCachedData(cacheKey);
-    if (cachedResponse && Object.keys(cachedResponse).length > 0) {
-      return cachedResponse;
-    }
+    // const cachedResponse = await getCachedData(cacheKey);
+    // if (cachedResponse && Object.keys(cachedResponse).length > 0) {
+    //   return cachedResponse;
+    // }
     const [
       spotlights,
       trending,
@@ -57,9 +57,9 @@ export const getHomeInfo = async (req,res) => {
       genres,
     };
 
-    setCachedData(cacheKey, responseData).catch((err) => {
-      console.error("Failed to set cache:", err);
-    });
+    // setCachedData(cacheKey, responseData).catch((err) => {
+    //   console.error("Failed to set cache:", err);
+    // });
     return responseData;
   } catch (fetchError) {
     console.error("Error fetching fresh data:", fetchError);
