@@ -14,7 +14,7 @@ async function getSuggestions(keyword) {
       .each((i, element) => {
         const id = $(element).attr("href").split("?")[0].replace("/", "");
         const data_id = id.split("-").pop();
-        const imgData = $(element).find(".film-poster-img").attr("data-src");
+        const poster = $(element).find(".film-poster-img").attr("data-src");
         const title = $(element).find(".film-name").text().trim();
         const japanese_title = $(element).find(".film-name").attr("data-jname").trim();
         const releaseDate = $(element)
@@ -33,7 +33,7 @@ async function getSuggestions(keyword) {
         results.push({
           id,
           data_id,
-          imgData,
+          poster,
           title,
           japanese_title,
           releaseDate,

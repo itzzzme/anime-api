@@ -1,10 +1,10 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-import baseUrl from "../utils/baseUrl.js";
+import { v1_base_url } from "../utils/base_v1.js";
 
 async function extractSpotlights() {
   try {
-    const resp = await axios.get(`${baseUrl}/home`);
+    const resp = await axios.get(`https://${v1_base_url}/home`);
     const $ = cheerio.load(resp.data);
 
     const slideElements = $(

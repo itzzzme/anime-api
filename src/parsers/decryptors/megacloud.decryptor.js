@@ -9,7 +9,7 @@ const user_agent =
 import { webcrypto } from "crypto";
 const crypto = webcrypto;
 import { dataURL } from "../../configs/dataUrl.js";
-import baseUrl from "../../utils/baseUrl.js";
+import { v1_base_url } from "../../utils/base_v1.js";
 
 let wasm;
 let arr = new Array(128).fill(void 0);
@@ -703,7 +703,9 @@ function z(a) {
 }
 
 const decryptSource = async (embed_url) => {
-  referrer = embed_url.includes("mega") ? baseUrl : new URL(embed_url).origin;
+  referrer = embed_url.includes("mega")
+    ? `https://${v1_base_url}`
+    : new URL(embed_url).origin;
   let regx = /([A-Z])\w+/;
   let xrax = embed_url.split("/").pop().split("?").shift();
   regx = /https:\/\/[a-zA-Z0-9.]*/;
@@ -788,7 +790,7 @@ const decryptSource = async (embed_url) => {
 export default async function decryptMegacloud(id, name, type) {
   try {
     const { data: sourcesData } = await axios.get(
-      `${baseUrl}/ajax/v2/episode/sources?id=${id}`
+      `https://${v1_base_url}/ajax/v2/episode/sources?id=${id}`
     );
     const source = await decryptSource(sourcesData.link);
     return {
@@ -799,6 +801,7 @@ export default async function decryptMegacloud(id, name, type) {
       intro: source.intro,
       outro: source.outro,
       server: name,
+      iframe: sourcesData.link,
     };
   } catch (error) {
     console.error("Error during decryption:", error);

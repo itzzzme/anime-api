@@ -15,26 +15,43 @@ import * as producerController from "../controllers/producer.controller.js";
 import * as characterListController from "../controllers/voiceactor.controller.js";
 import * as nextEpisodeScheduleController from "../controllers/nextEpisodeSchedule.controller.js";
 import { routeTypes } from "./category.route.js";
+import { getWatchlist } from "../controllers/watchlist.controller.js";
+import getVoiceActors from "../controllers/actors.controller.js";
+import getCharacter from "../controllers/characters.controller.js";
+import * as filterController from "../controllers/filter.controller.js";
+import getTopSearch from "../controllers/topsearch.controller.js";
 
 export const createApiRoutes = (app, jsonResponse, jsonError) => {
   const createRoute = (path, controllerMethod) => {
     app.get(path, async (req, res) => {
       try {
         const data = await controllerMethod(req, res);
-        return jsonResponse(res, data);
+        if (!res.headersSent) {
+          return jsonResponse(res, data);
+        }
       } catch (err) {
-        return jsonError(res);
+        console.error(`Error in route ${path}:`, err);
+        if (!res.headersSent) {
+          return jsonError(res, err.message || "Internal server error");
+        }
       }
     });
   };
 
   ["/api", "/api/"].forEach((route) => {
-    app.get(route, (req, res) =>
-      homeInfoController
-        .getHomeInfo(req, res)
-        .then((data) => jsonResponse(res, data))
-        .catch((err) => jsonError(res))
-    );
+    app.get(route, async (req, res) => {
+      try {
+        const data = await homeInfoController.getHomeInfo(req, res);
+        if (!res.headersSent) {
+          return jsonResponse(res, data);
+        }
+      } catch (err) {
+        console.error("Error in home route:", err);
+        if (!res.headersSent) {
+          return jsonError(res, err.message || "Internal server error");
+        }
+      }
+    });
   });
 
   routeTypes.forEach((routeType) =>
@@ -49,6 +66,7 @@ export const createApiRoutes = (app, jsonResponse, jsonError) => {
   createRoute("/api/servers/:id", serversController.getServers);
   createRoute("/api/stream", streamController.getStreamInfo);
   createRoute("/api/search", searchController.search);
+  createRoute("/api/filter", filterController.filter);
   createRoute("/api/search/suggest", suggestionsController.getSuggestions);
   createRoute("/api/schedule", scheduleController.getSchedule);
   createRoute(
@@ -63,4 +81,8 @@ export const createApiRoutes = (app, jsonResponse, jsonError) => {
     "/api/character/list/:id",
     characterListController.getVoiceActors
   );
+  createRoute("/api/watchlist/:userId/:page?", getWatchlist);
+  createRoute("/api/actors/:id", getVoiceActors);
+  createRoute("/api/character/:id", getCharacter);
+  createRoute("/api/top-search", getTopSearch);
 };
