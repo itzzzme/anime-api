@@ -2,16 +2,16 @@ import extractTopTen from "../extractors/topten.extractor.js";
 import { getCachedData, setCachedData } from "../helper/cache.helper.js";
 
 export const getTopTen = async (req,res) => {
-  const cacheKey = "topTen";
+  // const cacheKey = "topTen";
   try {
-    const cachedResponse = await getCachedData(cacheKey);
-    if (cachedResponse && Object.keys(cachedResponse).length > 0) {
-      return cachedResponse;
-    }
+    // const cachedResponse = await getCachedData(cacheKey);
+    // if (cachedResponse && Object.keys(cachedResponse).length > 0) {
+    //   return cachedResponse;
+    // }
     const topTen = await extractTopTen();
-    await setCachedData(cacheKey, topTen).catch((err) => {
-      console.error("Failed to set cache:", err);
-    });
+    // await setCachedData(cacheKey, topTen).catch((err) => {
+    //   console.error("Failed to set cache:", err);
+    // });
     return topTen;
   } catch (e) {
     console.error(e);
