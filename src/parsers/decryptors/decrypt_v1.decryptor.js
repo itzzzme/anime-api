@@ -1,17 +1,9 @@
 import axios from "axios";
-import CryptoJS from "crypto-js";
 import { v1_base_url } from "../../utils/base_v1.js";
 
 export async function decryptSources_v1(id, name, type) {
   try {
-    //Thanks superbillgalaxy for the keys
-    // Parallel request for source metadata and decryption key
-    const [{ data: sourcesData }, { data: keyData }] = await Promise.all([
-      axios.get(`https://${v1_base_url}/ajax/v2/episode/sources?id=${id}`),
-      axios.get(
-        "https://raw.githubusercontent.com/superbillgalaxy/megacloud-keys/refs/heads/main/api.json"
-      ),
-    ]);
+    const { data: sourcesData } = await axios.get(`https://${v1_base_url}/ajax/v2/episode/sources?id=${id}`);
 
     const ajaxLink = sourcesData?.link;
     if (!ajaxLink) throw new Error("Missing link in sourcesData");
@@ -20,31 +12,28 @@ export async function decryptSources_v1(id, name, type) {
     const sourceId = match?.[1];
     if (!sourceId) throw new Error("Unable to extract sourceId from link");
 
-    // Get encrypted source
-    const { data: rawSourceData } = await axios.get(
-      `https://megacloud.blog/embed-2/v2/e-1/getSources?id=${sourceId}`
-    );
-    const encrypted = rawSourceData?.sources;
-    if (!encrypted) throw new Error("Encrypted source missing in response");
+    const megacloudUrl = `https://megacloud.blog/embed-2/v2/e-1/getSources?id=${sourceId}`;
+    
+    console.log(`https://${v1_base_url}/ajax/v2/episode/sources?id=${id}`);
+    console.log(`Megacloud URL: ${megacloudUrl}`);
 
-    // Decrypt using key
-    const decrypted = CryptoJS.AES.decrypt(encrypted, keyData.megacloud).toString(CryptoJS.enc.Utf8);
-    if (!decrypted) throw new Error("Failed to decrypt source");
+    const { data: rawSourceData } = await axios.get(megacloudUrl);
 
-    let decryptedSources;
-    try {
-      decryptedSources = JSON.parse(decrypted);
-    } catch (e) {
-      throw new Error("Decrypted data is not valid JSON");
+    const bypassUrl = `https://bypass.lunaranime.ru/extract?url=${encodeURIComponent(megacloudUrl)}`;
+    console.log(`Bypass URL: ${bypassUrl}`);
+
+    const { data: bypassData } = await axios.get(bypassUrl);
+    
+    if (!bypassData?.sources || !Array.isArray(bypassData.sources) || bypassData.sources.length === 0) {
+      throw new Error("No sources found in bypass response");
     }
 
-    // Build response
     return {
       id,
       type,
       link: {
-        file: decryptedSources?.[0]?.file ?? "",
-        type: "hls",
+        file: bypassData.sources[0].file,
+        type: bypassData.sources[0].type || "hls",
       },
       tracks: rawSourceData.tracks ?? [],
       intro: rawSourceData.intro ?? null,
