@@ -4,12 +4,10 @@ import { v1_base_url } from "../../utils/base_v1.js";
 
 export async function decryptSources_v1(id, name, type) {
   try {
-    //Thanks superbillgalaxy for the keys
-    // Parallel request for source metadata and decryption key
-    const [{ data: sourcesData }, { data: keyData }] = await Promise.all([
+    const [{ data: sourcesData }, { data: key }] = await Promise.all([
       axios.get(`https://${v1_base_url}/ajax/v2/episode/sources?id=${id}`),
       axios.get(
-        "https://raw.githubusercontent.com/superbillgalaxy/megacloud-keys/refs/heads/main/api.json"
+        "https://raw.githubusercontent.com/itzzzme/megacloud-keys/refs/heads/main/key.txt"
       ),
     ]);
 
@@ -20,15 +18,14 @@ export async function decryptSources_v1(id, name, type) {
     const sourceId = match?.[1];
     if (!sourceId) throw new Error("Unable to extract sourceId from link");
 
-    // Get encrypted source
     const { data: rawSourceData } = await axios.get(
       `https://megacloud.blog/embed-2/v2/e-1/getSources?id=${sourceId}`
     );
     const encrypted = rawSourceData?.sources;
     if (!encrypted) throw new Error("Encrypted source missing in response");
-
-    // Decrypt using key
-    const decrypted = CryptoJS.AES.decrypt(encrypted, keyData.megacloud).toString(CryptoJS.enc.Utf8);
+    const decrypted = CryptoJS.AES.decrypt(encrypted, key).toString(
+      CryptoJS.enc.Utf8
+    );
     if (!decrypted) throw new Error("Failed to decrypt source");
 
     let decryptedSources;
@@ -37,8 +34,6 @@ export async function decryptSources_v1(id, name, type) {
     } catch (e) {
       throw new Error("Decrypted data is not valid JSON");
     }
-
-    // Build response
     return {
       id,
       type,
