@@ -23,7 +23,7 @@ export async function decryptSources_v1(id, name, type) {
     );
     const encrypted = rawSourceData?.sources;
     if (!encrypted) throw new Error("Encrypted source missing in response");
-    const decrypted = CryptoJS.AES.decrypt(encrypted, key).toString(
+    const decrypted = CryptoJS.AES.decrypt(encrypted, key.trim()).toString(
       CryptoJS.enc.Utf8
     );
     if (!decrypted) throw new Error("Failed to decrypt source");
