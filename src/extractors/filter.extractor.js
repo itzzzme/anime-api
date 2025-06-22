@@ -78,17 +78,21 @@ async function extractFilterResults(params = {}) {
 
     const queryParams = new URLSearchParams(filteredParams).toString();
 
-    const resp = await axios.get(
-      `https://${v1_base_url}/filter?${queryParams}`,
-      {
-        headers: {
-          Accept:
-            "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
-          "Accept-Encoding": "gzip, deflate, br",
-          "User-Agent": DEFAULT_HEADERS,
-        },
-      }
-    );
+    let apiUrl = `https://${v1_base_url}/filter?${queryParams}`;
+
+    if (filteredParams.keyword) {
+      apiUrl = `https://${v1_base_url}/search?${queryParams}`;
+    }
+
+    const resp = await axios.get(apiUrl, {
+      headers: {
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+
+        "Accept-Encoding": "gzip, deflate, br",
+        "User-Agent": DEFAULT_HEADERS,
+      },
+    });
 
     const $ = cheerio.load(resp.data);
     const elements = ".flw-item";
@@ -136,9 +140,7 @@ async function extractFilterResults(params = {}) {
                 .replace(/[^0-9]/g, "")
             ) || null,
         },
-        adultContent:
-          $el.find(".tick-rate").text().trim() ||
-          null,
+        adultContent: $el.find(".tick-rate").text().trim() || null,
       });
     });
 
