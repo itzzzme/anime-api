@@ -11,7 +11,7 @@ const GENRE_MAP = {
     CARS: '3',
     COMEDY: '4',
     DEMENTIA: '5',
-    DEMOS: '6',
+    DEMONS: '6',
     DRAMA: '8',
     ECCHI: '9',
     FANTASY: '10',
