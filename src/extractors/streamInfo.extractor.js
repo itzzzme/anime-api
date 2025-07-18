@@ -53,6 +53,7 @@ async function extractStreamingInfo(id, name, type) {
       );
     }
     const streamingLink = await decryptSources_v1(
+      id,
       requestedServer[0].data_id,
       name,
       type
