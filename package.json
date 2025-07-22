@@ -15,7 +15,7 @@
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^17.2.0",
     "express": "^4.21.2",
     "image-pixels": "^2.2.2"
   },
