@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: anime-api
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - '4444:${PORT:-4444}'
