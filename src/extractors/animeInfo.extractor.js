@@ -76,6 +76,27 @@ async function extractAnimeInfo(id) {
       animeInfo[key] = value;
     });
 
+    const trailers = [];
+    $('.block_area-promotions-list .screen-items .item').each((_, element) => {
+      const el = $(element);
+      const title = el.attr('data-title');
+      const url = el.attr('data-src');
+      if (url) {
+        const fullUrl = url.startsWith('//') ? `https:${url}` : url;
+        let videoId = null;
+        const match = fullUrl.match(/\/embed\/([^?&]+)/);
+        if (match && match[1]) {
+          videoId = match[1];
+        }
+        trailers.push({
+          title: title || null,
+          url: fullUrl,
+          thumbnail: videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null
+        });
+      }
+    });
+    animeInfo.trailers = trailers;
+
     const season_id = formatTitle(title, data_id);
     animeInfo["Overview"] = overviewElement.text().trim();
     animeInfo["tvInfo"] = tvInfo;
