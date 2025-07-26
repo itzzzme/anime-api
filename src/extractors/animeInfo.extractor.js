@@ -32,6 +32,7 @@ async function extractAnimeInfo(id) {
       if (el.hasClass("tick-quality")) tvInfo.quality = text;
       else if (el.hasClass("tick-sub")) tvInfo.sub = text;
       else if (el.hasClass("tick-dub")) tvInfo.dub = text;
+      else if (el.hasClass("tick-eps")) tvInfo.eps = text;
       else if (el.hasClass("tick-pg")) tvInfo.rating = text;
       else if (el.is("span.item")) {
         if (!tvInfo.showType) tvInfo.showType = text;
