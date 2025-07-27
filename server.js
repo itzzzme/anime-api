@@ -13,12 +13,12 @@ const app = express();
 const PORT = process.env.PORT || 4444;
 const __filename = fileURLToPath(import.meta.url);
 const publicDir = path.join(dirname(__filename), "public");
-const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",");
+// const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(","); // Removed dynamic origins
 
 // Express CORS setup
 app.use(
   cors({
-    origin: allowedOrigins?.includes("*") ? "*" : allowedOrigins || [],
+    origin: ["https://example.com", "https://another-example.com"], // Use literal values for allowed origins
     methods: ["GET"],
   })
 );
@@ -27,11 +27,9 @@ app.use(
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   if (
-    !allowedOrigins ||
-    allowedOrigins.includes("*") ||
-    (origin && allowedOrigins.includes(origin))
+    ["https://example.com", "https://another-example.com"].includes(origin) // Use literal values for allowed origins
   ) {
-    res.setHeader("Access-Control-Allow-Origin", origin || "*");
+    res.setHeader("Access-Control-Allow-Origin", origin);
     res.setHeader("Access-Control-Allow-Methods", "GET");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     return next();
