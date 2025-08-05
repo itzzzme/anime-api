@@ -18,7 +18,7 @@ export default async function extractRelatedData($) {
 
         // Extract show type like "TV", "Movie", etc.
         const showTypeText = $el.find(".tick").text().toLowerCase();
-        const showTypeMatch = ["tv", "ona", "movie", "ova", "special"].find(type =>
+        const showTypeMatch = ["TV", "ONA", "Movie", "OVA", "Special"].find(type =>
           showTypeText.includes(type)
         );
         const tvInfo = {
