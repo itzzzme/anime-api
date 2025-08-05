@@ -1,59 +1,42 @@
 export default async function extractRelatedData($) {
-  const relatedElements = $(
-    "#main-sidebar .block_area_sidebar .block_area-content .cbox-list .cbox-content .anif-block-ul .ulclear li"
+  // Target only the section that contains "Related Anime" heading
+  const relatedSection = $('#main-sidebar .block_area:has(.cat-heading:contains("Related Anime"))');
+
+  const relatedElements = relatedSection.find(
+    ".anif-block-ul .ulclear li"
   );
+
   return await Promise.all(
     relatedElements
       .map(async (index, element) => {
-        const id = $(element)
-          .find(".film-detail .film-name a")
-          .attr("href")
-          .split("/")
-          .pop();
-        const data_id = $(element).find(".film-poster").attr("data-id");
-        const title = $(element)
-          .find(".film-detail .film-name a")
-          .text()
-          .trim();
-        const japanese_title = $(element)
-          .find(".film-detail .film-name a")
-          .attr("data-jname")
-          .trim();
-        const poster = $(element).find(".film-poster img").attr("data-src");
-        const $fdiItems = $(".film-detail>.fd-infor>.tick", element);
-        const showType = $fdiItems
-          .filter((_, item) => {
-            const text = $(item).text().trim().toLowerCase();
-            return ["tv", "ona", "movie", "ova", "special"].some((type) =>
-              text.includes(type)
-            );
-          })
-          .first()
-          .text()
-          .trim()
-          .split(/\s+/)
-          .find((word) =>
-            ["tv", "ona", "movie", "ova", "special"].includes(
-              word.toLowerCase()
-            )
-          );
+        const $el = $(element);
+        const id = $el.find(".film-detail .film-name a").attr("href")?.split("/").pop();
+        const data_id = $el.find(".film-poster").attr("data-id");
+        const title = $el.find(".film-detail .film-name a").text().trim();
+        const japanese_title = $el.find(".film-detail .film-name a").attr("data-jname")?.trim();
+        const poster = $el.find(".film-poster img").attr("data-src") || $el.find(".film-poster img").attr("src");
+
+        // Extract show type like "TV", "Movie", etc.
+        const showTypeText = $el.find(".tick").text().toLowerCase();
+        const showTypeMatch = ["tv", "ona", "movie", "ova", "special"].find(type =>
+          showTypeText.includes(type)
+        );
         const tvInfo = {
-          showType: showType ? showType : "Unknown",
+          showType: showTypeMatch || "Unknown"
         };
 
-        ["sub", "dub", "eps"].forEach((property) => {
-          const value = $(`.tick .tick-${property}`, element).text().trim();
+        // Extract tick items like sub, dub, eps
+        ["sub", "dub", "eps"].forEach((type) => {
+          const value = $el.find(`.tick-item.tick-${type}`).text().trim();
           if (value) {
-            tvInfo[property] = value;
+            tvInfo[type] = value;
           }
         });
-        let adultContent = false;
-        const tickRateText = $(".film-poster>.tick-rate", element)
-          .text()
-          .trim();
-        if (tickRateText.includes("18+")) {
-          adultContent = true;
-        }
+
+        // Adult content check
+        const tickRateText = $el.find(".film-poster > .tick-rate").text().trim();
+        const adultContent = tickRateText.includes("18+");
+
         return {
           data_id,
           id,
