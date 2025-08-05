@@ -43,8 +43,11 @@ export async function extractCharacter(id) {
     const animeography = [];
     $(".anif-block-ul li").each((_, el) => {
       const item = $(el);
-      const title = item.find(".film-name a").text().trim();
-      const id = item.find(".film-name a").attr("href")?.split("/").pop();
+      const anchor = item.find(".film-name a.dynamic-name");
+
+      const title = anchor.text().trim();
+      const japanese_title = anchor.attr("data-jname")?.trim();
+      const id = anchor.attr("href")?.split("/").pop();
       const role = item.find(".fdi-item").first().text().trim();
       const type = item.find(".fdi-item").last().text().trim();
       const poster = item.find(".film-poster img").attr("src");
@@ -52,6 +55,7 @@ export async function extractCharacter(id) {
       if (title && id) {
         animeography.push({
           title,
+          japanese_title,
           id,
           role: role.replace(" (Role)", ""),
           type,
