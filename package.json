@@ -11,17 +11,20 @@
   "author": "Sayan Das",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.6.7",
+    "axios": "^1.11.0",
+    "bcrypt": "^6.0.0",
     "cheerio": "^1.0.0-rc.12",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
     "dotenv": "^17.2.0",
     "express": "^4.21.2",
-    "image-pixels": "^2.2.2"
+    "image-pixels": "^2.2.2",
+    "jsonwebtoken": "^9.0.2"
   },
   "type": "module",
   "devDependencies": {
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.10"
   },
   "repository": {
     "type": "git",
