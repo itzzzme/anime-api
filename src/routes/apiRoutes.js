@@ -64,7 +64,8 @@ export const createApiRoutes = (app, jsonResponse, jsonError) => {
   createRoute("/api/info", animeInfoController.getAnimeInfo);
   createRoute("/api/episodes/:id", episodeListController.getEpisodes);
   createRoute("/api/servers/:id", serversController.getServers);
-  createRoute("/api/stream", streamController.getStreamInfo);
+  createRoute("/api/stream", (req, res) => streamController.getStreamInfo(req, res, false));
+  createRoute("/api/stream/fallback", (req, res) => streamController.getStreamInfo(req, res, true));
   createRoute("/api/search", searchController.search);
   createRoute("/api/filter", filterController.filter);
   createRoute("/api/search/suggest", suggestionsController.getSuggestions);

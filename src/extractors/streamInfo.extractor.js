@@ -32,7 +32,7 @@ export async function extractServers(id) {
   }
 }
 
-async function extractStreamingInfo(id, name, type) {
+async function extractStreamingInfo(id, name, type, fallback) {
   try {
     const servers = await extractServers(id.split("?ep=").pop());
     let requestedServer = servers.filter(
@@ -56,7 +56,8 @@ async function extractStreamingInfo(id, name, type) {
       id,
       requestedServer[0].data_id,
       name,
-      type
+      type,
+      fallback
     );
     return { streamingLink, servers };
   } catch (error) {

@@ -50,6 +50,7 @@
   - [GET Character Details](#get-character-details)
   - [GET Voice Actor Details](#get-voice-actor-details)
   - [GET Anime Stream Info](#get-streaming-info)
+  - [GET Anime Backup Stream Info](#get-fallback-streaming-info)
   - [GET Anime Episodes](#get-animes-episode-list)
   - [GET Anime Episode's Available Servers](#get-available-servers-of-anime)
 - [Pull Requests](#pull-requests)
@@ -1188,9 +1189,9 @@ console.log(resp.data);
 
 #### Parameters
 
-|        Parameters        | Parameter-Type |   Type   | Description | Mandatory ? | Default |
-| :----------------------: | :------------: | :------: | :---------: | :---------: | :-----: |
-| `id` , `server` , `type` |    `query`     | `string` |  `keyword`  |   Yes ✔️    |   --    |
+|        Parameters        | Parameter-Type |   Type   | Mandatory ? | Default |
+| :----------------------: | :------------: | :------: | :---------: | :-----: |
+| `id` , `server` , `type` |    `query`     | `string` |   Yes ✔️    |   --    |
 
 #### Example of request
 
@@ -1198,6 +1199,75 @@ console.log(resp.data);
 import axios from "axios";
 const resp = await axios.get(
   "/api/stream?id=frieren-beyond-journeys-end-18542?ep=107257&server=hd-1&type=sub"
+);
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "streamingLink": [
+      {
+            "id":number,
+            "type": "sub",
+            "link": {
+              "file":string,
+              "type":string,
+            },
+            "tracks": [
+              {
+                "file": string,
+                "label": string,
+                "kind": string,
+                "default": boolean
+              },{...}
+            ],
+            "intro": [Object],
+            "outro": [Object],
+            "server":string
+      }
+    ],
+    "servers": [
+      {
+        "type":string,
+        "data_id": number,
+        "server_id": number,
+        "server_name": string
+      },
+      {...}
+    ]
+  }
+}
+
+
+```
+### `GET` Fallback Streaming info
+
+```bash
+  GET /api/stream/fallback
+```
+
+### Endpoint
+
+```bash
+  /api/stream/fallback?id={string}&server={string}&type={string}
+```
+
+#### Parameters
+
+|        Parameters        | Parameter-Type |   Type    | Mandatory ? | Default |
+| :----------------------: | :------------: | :------:  | :---------: | :-----: |
+| `id` , `server` , `type` |    `query`     | `string`  |   Yes ✔️    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get(
+  "/api/stream/fallback?id=frieren-beyond-journeys-end-18542?ep=107257&server=hd-1&type=sub"
 );
 console.log(resp.data);
 ```
