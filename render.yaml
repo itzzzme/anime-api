@@ -2,6 +2,7 @@ services:
   - type: web
     name: anime-api
     env: node
+    repo: https://github.com/itzzzme/anime-api  # <-- add this if required
     buildCommand: npm install
     startCommand: npm start
     branch: main
