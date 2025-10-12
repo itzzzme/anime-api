@@ -40,9 +40,31 @@ export default async function extractQtip(id) {
     });
     const watchLink = $(".pre-qtip-button a.btn.btn-play").attr("href");
 
+    let anilistId = null;
+    let malId = null;
+    if (watchLink) {
+      try {
+        const animeSlug = watchLink.replace('/watch', '');
+        
+        const mainPageResponse = await axios.get(`https://${v1_base_url}${animeSlug}`);
+        const $mainPage = cheerio.load(mainPageResponse.data);
+        
+        const syncDataScript = $mainPage("#syncData").html();
+        if (syncDataScript) {
+          const syncData = JSON.parse(syncDataScript);
+          anilistId = syncData.anilist_id || null;
+          malId = syncData.mal_id || null;
+        }
+      } catch (error) {
+        console.error("Error fetching AniList/MAL IDs:", error);
+      }
+    }
+
     const extractedData = {
       title,
       rating,
+      anilistId,
+      malId,
       quality,
       subCount,
       dubCount,
