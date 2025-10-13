@@ -1097,6 +1097,8 @@ console.log(resp.data);
   "results": {
     "title": string,
     "rating": double,
+    "anilistId": number,
+    "malId": number,
     "quality": string,
     "subCount": number,
     "dubCount": number,
