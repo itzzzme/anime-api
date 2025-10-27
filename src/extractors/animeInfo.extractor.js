@@ -98,15 +98,7 @@ async function extractAnimeInfo(id) {
     });
     animeInfo.trailers = trailers;
 
-    const watchNowHref = $('.btn.btn-radius.btn-primary.btn-play').attr('href');
-    let season_id = null;
-
-    if (watchNowHref) {
-      const match = watchNowHref.match(/\/watch\/([^/]+)/);
-      if (match && match[1]) {
-        season_id = match[1];
-      }
-    }
+    const season_id = formatTitle(title, data_id);
     animeInfo["Overview"] = overviewElement.text().trim();
     animeInfo["tvInfo"] = tvInfo;
 
