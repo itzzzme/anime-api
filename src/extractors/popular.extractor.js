@@ -1,12 +1,10 @@
-export default async function extractRelatedData($) {
-  const relatedSection = $('#main-sidebar .block_area:has(.cat-heading:contains("Related Anime"))');
+export default async function extractPopularData($) {
+  const popularSection = $('#main-sidebar .block_area:has(.cat-heading:contains("Most Popular"))');
 
-  const relatedElements = relatedSection.find(
-    ".anif-block-ul .ulclear li"
-  );
+  const popularElements = popularSection.find(".anif-block-ul .ulclear li");
 
   return await Promise.all(
-    relatedElements
+    popularElements
       .map(async (index, element) => {
         const $el = $(element);
         const id = $el.find(".film-detail .film-name a").attr("href")?.split("/").pop();

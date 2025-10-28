@@ -4,6 +4,7 @@ import formatTitle from "../helper/formatTitle.helper.js";
 import { v1_base_url } from "../utils/base_v1.js";
 import extractRecommendedData from "./recommend.extractor.js";
 import extractRelatedData from "./related.extractor.js";
+import extractPopularData from "./popular.extractor.js";
 
 async function extractAnimeInfo(id) {
   try {
@@ -107,9 +108,10 @@ async function extractAnimeInfo(id) {
       adultContent = true;
     }
 
-    const [recommended_data, related_data] = await Promise.all([
+    const [recommended_data, related_data, popular_data] = await Promise.all([
       extractRecommendedData($),
       extractRelatedData($),
+      extractPopularData($),
     ]);
     let charactersVoiceActors = [];
     if (characterHtml) {
@@ -182,6 +184,7 @@ async function extractAnimeInfo(id) {
       charactersVoiceActors,
       recommended_data,
       related_data,
+      popular_data,
     };
   } catch (e) {
     console.error("Error extracting anime info:", e);
