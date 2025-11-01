@@ -4,11 +4,14 @@ import { v1_base_url } from "../utils/base_v1.js";
 
 export default async function extractSchedule(date, tzOffset) {
   try {  
+    tzOffset = tzOffset ?? -330;
+
     const resp = await axios.get(
       `https://${v1_base_url}/ajax/schedule/list?tzOffset=${tzOffset}&date=${date}`
     );
     const $ = cheerio.load(resp.data.html);
     const results = [];
+
     $("li").each((i, element) => {
       const id = $(element)
         ?.find("a")
@@ -39,6 +42,7 @@ export default async function extractSchedule(date, tzOffset) {
         episode_no,
       });
     });
+
     return results;
   } catch (error) {
     console.log(error.message);
