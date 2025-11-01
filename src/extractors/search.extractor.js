@@ -38,9 +38,9 @@ async function extractSearchResults(params = {}) {
     const sortParam = normalizeParam(params.sort, FILTER_SORT);
 
     let languageParam = params.language;
-    if (typeof languageParam === "string") {
-      languageParam = languageParam.trim().toUpperCase();
-      languageParam = FILTER_LANGUAGE_MAP[languageParam] || undefined;
+    if (languageParam != null) {
+      languageParam = String(languageParam).trim().toUpperCase();
+      languageParam = FILTER_LANGUAGE_MAP[languageParam] ?? (Object.values(FILTER_LANGUAGE_MAP).includes(languageParam) ? languageParam : undefined);
     }
 
     let genresParam = params.genres;
