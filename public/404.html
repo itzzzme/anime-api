@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 not found!</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
+      * {
+        margin: 0;
+        padding: 0;
+        outline: none;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        height: 100vh;
+        background-color: #1e1e1e;
+        color: #ce9178;
+      }
+      #error-page {
+        position: absolute;
+        top: 10%;
+        left: 15%;
+        right: 15%;
+        bottom: 10%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #error-page .content {
+        max-width: 600px;
+        text-align: center;
+      }
+      .content img.header {
+        width: 250px;
+        height: 250px;
+        position: relative;
+      }
+      .content h4 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        font-size: 2em;
+        max-width: 600px;
+        position: relative;
+      }
+      .content p {
+        font-size: 1.2em;
+      }
+      .content .btns {
+        margin: 25px 0;
+        display: inline-flex;
+      }
+      .content .btns a {
+        display: inline-block;
+        margin: 0 10px;
+        text-decoration: none;
+        border: 2px solid #69a6ce;
+        color: #69a6ce;
+        font-weight: 500;
+        padding: 10px 25px;
+        border-radius: 25px;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+      }
+      .content .btns a:hover {
+        background: #69a6ce;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="error-page">
+      <div class="content">
+        <img class="header" data-text="404" src="https://media.tenor.com/TPvxRCmycL4AAAAi/gray-hair-big-eyes.gif"/>
+        <h4 data-text="Opps! Page not found">404! Page not found :&#40;</h4>
+        <p>
+          Sorry, the page you're looking for doesn't exist. If you think
+          something is broken, report a problem.
+        </p>
+        <div class="btns">
+          <a href="/">return home</a>
+          <a href="https://github.com/itzzzme/anime-api" target="_blank"
+            >report problem</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <title>Anime Api</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        height: 100%;
+        width: 100%;
+        max-height: 100vh;
+        max-width: 100vw;
+        background-color: #1e1e1e;
+        color: #ce9178;
+      }
+
+      .container {
+        height: 100%;
+        width: 100%;
+        display: grid;
+        grid-template-rows: auto 1fr;
+        grid-template-columns: 1fr;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+      }
+
+      .image-container {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        background-size: cover;
+        position: relative;
+        z-index: 1;
+      }
+
+      h1 {
+        font-size: 2rem;
+        text-align: center;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+        z-index: 2;
+      }
+
+      #gif,
+      #mirrored-gif {
+        height: 300px;
+        width: 300px;
+      }
+
+      #mirrored-gif {
+        transform: scaleX(-1);
+      }
+
+      #pic {
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        object-position: center;
+        object-fit: cover;
+      }
+
+      .profile {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+      }
+      .github {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        align-items: center;
+      }
+      .fa-github {
+        color: grey;
+      }
+      a {
+        font-size: 1.3rem;
+        color: #7cdcfe;
+      }
+      @media (max-width: 700px) {
+        .image-container {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to API 🎉</h1>
+      <div class="profile">
+        <img id="pic" src="image.webp" alt="" />
+        <div class="github">
+          <i class="fa fa-github" style="font-size: 36px"></i>
+          <a href="https://github.com/itzzzme/anime-api" target="_blank"
+            >Click here to refer docs</a
+          >
+        </div>
+      </div>
+      <div class="image-container">
+        <img
+          id="gif"
+          src="./wlc.gif"
+          alt=""
+        />
+        <img
+          id="mirrored-gif"
+          src="./wlc.gif"
+          alt=""
+        />
+      </div>
+    </div>
+  </body>
+</html>
