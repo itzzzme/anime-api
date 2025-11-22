@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aniplix - Watch Anime Online</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo-container" onclick="window.location.href='/home'">
+                <!-- New Stylized Logo -->
+                <svg class="logo-icon" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M25 0C11.19 0 0 11.19 0 25C0 38.81 11.19 50 25 50C38.81 50 50 38.81 50 25C50 11.19 38.81 0 25 0ZM18 34V16L34 25L18 34Z" fill="#E50914"/>
+                </svg>
+                <span class="logo-text">ANIPLIX</span>
+            </div>
+            <div class="nav-links desktop-links">
+                <a href="/home" class="active">Home</a>
+                <a href="#">Movies</a>
+                <a href="#">TV Series</a>
+                <a href="#">My List</a>
+            </div>
+        </div>
+
+        <div class="nav-right">
+            <!-- Desktop Search -->
+            <div class="search-container desktop-search">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="search-input" placeholder="Titles, people, genres" autocomplete="off">
+                    <i class="fas fa-times clear-icon" id="clear-search" style="display: none;"></i>
+                </div>
+                <div id="search-suggestions" class="search-suggestions" style="display: none;"></div>
+            </div>
+
+            <!-- Mobile Search Icon -->
+            <div class="mobile-search-toggle">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Search Overlay -->
+    <div id="mobile-search-overlay" class="mobile-search-overlay">
+        <div class="mobile-search-header">
+            <div class="mobile-search-input-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="mobile-search-input" placeholder="Search anime..." autocomplete="off">
+                <i class="fas fa-times" id="mobile-search-close"></i>
+            </div>
+        </div>
+        <div id="mobile-search-suggestions" class="mobile-search-suggestions"></div>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <div id="main-content">
+        <!-- Hero Section -->
+        <header id="hero-section" class="hero-container">
+            <div class="hero-skeleton skeleton"></div>
+        </header>
+
+        <div class="main-container">
+            <!-- Top Ten Section -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Top 10 Anime</h2>
+                    <div class="tabs">
+                        <button class="tab-btn active" data-period="today">Today</button>
+                        <button class="tab-btn" data-period="week">Week</button>
+                        <button class="tab-btn" data-period="month">Month</button>
+                    </div>
+                </div>
+                <div id="top-ten-list" class="horizontal-scroll">
+                    <!-- Skeletons will be injected here -->
+                </div>
+            </section>
+
+            <!-- Top Search Section -->
+            <section class="section">
+                <h2 class="section-title">Top Searches</h2>
+                <div id="top-search-list" class="horizontal-tags">
+                    <!-- Tags -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Nav (Optional, common in modern apps) -->
+    <nav class="mobile-bottom-nav">
+        <a href="/home" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-compass"></i>
+            <span>Explore</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-search" id="bottom-nav-search"></i>
+            <span>Search</span>
+        </a>
+    </nav>
+
+    <script src="/js/navbar.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
