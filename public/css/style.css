@@ -1,0 +1,345 @@
+:root {
+    --bg-color: #141414;
+    --card-bg: #1f1f1f;
+    --text-color: #ffffff;
+    --accent-color: #E50914;
+    --secondary-text: #b3b3b3;
+    --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --skeleton-base: #2a2a2a;
+    --skeleton-highlight: #3a3a3a;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-x: hidden;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 15px 4%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-right: 40px;
+}
+
+.logo-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    flex-grow: 1;
+}
+
+.nav-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--secondary-text);
+}
+
+.search-bar {
+    color: var(--text-color);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Hero Section */
+.hero-container {
+    height: 80vh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, #141414 0%, transparent 60%, rgba(0,0,0,0.7) 100%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    padding: 0 4% 100px 4%;
+    max-width: 600px;
+}
+
+.hero-title {
+    font-size: 4rem;
+    margin: 0 0 20px 0;
+    line-height: 1.1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    color: #46d369; /* Netflix match match percentage color style */
+}
+
+.hero-btn {
+    background-color: var(--text-color);
+    color: #000;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hero-btn:hover {
+    background-color: rgba(255,255,255,0.75);
+}
+
+/* Main Container */
+.main-container {
+    padding: 20px 4%;
+    margin-top: -50px;
+    position: relative;
+    z-index: 20;
+}
+
+.section {
+    margin-bottom: 40px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: var(--secondary-text);
+    font-weight: 500;
+    margin: 0;
+    transition: color 0.3s;
+}
+
+.section-title:hover {
+    color: var(--text-color);
+}
+
+/* Horizontal Scroll */
+.horizontal-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding-bottom: 20px; /* Space for scrollbar */
+    scrollbar-width: none; /* Firefox */
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.anime-card {
+    flex: 0 0 200px; /* Fixed width for cards */
+    position: relative;
+    transition: transform 0.3s ease, z-index 0.3s;
+    cursor: pointer;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.anime-card:hover {
+    transform: scale(1.05);
+    z-index: 50;
+}
+
+.image-container {
+    width: 100%;
+    aspect-ratio: 2 / 3; /* Force 2:3 ratio */
+    background-color: #222;
+    position: relative;
+}
+
+.poster-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.rank-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-bottom-left-radius: 4px;
+    box-shadow: -2px 2px 5px rgba(0,0,0,0.5);
+}
+
+.card-info {
+    padding: 10px 0;
+}
+
+.card-title {
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.card-meta {
+    font-size: 0.8rem;
+    color: var(--secondary-text);
+    display: flex;
+    gap: 8px;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 15px;
+    background-color: rgba(0,0,0,0.5);
+    padding: 5px;
+    border-radius: 20px;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    color: var(--secondary-text);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 5px 15px;
+    border-radius: 15px;
+    transition: all 0.2s;
+}
+
+.tab-btn.active {
+    background-color: var(--secondary-text);
+    color: #000;
+    font-weight: bold;
+}
+
+/* Top Search Tags */
+.horizontal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag {
+    background-color: #333;
+    color: var(--text-color);
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.tag:hover {
+    background-color: var(--text-color);
+    color: #000;
+}
+
+/* Skeleton Loading */
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.skeleton {
+    background: linear-gradient(90deg, var(--skeleton-base) 25%, var(--skeleton-highlight) 50%, var(--skeleton-base) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+
+.hero-skeleton {
+    width: 100%;
+    height: 100%;
+}
+
+.card-skeleton {
+    flex: 0 0 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.poster-skeleton {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+}
+
+.text-skeleton {
+    height: 15px;
+    width: 80%;
+}
+
+.tag-skeleton {
+    width: 100px;
+    height: 35px;
+    border-radius: 20px;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .anime-card {
+        flex: 0 0 140px;
+    }
+}

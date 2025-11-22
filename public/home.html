@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aniplix - Watch Anime Online</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Font Awesome for icons if needed, or just SVGs -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo-container">
+            <!-- Simple SVG Logo -->
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 22H22L12 2Z" fill="#E50914"/>
+                <path d="M12 6L6 18H18L12 6Z" fill="#000"/>
+            </svg>
+            <span class="logo-text">ANIPLIX</span>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="active">Home</a>
+            <a href="#">Movies</a>
+            <a href="#">TV Series</a>
+            <a href="#">My List</a>
+        </div>
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+        </div>
+    </nav>
+
+    <!-- Spotlight / Hero Section -->
+    <header id="hero-section" class="hero-container">
+        <div class="hero-skeleton skeleton"></div>
+    </header>
+
+    <div class="main-container">
+
+        <!-- Top Ten Section (Tabs) -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Top 10 Anime</h2>
+                <div class="tabs">
+                    <button class="tab-btn active" data-period="today">Today</button>
+                    <button class="tab-btn" data-period="week">Week</button>
+                    <button class="tab-btn" data-period="month">Month</button>
+                </div>
+            </div>
+            <div id="top-ten-list" class="horizontal-scroll">
+                <!-- Skeletons will be injected here -->
+            </div>
+        </section>
+
+        <!-- Top Search Section -->
+        <section class="section">
+            <h2 class="section-title">Top Searches</h2>
+            <div id="top-search-list" class="horizontal-tags">
+                <!-- Tags -->
+            </div>
+        </section>
+
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
