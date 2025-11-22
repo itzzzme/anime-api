@@ -42,6 +42,10 @@ app.use((req, res, next) => {
 
 app.use(express.static(publicDir, { redirect: false }));
 
+app.get("/home", (req, res) => {
+  res.sendFile(path.join(publicDir, "home.html"));
+});
+
 const jsonResponse = (res, data, status = 200) =>
   res.status(status).json({ success: true, results: data });
 
