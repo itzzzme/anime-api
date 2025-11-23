@@ -115,6 +115,8 @@ async function extractSearchResults(params = {}) {
           .split("?ref=search")[0] || null;
       result.push({
         id: id,
+        data_id: $(el)
+          .find(".film-poster .film-poster-ahref").attr("data-id"),
         title: $(el)
           .find(".film-detail .film-name .dynamic-name")
           ?.text()
