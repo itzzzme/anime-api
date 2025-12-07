@@ -34,7 +34,7 @@ async function extractPage(page, params) {
           const showType = $fdiItems
             .filter((_, item) => {
               const text = $(item).text().trim().toLowerCase();
-              return ["tv", "ona", "movie", "ova", "special"].some((type) =>
+              return ["tv", "ona", "movie", "ova", "special", "music"].some((type) =>
                 text.includes(type)
               );
             })
