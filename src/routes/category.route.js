@@ -54,6 +54,7 @@ export const routeTypes = [
   "ova",
   "ona",
   "tv",
+  "music",
   "az-list",
   "az-list/other",
   "az-list/0-9",
