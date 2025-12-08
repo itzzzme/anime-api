@@ -82,7 +82,7 @@ export const createApiRoutes = (app, jsonResponse, jsonError) => {
     "/api/character/list/:id",
     characterListController.getVoiceActors
   );
-  createRoute("/api/watchlist/:userId/:page?", getWatchlist);
+  createRoute("/api/watchlist/:userId{/:page}", getWatchlist);
   createRoute("/api/actors/:id", getVoiceActors);
   createRoute("/api/character/:id", getCharacter);
   createRoute("/api/top-search", getTopSearch);
