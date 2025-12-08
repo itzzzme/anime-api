@@ -613,6 +613,7 @@ console.log(resp.data);
 - ova
 - ona
 - tv
+- music
 
 #### Example of request
 
