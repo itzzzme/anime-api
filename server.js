@@ -50,7 +50,7 @@ const jsonError = (res, message = "Internal server error", status = 500) =>
 
 createApiRoutes(app, jsonResponse, jsonError);
 
-app.get("*", (req, res) => {
+app.use((req, res) => {
   const filePath = path.join(publicDir, "404.html");
   if (fs.existsSync(filePath)) {
     res.status(404).sendFile(filePath);
