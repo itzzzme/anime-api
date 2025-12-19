@@ -36,8 +36,9 @@ export default async function extractQtip(id) {
       .trim();
     const genres = [];
     $(".pre-qtip-line:contains('Genres:') a").each((i, elem) => {
-      genres.push($(elem).text().trim());
+      genres.push($(elem).text().trim().split(" ").join("-"));
     });
+    
     const watchLink = $(".pre-qtip-button a.btn.btn-play").attr("href");
 
     const extractedData = {
