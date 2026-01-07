@@ -1,9 +1,13 @@
 import extractSearchResults from "../extractors/search.extractor.js";
+import convertForeignLanguage from "../helper/foreignInput.helper.js";
 
 export const search = async (req) => {
   try {
     let { keyword, type, status, rated, score, season, language, genres, sort, sy, sm, sd, ey, em, ed } = req.query;
     let page = parseInt(req.query.page) || 1;
+    
+    // Check if the search keyword is in a foreign language and if it can be converted
+    keyword = await convertForeignLanguage(keyword);
 
     const [totalPage, data] = await extractSearchResults({
       keyword: keyword, 
