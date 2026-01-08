@@ -22,7 +22,6 @@ async function getEnglishTitleFromAniList(userInput) {
       }
     `;
 
-    // Rate limit the calls to the AniList API
     const response = await axios.post('https://graphql.anilist.co', {
       query,
       variables: { search: userInput }
