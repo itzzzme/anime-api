@@ -1,14 +1,5 @@
 import axios from "axios";
-import Bottleneck from "bottleneck";
 // import { getCachedData, setCachedData } from "./cache.helper";
-
-const limiter = new Bottleneck({
-  reservoir: 80,
-  reservoirRefreshAmount: 80,
-  reservoirRefreshInterval: 65 * 1000, // 65 seconds to comply with AniList rate limiting
-  maxConcurrent: 5,
-  minTime: 100
-});
 
 async function getEnglishTitleFromAniList(userInput) {
   // const cacheKey = `translation:${userInput}`;
@@ -32,15 +23,13 @@ async function getEnglishTitleFromAniList(userInput) {
     `;
 
     // Rate limit the calls to the AniList API
-    const response = await limiter.schedule(() => 
-      axios.post('https://graphql.anilist.co', {
-        query,
-        variables: { search: userInput }
-      }, {
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 3000 // 3 seconds 
-      })
-    );
+    const response = await axios.post('https://graphql.anilist.co', {
+      query,
+      variables: { search: userInput }
+    }, {
+      headers: { 'Content-Type': 'application/json' },
+      timeout: 3000 // 3 seconds 
+    });
 
     const titles = response.data?.data?.Media?.title;
     
