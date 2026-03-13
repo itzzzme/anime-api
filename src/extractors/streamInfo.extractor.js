@@ -8,7 +8,8 @@ import { decryptSources_v1 } from "../parsers/decryptors/decrypt_v1.decryptor.js
 export async function extractServers(id) {
   try {
     const resp = await axios.get(
-      `https://${v1_base_url}/ajax/v2/episode/servers?episodeId=${id}`
+      `https://${v1_base_url}/ajax/episode/servers?episodeId=
+${id}`
     );
     const $ = cheerio.load(resp.data.html);
     const serverData = [];
