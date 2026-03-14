@@ -1,1 +1,1 @@
-export const v3_base_url = "aniplay.lol";
+export const v3_base_url = "aniwatchtv.to";
